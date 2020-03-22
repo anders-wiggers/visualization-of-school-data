@@ -1,0 +1,5 @@
+All data of mean grade can be downloaded from: https://uddannelsesstatistik.dk/Pages/Reports/1802.aspx
+
+To enlist all hover field. Click explore, drill to "institution -> prefix"
+Add all region to list. At the top bar. 
+next download the sheet
