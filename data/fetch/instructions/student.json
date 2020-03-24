@@ -1,0 +1,7 @@
+{
+	"instructions": [
+		{
+			"get": "https://google.com"
+		}
+	]
+}
