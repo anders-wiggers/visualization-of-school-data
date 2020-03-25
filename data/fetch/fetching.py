@@ -9,6 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from terminalOutput import Wait
 
+sleepTime = config.SLEEPTIME
+
 
 def waitForSiteLoad(xpath):
     done = False
@@ -17,12 +19,70 @@ def waitForSiteLoad(xpath):
             expandData = browser.find_element_by_xpath(xpath)
             return expandData
         except:
-            time.sleep(0.5)
+            time.sleep(sleepTime)
+
+
+def clickFromPivot(content):
+    try:
+        element = browser.find_element_by_xpath(
+            "//*[contains(text(), '" + content + "')]")
+        element.click()
+        id = element.get_attribute("id").split("_")[2]
+        browser.find_element_by_id("flcb_" + id).click()
+    except:
+        time.sleep(sleepTime)
+        clickFromPivot(content)
+
+
+def switchToFrame(to):
+    try:
+        browser.switch_to.frame(to)
+    except:
+        time.sleep(sleepTime)
+        switchToFrame(to)
+
+
+def xpathClick(value):
+    try:
+        browser.find_element_by_xpath(value).click()
+    except:
+        time.sleep(sleepTime)
+        xpathClick(value)
+
+
+def classClick(value):
+    try:
+        browser.find_element_by_class_name(value).click()
+    except:
+        time.sleep(sleepTime)
+        classClick(value)
+
+
+def idClick(Value):
+    try:
+        browser.find_element_by_id(value).click()
+    except:
+        time.sleep(sleepTime)
+        idClick(value)
+
+
+def progress(doing, pg, op):
+    Wait.printProgressBar(pg, op,
+                          prefix='Progress:', suffix=' ' * 50, length=50)
+    Wait.printProgressBar(pg, op,
+                          prefix='Progress:', suffix='Doing: ' + doing, length=50)
 
 
 options = Options()
 
-prefs = {'download.default_directory':  os.getcwd() + '/'}
+path = ''
+paths = os.getcwd().split('/')
+paths.remove('')
+paths.remove('fetch')
+for item in paths:
+    path = path + "/" + item
+
+prefs = {'download.default_directory':  path + "/excel"}
 options.add_experimental_option('prefs', prefs)
 
 options.set_headless(headless=config.HEAD)
@@ -30,6 +90,7 @@ browser = webdriver.Chrome(chrome_options=options,
                            executable_path=os.getcwd()+'/assets/chromedriver')
 
 print("Starting Scraping From Web\n")
+
 
 instructions = glob.glob(os.getcwd()+"/instructions/*.json")
 
@@ -40,36 +101,47 @@ for instruction in instructions:
 
     operations = len(data["instructions"])
 
-    progress = 0
-    Wait.printProgressBar(progress, operations,
+    progression = 0
+    Wait.printProgressBar(progression, operations,
                           prefix='Progress:', suffix='Complete', length=50)
 
     for command in data["instructions"]:
+
         if "get" in command:
+            progress("get", progression, operations)
             browser.get(command["get"])
         if "wait" in command:
+            progress("Waiting for " +
+                     str(command["wait"]) + " sec", progression, operations)
             time.sleep(command["wait"])
         if "switch" in command:
-            browser.switch_to.frame(command["switch"])
+            progress("switch", progression, operations)
+            switchToFrame(command["switch"])
         if "click" in command:
             findType = command["click"]["find"]
             value = command["click"]["value"]
 
             if findType == "xpath":
-                browser.find_element_by_xpath(value).click()
+                progress("Clicking: " + value[:20], progression, operations)
+                xpathClick(value)
             if findType == "class":
-                browser.find_element_by_class_name(value).click()
+                progress("Clicking: " + value[:20], progression, operations)
+                classClick(value)
             if findType == "id":
-                browser.find_element_by_id(value).click()
+                progress("Clicking: " + value[:20], progression, operations)
+                idClick(value)
+            if findType == "pivotTable":
+                progress("Clicking: " + value[:20], progression, operations)
+                clickFromPivot(value)
 
-        progress += 1
-        Wait.printProgressBar(progress, operations,
-                              prefix='Progress:', suffix='Complete', length=50)
+        progression += 1
+        Wait.printProgressBar(progression, operations,
+                              prefix='Progress:', suffix=' '*50, length=50)
     print(os.path.basename(instruction) + " Completed")
 
 """
 browser.get(
-    'https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={e3cf4ea5-929b-4772-b000-44ef289724fb}&action=view')
+    'https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={e1597862-3fb5-4b08-a932-79ddb9816146}&action=view')
 
 
 # Wait.WaitTerminal(5)
@@ -78,54 +150,9 @@ time.sleep(5)
 
 browser.switch_to.frame("WebApplicationFrame")
 
+selectFromLabelID('Elevtal Kommune')
+
 
 # expandData = browser.find_element_by_xpath(
 #    "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']")
-
-expandData = waitForSiteLoad(
-    "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']")
-
-expandData.click()
-
-magnify = browser.find_element_by_class_name("ewa-bix-launchButton")
-
-magnify.click()
-
-time.sleep(2)
-
-institution = browser.find_element_by_id("bixflec_17")
-
-institution.click()
-
-browser.find_element_by_id("bixflec_19").click()
-
-browser.find_element_by_id("bixflil_23").click()
-
-browser.find_element_by_id("bix-drill-action-to").click()
-
-time.sleep(1)
-
-browser.find_element_by_xpath("//input[@name='afi.3.1']").click()
-
-time.sleep(1)
-
-
-browser.find_element_by_id("_ewanode2").click()
-
-browser.find_element_by_xpath("//button[@type='submit']").click()
-
-
-extrendMenu = browser.find_element_by_id(
-    "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20")
-
-
-extrendMenu.click()
-
-download = browser.find_element_by_id(
-    'm_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20')
-
-# download.click()
-
-browser.close()
-
 """

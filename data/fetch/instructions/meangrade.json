@@ -4,10 +4,10 @@
 			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={e3cf4ea5-929b-4772-b000-44ef289724fb}&action=view"
 		},
 		{
-			"wait": 5
+			"switch": "WebApplicationFrame"
 		},
 		{
-			"switch": "WebApplicationFrame"
+			"wait": 2
 		},
 		{
 			"click": {
@@ -20,9 +20,6 @@
 				"find": "class",
 				"value": "ewa-bix-launchButton"
 			}
-		},
-		{
-			"wait": 2
 		},
 		{
 			"click": {
@@ -58,9 +55,6 @@
 			}
 		},
 		{
-			"wait": 1
-		},
-		{
 			"click": {
 				"find": "id",
 				"value": "_ewanode2"
@@ -85,7 +79,7 @@
 			}
 		},
 		{
-			"wait": 10
+			"wait": 3
 		}
 	]
 }

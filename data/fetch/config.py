@@ -1,1 +1,2 @@
 HEAD = False
+SLEEPTIME = 0.5
