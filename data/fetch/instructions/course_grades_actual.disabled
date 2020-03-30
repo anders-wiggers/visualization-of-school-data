@@ -12,7 +12,7 @@
 		{
 			"click": {
 				"find": "xpath",
-				"value": "//input[@name='afi.3.1']"
+				"value": "//input[@name='afi.3.2']"
 			}
 		},
 		{
@@ -30,13 +30,13 @@
 		{
 			"click": {
 				"find": "xpath",
-				"value": "//input[@name='afi.4.1']"
+				"value": "//input[@name='afi.4.2']"
 			}
 		},
 		{
 			"click": {
 				"find": "id",
-				"value": "_ewanode7"
+				"value": "_ewanode17"
 			}
 		},
 		{
