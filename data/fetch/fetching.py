@@ -43,6 +43,19 @@ def expandPivot(content):
         time.sleep(sleepTime)
         expandPivot(content)
 
+def pivotTableMulti(content,listNumber):
+    try:
+        elements = browser.find_elements_by_xpath(
+            "//*[contains(text(), '" + content + "')]")
+
+        element = elements[listNumber - 1]
+        id = element.get_attribute("id").split("_")[2]
+        browser.find_element_by_id("flcb_" + id).click()
+    except:
+        time.sleep(sleepTime)
+        expandPivot(content)
+
+
 
 def switchToFrame(to):
     try:
@@ -68,13 +81,12 @@ def classClick(value):
         classClick(value)
 
 
-def idClick(Value):
+def idClick(value):
     try:
         browser.find_element_by_id(value).click()
     except:
         time.sleep(sleepTime)
         idClick(value)
-
 
 def progress(doing, pg, op):
     Wait.printProgressBar(pg, op,
@@ -82,6 +94,11 @@ def progress(doing, pg, op):
     Wait.printProgressBar(pg, op,
                           prefix='Progress:', suffix='Doing: ' + doing, length=50)
 
+def sleep(sleepTime):
+    try:
+        time.sleep(sleepTime)
+    except:
+        browser.quit()
 
 options = Options()
 
@@ -123,13 +140,14 @@ for instruction in instructions:
         if "wait" in command:
             progress("Waiting for " +
                      str(command["wait"]) + " sec", progression, operations)
-            time.sleep(command["wait"])
+            sleep(command["wait"])
         if "switch" in command:
             progress("switch", progression, operations)
             switchToFrame(command["switch"])
         if "click" in command:
             findType = command["click"]["find"]
             value = command["click"]["value"]
+
 
             if findType == "xpath":
                 progress("Clicking: " + value[:20], progression, operations)
@@ -146,6 +164,10 @@ for instruction in instructions:
             if findType == "pivotTableExpand":
                 progress("Expanding: " + value[:20], progression, operations)
                 expandPivot(value)
+            if findType == "pivotTableMulti":
+                progress("Multi c: " + value[:20], progression, operations)
+                numb = command["click"]["listNumber"]
+                pivotTableMulti(value,numb)
 
         progression += 1
         Wait.printProgressBar(progression, operations,
