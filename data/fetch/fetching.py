@@ -37,7 +37,7 @@ def clickFromPivot(content):
 def expandPivot(content):
     try:
         element = browser.find_element_by_xpath(
-            "//*[contains(text(), '" + content + "')]")
+            "//label[contains(text(), '" + content + "')]")
         element.click()
     except:
         time.sleep(sleepTime)
@@ -46,7 +46,7 @@ def expandPivot(content):
 def pivotTableMulti(content,listNumber):
     try:
         elements = browser.find_elements_by_xpath(
-            "//*[contains(text(), '" + content + "')]")
+            "//label[contains(text(), '" + content + "')]")
 
         element = elements[listNumber - 1]
         id = element.get_attribute("id").split("_")[2]

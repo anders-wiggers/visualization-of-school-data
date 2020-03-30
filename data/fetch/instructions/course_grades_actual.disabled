@@ -1,7 +1,7 @@
 {
 	"instructions": [
 		{
-			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={9df79cca-df21-4c02-bbf6-fc361fab63ad}&action=view"
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={42916c50-8657-4cb8-a8a8-10e3401088fc}&action=view"
 		},
 		{
 			"switch": "WebApplicationFrame"
@@ -30,8 +30,29 @@
 		{
 			"click": {
 				"find": "xpath",
+				"value": "//input[@name='afi.4.1']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode7"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
 				"value": "//select[@id='flp_srt_combobox']/option[text()='Institution']"
 			}
+		},
+		{
+			"wait": 2
 		},
 		{
 			"click": {
@@ -48,6 +69,35 @@
 		},
 		{
 			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Skoleår']"
+			}
+		},
+		{
+			"wait": 5
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Skoleår",
+				"listNumber": 2
+			}
+		},
+		{
+			"wait": 5
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Skoleår",
+				"listNumber": 2
+			}
+		},
+		{
+			"wait": 5
+		},
+		{
+			"click": {
 				"find": "id",
 				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
 			}
@@ -59,7 +109,7 @@
 			}
 		},
 		{
-			"wait": 3
+			"wait": 10
 		}
 	]
 }

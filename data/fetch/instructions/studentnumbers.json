@@ -1,0 +1,47 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={44b6b884-cfa1-42c0-bd56-fa9a155647cb}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "Specialundervisning"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Andel der modtager seg specialundervisning"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Antal elever der modtager seg specialundervisning"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Inklusionsgrad"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Bor I Institutionskommune",
+				"listNumber": 3
+			}
+		},
+		{
+			"wait": 9999
+		}
+	]
+}
