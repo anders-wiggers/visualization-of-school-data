@@ -26,3 +26,46 @@
 		}
 	]
 }
+
+
+Selector box 
+
+{
+	"click": {
+		"find": "xpath",
+		"value": "//select[@id='flp_srt_combobox']/option[text()='Institution']"
+	}
+},
+{
+	"wait": 2
+},
+{
+	"click": {
+		"find": "pivotTableExpand",
+		"value": "More Fields"
+	}
+}
+
+
+
+Click on Colum
+{
+	"click": {
+		"find": "xpath",
+		"value": "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']"
+	}
+}
+
+Download
+{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		}

@@ -43,7 +43,8 @@ def expandPivot(content):
         time.sleep(sleepTime)
         expandPivot(content)
 
-def pivotTableMulti(content,listNumber):
+
+def pivotTableMulti(content, listNumber):
     try:
         elements = browser.find_elements_by_xpath(
             "//label[contains(text(), '" + content + "')]")
@@ -51,10 +52,10 @@ def pivotTableMulti(content,listNumber):
         element = elements[listNumber - 1]
         id = element.get_attribute("id").split("_")[2]
         browser.find_element_by_id("flcb_" + id).click()
-    except:
+    except Exception as e:
+        print(e)
         time.sleep(sleepTime)
-        expandPivot(content)
-
+        pivotTableMulti(content, listNumber)
 
 
 def switchToFrame(to):
@@ -88,17 +89,20 @@ def idClick(value):
         time.sleep(sleepTime)
         idClick(value)
 
+
 def progress(doing, pg, op):
     Wait.printProgressBar(pg, op,
                           prefix='Progress:', suffix=' ' * 50, length=50)
     Wait.printProgressBar(pg, op,
                           prefix='Progress:', suffix='Doing: ' + doing, length=50)
 
+
 def sleep(sleepTime):
     try:
         time.sleep(sleepTime)
     except:
         browser.quit()
+
 
 options = Options()
 
@@ -148,7 +152,6 @@ for instruction in instructions:
             findType = command["click"]["find"]
             value = command["click"]["value"]
 
-
             if findType == "xpath":
                 progress("Clicking: " + value[:20], progression, operations)
                 xpathClick(value)
@@ -167,7 +170,7 @@ for instruction in instructions:
             if findType == "pivotTableMulti":
                 progress("Multi c: " + value[:20], progression, operations)
                 numb = command["click"]["listNumber"]
-                pivotTableMulti(value,numb)
+                pivotTableMulti(value, numb)
 
         progression += 1
         Wait.printProgressBar(progression, operations,
