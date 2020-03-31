@@ -1,0 +1,55 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={8fba6074-08ea-4ff0-9eee-13edb0e9b568}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//div[@ondblclick='_Ewa.Gim.tpd(event,false,9,0,0);']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "class",
+				"value": "clip16x16"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflec_43"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflec_51"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflil_52"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bix-drill-action-to"
+			}
+		},
+		{
+			"wait": 9999
+		}
+	]
+}

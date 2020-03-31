@@ -69,3 +69,12 @@ Download
 				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
 			}
 		}
+
+Multi click example
+	{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Hovedinstitution",
+				"listNumber": 2
+			}
+		}
