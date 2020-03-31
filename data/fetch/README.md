@@ -4,7 +4,7 @@ Python Scraper for getting raw Excel files.
 
 ## Getting Started
 
-To run the script a few prerequisites must be forfilled. The script uses selenium with chromebrowers. The python enviorment used to develop the script was [Pipenv](https://github.com/pypa/pipenv) which means pipenv is need to install depedencies.
+To run the script a few prerequisites must be fulfilled. The script uses selenium with chromebrowers. The python environment used to develop the script was [Pipenv](https://github.com/pypa/pipenv) which means pipenv is needed to install dependencies.
 
 ### Prerequisites
 
@@ -13,11 +13,11 @@ To run the script a few prerequisites must be forfilled. The script uses seleniu
 sudo apt install pipenv
 ```
 * Google Chrome should be installed on the system 
-* A [Chromedrive](https://chromedriver.chromium.org/) maching the Google Chrome instalation should be put in the assets folder. 
+* A [Chromedrive](https://chromedriver.chromium.org/) matching the Google Chrome installation should be put in the assets folder. 
 
 ### Installing
 
-To install the dependecies just run
+To install the dependencies just run
 
 ```
 pipenv install
@@ -26,7 +26,7 @@ pipenv install
 
 ## Deployment
 
-The Script run through all instructions in the instructions folder. An inscrution is a `json` file which contains a set of instructions for the script to execture on each site. 
+The Script runs through all instructions in the `instructions` folder. An instruction is a `json` file which contains a set of instructions for the script to execute. Each relevant excel sheet has been given a fetch instruction 
 
 ### Instructions
 
@@ -58,7 +58,7 @@ The switch command changes focus to an iframe window
 ```
 
 #### Click
-The click command clicks on an element in the window frame. The click commands can determind the element by
+The click command clicks on an element in the window frame. The click commands can determine the element by
 * id
 * class
 * xpath
@@ -84,4 +84,3 @@ The click command clicks on an element in the window frame. The click commands c
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
