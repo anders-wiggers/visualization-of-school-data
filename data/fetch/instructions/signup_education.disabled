@@ -49,7 +49,34 @@
 			}
 		},
 		{
-			"wait": 9999
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "Andel"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Andel ansøgninger - uddannelsesgruppering"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 5
 		}
 	]
 }
