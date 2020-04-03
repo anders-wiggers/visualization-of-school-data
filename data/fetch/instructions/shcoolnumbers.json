@@ -1,0 +1,97 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/xlviewer.aspx?id=Excel analyser/Grundskolen/Overblik/Skoletal.xlsx"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Elevtal Kommune"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Klassekvotient Kommune"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Elevtal land"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Klassekvotient Land"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Samlet elevfravær Kommune"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Samlet elevfravær Land"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Karaktergennemsnit Land"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Kompetencedækning Kommune"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Kompetencedækning Land"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Andel med højest trivsel Kommune"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Andel med højest trivsel Land"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Kommunenummer"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 3
+		}
+	]
+}

@@ -8,33 +8,34 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+The project uses pipenv to handle dependencies. Make sure pipenv is installed. 
 
 ```
-Give examples
+pip install --user pipenv
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+To install the dependencies run.  
 
 ```
-Give the example
+pipenv install
 ```
 
-And repeat
+After the installation, it might be useful to set the python version the editor is using to the same. This can be done by edition the file in `.vscide/settings.json` and adding: 
+```
+"python.pythonPath": "path-to-the-env"
+```
+
+### Installing new packages
+
+
+To install a new package to the project use the pipenv install as so:
 
 ```
-until finished
+pipenv install "package-name"
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
+This automatically adds the file dependencies to the `pipfile`
 
 ### Break down into end to end tests
 

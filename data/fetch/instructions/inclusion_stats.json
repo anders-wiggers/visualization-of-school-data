@@ -1,0 +1,78 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={5cc48726-50fb-4e25-b39d-de20f9cd1dc4}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Institution']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "More Fields"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Hovedinstitution",
+				"listNumber": 2
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Klassetrin']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "More Fields"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Klassetrin",
+				"listNumber": 3
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 10
+		}
+	]
+}

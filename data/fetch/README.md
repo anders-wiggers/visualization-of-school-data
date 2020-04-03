@@ -15,15 +15,6 @@ sudo apt install pipenv
 * Google Chrome should be installed on the system 
 * A [Chromedrive](https://chromedriver.chromium.org/) matching the Google Chrome installation should be put in the assets folder. 
 
-### Installing
-
-To install the dependencies just run
-
-```
-pipenv install
-```
-
-
 ## Deployment
 
 The Script runs through all instructions in the `instructions` folder. An instruction is a `json` file which contains a set of instructions for the script to execute. Each relevant excel sheet has been given a fetch instruction 

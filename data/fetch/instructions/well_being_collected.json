@@ -10,7 +10,65 @@
 			"wait": 2
 		},
 		{
-			"wait": 1000000
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "Antal"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTable",
+				"value": "Antal Samlet Indikatorsvar"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Institution']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "More Fields"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Hovedinstitution",
+				"listNumber": 1
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.5.2']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode2"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"wait": 2
 		},
 		{
 			"click": {

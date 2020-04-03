@@ -7,6 +7,7 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
 from terminalOutput import Wait
 
 sleepTime = config.SLEEPTIME
@@ -48,7 +49,6 @@ def pivotTableMulti(content, listNumber):
     try:
         elements = browser.find_elements_by_xpath(
             "//label[contains(text(), '" + content + "')]")
-
         element = elements[listNumber - 1]
         id = element.get_attribute("id").split("_")[2]
         browser.find_element_by_id("flcb_" + id).click()
@@ -88,6 +88,19 @@ def idClick(value):
     except:
         time.sleep(sleepTime)
         idClick(value)
+
+
+def dragAndDrop(value, x, y):
+    try:
+        element = browser.find_element_by_xpath(
+            "//label[contains(text(), '" + value + "')]")
+        id = element.get_attribute("id").split("_")[1]
+        browser.find_element_by_id("flzlf_" + id)
+        action = ActionChains(browser)
+        action.drag_and_drop_by_offset(element, x, y).perform()
+    except Exception as e:
+        time.sleep(sleepTime)
+        print(e)
 
 
 def progress(doing, pg, op):
@@ -171,6 +184,10 @@ for instruction in instructions:
                 progress("Multi c: " + value[:20], progression, operations)
                 numb = command["click"]["listNumber"]
                 pivotTableMulti(value, numb)
+            if findType == "dragAndDrop":
+                progress("Dragging: " + value[:20], progression, operations)
+                dragAndDrop(value, command["click"]
+                            ["x"], command["click"]["y"])
 
         progression += 1
         Wait.printProgressBar(progression, operations,

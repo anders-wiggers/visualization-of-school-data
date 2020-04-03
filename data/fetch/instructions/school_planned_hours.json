@@ -1,0 +1,157 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={40b6bd78-a22e-402d-aa47-ed2ed3d667d1}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.2.2']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode2"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.3.2']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode14"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.4.2']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode18"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"wait": 1
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.5.2']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode23"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Institution']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "dragAndDrop",
+				"value": "Skoleår",
+				"x": 150,
+				"y": 0
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Institution']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTableExpand",
+				"value": "More Fields"
+			}
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Hovedinstitution",
+				"listNumber": 2
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 10
+		}
+	]
+}

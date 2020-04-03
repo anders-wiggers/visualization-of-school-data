@@ -1,0 +1,85 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={e3cf4ea5-929b-4772-b000-44ef289724fb}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']"
+			}
+		},
+		{
+			"click": {
+				"find": "class",
+				"value": "ewa-bix-launchButton"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflec_17"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflec_19"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflil_23"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bix-drill-action-to"
+			}
+		},
+		{
+			"wait": 1
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.3.1']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode2"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 3
+		}
+	]
+}
