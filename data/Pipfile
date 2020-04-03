@@ -8,7 +8,9 @@ verify_ssl = true
 [packages]
 requests = "*"
 selenium = "*"
-glob = "*"
+pylint = "*"
+autopep8 = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.6"
