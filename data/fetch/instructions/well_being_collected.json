@@ -1,0 +1,31 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={af4dae3c-b96e-440a-972e-6eca7edee2db}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"wait": 1000000
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 10
+		}
+	]
+}
