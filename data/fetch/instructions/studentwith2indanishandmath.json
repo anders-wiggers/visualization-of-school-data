@@ -1,0 +1,127 @@
+{
+	"instructions": [
+		{
+			"get": "https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={3686e92f-cf4f-4627-b9a7-b88a9ce58856}&action=view"
+		},
+		{
+			"switch": "WebApplicationFrame"
+		},
+		{
+			"wait": 3
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.3.1']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode2"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.4.1']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode7"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//div[@ondblclick='_Ewa.Gim.tpd(event,false,8,0,0);']"
+			}
+		},
+		{
+			"click": {
+				"find": "class",
+				"value": "ewa-bix-launchButton"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflec_19"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflec_21"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bixflil_24"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "bix-drill-action-to"
+			}
+		},
+		{
+			"wait": 5
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='afi.4.1']"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "_ewanode19"
+			}
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//button[@type='submit']"
+			}
+		},
+
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"
+			}
+		},
+		{
+			"click": {
+				"find": "id",
+				"value": "m_excelWebRenderer_ewaCtl_Jewel.DownloadCopy-Menu20"
+			}
+		},
+		{
+			"wait": 3
+		}
+	]
+}
