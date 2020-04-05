@@ -49,7 +49,7 @@ institutions = df['Instition'].toList()
 values = pd.Series(institutions)
 
 for table in all_tables_in_database:
-    if table = #ET YEAR TABLE:
+    if table = #HVIS TABLE ER ET YEAR-TABLE:
     c.execute("INSERT INTO " +table+"(INSTITUTION) VALUES ("+institutions+")")
 
 
