@@ -9,11 +9,21 @@ con=sqlite3.connect(r'data\db\\'+filename+".db")
 
 c = con.cursor() # The database will be saved in the location where your 'py' file is saved
 
-# Create table - YEAR
-c.execute('''CREATE TABLE YEAR(
-            [INSTITUTION] TEXT PRIMARY KEY
-                )''')
-          
+# Create table - YEARS
+c.execute('''CREATE TABLE "2013"([INSTITUTION] TEXT PRIMARY KEY)''')
+
+c.execute('''CREATE TABLE "2014"([INSTITUTION] TEXT PRIMARY KEY)''')
+
+c.execute('''CREATE TABLE "2015"([INSTITUTION] TEXT PRIMARY KEY)''')
+
+c.execute('''CREATE TABLE "2016"([INSTITUTION] TEXT PRIMARY KEY)''')
+
+c.execute('''CREATE TABLE "2017"([INSTITUTION] TEXT PRIMARY KEY)''')
+
+c.execute('''CREATE TABLE "2018"([INSTITUTION] TEXT PRIMARY KEY)''')
+
+c.execute('''CREATE TABLE "2019"([INSTITUTION] TEXT PRIMARY KEY)''')
+
 # Create table - INSTITUTION
 c.execute('''CREATE TABLE INSTITUTION(
             [NAME] TEXT PRIMARY KEY,
