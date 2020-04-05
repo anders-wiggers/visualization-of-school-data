@@ -16,4 +16,4 @@ dataframe.rename(columns={'Institution Postfix' : 'Institution',
 
 print(dataframe.columns)
 
-dataframe.to_sql(''+filename, con,if_exists='replace') #Convert
+dataframe.to_sql(''+filename, con,if_exists='replace',index=False) #Convert
