@@ -50,7 +50,7 @@ values = pd.Series(institutions)
 
 for table in all_tables_in_database:
     if table = #ET YEAR TABLE:
-    c.execute("INSERT INTO table(INSTITUTION) VALUES (institutions)")
+    c.execute("INSERT INTO " +table+"(INSTITUTION) VALUES ("+institutions+")")
 
 
 
