@@ -40,13 +40,17 @@ c.execute('''CREATE TABLE SPECIFIC_GRADE(
 
 con.commit()
 
-#TODO KALD ALLE DE FORSKELLIGE EXTRACTORS DER PUSHER DERES DATA TIL DB'EN
+#konstanter
+all_tables_in_database = """SELECT * FROM information_schema.tabes"""
 
-
-
-#LOAD DE FORSKELLIGE DATABASER OG QUERY DEM IND I MAIN DB
 #Insert institution names
 df = pd.read_sql_table(r'data\db\Resultater_Folkeskolens_Afgangseksamen', con)
+institutions = df['Instition'].toList()
+values = pd.Series(institutions)
+
+for table in all_tables_in_database:
+    if table = #ET YEAR TABLE:
+    c.execute("INSERT INTO table(INSTITUTION) VALUES (institutions)")
 
 
 
