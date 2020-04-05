@@ -41,7 +41,7 @@ c.execute('''CREATE TABLE SPECIFIC_GRADE(
 con.commit()
 
 #konstanter
-all_tables_in_database = """SELECT * FROM information_schema.tabes"""
+all_tables_in_database = c.execute("SELECT * FROM information_schema.tabes")
 
 #Insert institution names
 df = pd.read_sql_table(r'data\db\Resultater_Folkeskolens_Afgangseksamen', con)
