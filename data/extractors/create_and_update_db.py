@@ -24,7 +24,8 @@ c.execute('''CREATE TABLE IF NOT EXISTS INSTITUTION(
 # Create table - GRADES
 c.execute('''CREATE TABLE IF NOT EXISTS GRADES(
             [ID] INTEGER PRIMARY KEY, 
-            [MEAN] INTEGER, [FEMALE] INTEGER, 
+            [MEAN] INTEGER, 
+            [FEMALE] INTEGER, 
             [MALE] INTEGER, 
             [DISTRIBUTION] INTEGER, 
             [PARENTAL STATUS] TEXT

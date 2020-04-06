@@ -25,10 +25,8 @@ c = con.cursor()
 
 #Insert institution names
 institutions = dataframe['Institution']
-print("printer institutions")
-print(institutions)
 
 for school in institutions:
-    c.execute('''INSERT INTO INSTITUTION(NAME) VALUES ("school")''')
+    c.execute('''INSERT INTO INSTITUTION(NAME) VALUES (?)''',(school,))
 
-
+con.commit()
