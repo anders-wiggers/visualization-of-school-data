@@ -56,12 +56,6 @@ def insertIntoTable(values):
         print(e)
 
 
-"""
-id = 1000
-values = (id, 20, 10, 123, 456, 783, 42, 86, 145, 78, 321)
-insertIntoTable(values)
-
-"""
 print(data.head())
 
 years = {}
@@ -84,23 +78,61 @@ for col in data:
     except:
         print("not a year")
 
-i = 40
-while i < 40+1:
+
+def checkExistance(values):
+    sqlCheckInstitutionQuery = '''
+    SELECT NAME, YEAR
+    FROM `INSTITUTION`
+    WHERE NAME = ? and YEAR = ?;
+    '''
+    c.execute(sqlCheckInstitutionQuery, values)
+    fetchData = c.fetchall()
+    if not fetchData:
+        return False
+    else:
+        return True
+
+
+def insertIntoInstructions(id, school, year):
+    sqlInsitutionInsertQuery = '''
+    INSERT INTO INSTITUTION (NAME, YEAR, PLANNED_HOURS)
+    VALUES (?,?,?) 
+    '''
+    sqlUpdateInstitutionsQuery = '''
+    UPDATE INSTITUTION
+    SET PLANNED_HOURS = ?
+    WHERE NAME = ? and YEAR = ?;
+    '''
+
+    if checkExistance((school, year)):
+        print("updating")
+        c.execute(sqlUpdateInstitutionsQuery, (id, school, year))
+        con.commit()
+    else:
+        print("inserting")
+        c.execute(sqlInsitutionInsertQuery, (school, year, id))
+        con.commit()
+
+
+try:
+    c.execute('''
+        ALTER TABLE INSTITUTION
+        ADD COLUMN PLANNED_HOURS;
+    ''')
+except:
+    print("Cannot Create column, column is there")
+
+i = 8
+idd = 9999
+while i < len(data)-1:
     school = data['Unnamed: 1'][i]
     if str(school) != "nan":
         print(str(data['Unnamed: 1'][i]))
-        idd = 1
         for year in years:
             idd = idd + 1
             queryData = (idd,)
             for speceficClass in years[year]:
                 queryData = queryData + (data[speceficClass][i],)
             insertIntoTable(queryData)
-    break
+            insertIntoInstructions(idd, school, year)
     i = i + 1
-
-
-"""
-for i in range(50):
-    print(str(data['Unnamed: 1'][i]) + " med: " + str(data['Unnamed: 2'][i]))
-"""
