@@ -67,6 +67,25 @@
 			}
 		},
 		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//select[@id='flp_srt_combobox']/option[text()='Køn']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "pivotTableMulti",
+				"value": "Køn",
+				"listNumber": 2
+			}
+		},
+		{
 			"click": {
 				"find": "id",
 				"value": "m_excelWebRenderer_ewaCtl_ExcelViewerHeroDockOverflowMenuLauncher-Small20"

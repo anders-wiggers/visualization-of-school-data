@@ -2,6 +2,7 @@ import sqlite3
 from sqlite3 import Error
 import pandas as pd
 import os
+from terminalOutput import Wait
 
 
 def goUpDir(path, up):
@@ -51,7 +52,6 @@ def insertIntoTable(values):
                         fouth_grade, fifth_grade, sixth_grade, seventh_grade,
                         eighth_grade, ninth_grade, tenth_grade)
               VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''', values)
-        con.commit()
     except Error as e:
         print(e)
 
@@ -85,8 +85,20 @@ def checkExistance(values):
     FROM `INSTITUTION`
     WHERE NAME = ? and YEAR = ?;
     '''
-    c.execute(sqlCheckInstitutionQuery, values)
-    fetchData = c.fetchall()
+    try:
+        c.execute(sqlCheckInstitutionQuery, values)
+        fetchData = c.fetchall()
+    except:
+        c.execute('''CREATE TABLE IF NOT EXISTS INSTITUTION(
+            NAME TEXT,
+            YEAR INTEGER,
+            GRADES TEXT,
+            ABSENCE TEXT,
+            STUDENTS TEXT,
+            PLANNED_HOURS INTEGER,
+            PRIMARY KEY (NAME, YEAR)
+            )''')
+        return False
     if not fetchData:
         return False
     else:
@@ -105,13 +117,9 @@ def insertIntoInstructions(id, school, year):
     '''
 
     if checkExistance((school, year)):
-        print("updating")
         c.execute(sqlUpdateInstitutionsQuery, (id, school, year))
-        con.commit()
     else:
-        print("inserting")
         c.execute(sqlInsitutionInsertQuery, (school, year, id))
-        con.commit()
 
 
 try:
@@ -122,8 +130,11 @@ try:
 except:
     print("Cannot Create column, column is there")
 
+
 i = 8
 idd = 9999
+Wait.printProgressBar(i, len(data)-1,
+                      prefix='Progress:', suffix='Complete', length=50)
 while i < len(data)-1:
     school = data['Unnamed: 1'][i]
     if str(school) != "nan":
@@ -136,3 +147,6 @@ while i < len(data)-1:
             insertIntoTable(queryData)
             insertIntoInstructions(idd, school, year)
     i = i + 1
+    con.commit()
+    Wait.printProgressBar(i, len(data)-1,
+                          prefix='Progress:', suffix='Complete', length=50)

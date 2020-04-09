@@ -103,11 +103,10 @@ def insertIntoInstructions(id, school, year):
     if checkExistance((school, year)):
         # print("updating")
         c.execute(sqlUpdateInstitutionsQuery, (id, school, year))
-        con.commit()
+
     else:
         # print("inserting")
         c.execute(sqlInsitutionInsertQuery, (school, year, id))
-        con.commit()
 
 
 print(data.head())
@@ -154,7 +153,7 @@ counter = 0
 
 try:
     c.execute('''
-        ALTER TABLE INSTITUTION
+        ALTER TABLE grades
         ADD COLUMN students_with_2 REAL;
     ''')
 except:
@@ -177,6 +176,7 @@ while i < len(data)-1:
                 insertIntoTable(school, year, data[speceficClass][i])
 
     i = i + 1
+    con.commit()
 
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
