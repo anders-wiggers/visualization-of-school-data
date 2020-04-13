@@ -12,13 +12,13 @@
 		{
 			"click": {
 				"find": "xpath",
-				"value": "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']"
+				"value": "//div[@ondblclick='bfndjns']"
 			}
 		},
 		{
 			"click": {
 				"find": "class",
-				"value": "ewa-bix-launchButton"
+				"value": "ewa-sharedUi-launchButton"
 			}
 		},
 		{
@@ -51,7 +51,7 @@
 		{
 			"click": {
 				"find": "xpath",
-				"value": "//input[@name='afi.3.1']"
+				"value": "//input[@name='afi.4.2']"
 			}
 		},
 		{

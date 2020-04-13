@@ -12,6 +12,22 @@ from terminalOutput import Wait
 
 sleepTime = config.SLEEPTIME
 
+# TODO FIX TIMEOUT
+
+
+class Timeout:
+    def __init__(self, attemts):
+        self.a = attemts
+        self.t = 0
+
+    def inc(self):
+        self.t += 1
+        print(self.t)
+        if(self.t >= self.a):
+            return True
+        else:
+            return False
+
 
 def waitForSiteLoad(xpath):
     done = False
@@ -24,38 +40,52 @@ def waitForSiteLoad(xpath):
 
 
 def clickFromPivot(content):
+    timeout = Timeout(10)
     try:
         element = browser.find_element_by_xpath(
             "//label[contains(text(), '" + content + "')]")
         element.click()
         id = element.get_attribute("id").split("_")[2]
         browser.find_element_by_id("flcb_" + id).click()
+        return False
     except:
         time.sleep(sleepTime)
-        clickFromPivot(content)
+        if timeout.inc():
+            return True
+        else:
+            return clickFromPivot(content)
 
 
 def expandPivot(content):
+    timeout = Timeout(10)
     try:
         element = browser.find_element_by_xpath(
             "//label[contains(text(), '" + content + "')]")
         element.click()
+        return False
     except:
         time.sleep(sleepTime)
-        expandPivot(content)
+        if timeout.inc():
+            return True
+        else:
+            return expandPivot(content)
 
 
 def pivotTableMulti(content, listNumber):
+    timeout = Timeout(10)
     try:
         elements = browser.find_elements_by_xpath(
             "//label[contains(text(), '" + content + "')]")
         element = elements[listNumber - 1]
         id = element.get_attribute("id").split("_")[2]
         browser.find_element_by_id("flcb_" + id).click()
-    except Exception as e:
-        print(e)
+        return False
+    except:
         time.sleep(sleepTime)
-        pivotTableMulti(content, listNumber)
+        if timeout.inc():
+            return True
+        else:
+            return pivotTableMulti(content, listNumber)
 
 
 def switchToFrame(to):
@@ -67,27 +97,41 @@ def switchToFrame(to):
 
 
 def xpathClick(value):
+    timeout = Timeout(10)
     try:
         browser.find_element_by_xpath(value).click()
+        return False
     except:
         time.sleep(sleepTime)
-        xpathClick(value)
+        if timeout.inc():
+            return True
+        else:
+            return xpathClick(value)
 
 
 def classClick(value):
+    timeout = Timeout(10)
     try:
         browser.find_element_by_class_name(value).click()
+        return False
     except:
         time.sleep(sleepTime)
-        classClick(value)
+        if timeout.inc():
+            return True
+        else:
+            return classClick(value)
 
 
 def idClick(value):
+    timeout = Timeout(10)
     try:
         browser.find_element_by_id(value).click()
     except:
         time.sleep(sleepTime)
-        idClick(value)
+        if timeout.inc():
+            return True
+        else:
+            return idClick(value)
 
 
 def dragAndDrop(value, x, y):
@@ -98,8 +142,10 @@ def dragAndDrop(value, x, y):
         browser.find_element_by_id("flzlf_" + id)
         action = ActionChains(browser)
         action.drag_and_drop_by_offset(element, x, y).perform()
+        return False
     except Exception as e:
         time.sleep(sleepTime)
+        return True
         print(e)
 
 
@@ -120,9 +166,10 @@ def sleep(sleepTime):
 options = Options()
 
 path = ''
-paths = os.getcwd().split('/')
+paths = os.path.realpath(__file__).split('/')
 paths.remove('')
 paths.remove('fetch')
+paths.remove('fetching.py')
 for item in paths:
     path = path + "/" + item
 
@@ -131,15 +178,16 @@ options.add_experimental_option('prefs', prefs)
 
 options.set_headless(headless=config.HEAD)
 browser = webdriver.Chrome(chrome_options=options,
-                           executable_path=os.getcwd()+'/assets/chromedriver')
+                           executable_path=path + '/fetch/assets/chromedriver')
 
 print("Starting Scraping From Web\n")
 
 
-instructions = glob.glob(os.getcwd()+"/instructions/*.json")
+instructions = glob.glob(path + "/fetch/instructions/*.json")
 
 
 for instruction in instructions:
+    timeOutError = False
     with open(instruction) as f:
         data = json.load(f)
 
@@ -150,7 +198,9 @@ for instruction in instructions:
                           prefix='Progress:', suffix='Complete', length=50)
 
     for command in data["instructions"]:
-
+        if timeOutError:
+            progress("TIMEOUT ERROR", progression, operations)
+            break
         if "get" in command:
             progress("get", progression, operations)
             browser.get(command["get"])
@@ -167,27 +217,27 @@ for instruction in instructions:
 
             if findType == "xpath":
                 progress("Clicking: " + value[:20], progression, operations)
-                xpathClick(value)
+                timeOutError = xpathClick(value)
             if findType == "class":
                 progress("Clicking: " + value[:20], progression, operations)
-                classClick(value)
+                timeOutError = classClick(value)
             if findType == "id":
                 progress("Clicking: " + value[:20], progression, operations)
-                idClick(value)
+                timeOutError = idClick(value)
             if findType == "pivotTable":
                 progress("Clicking: " + value[:20], progression, operations)
-                clickFromPivot(value)
+                timeOutError = clickFromPivot(value)
             if findType == "pivotTableExpand":
                 progress("Expanding: " + value[:20], progression, operations)
-                expandPivot(value)
+                timeOutError = expandPivot(value)
             if findType == "pivotTableMulti":
                 progress("Multi c: " + value[:20], progression, operations)
                 numb = command["click"]["listNumber"]
-                pivotTableMulti(value, numb)
+                timeOutError = pivotTableMulti(value, numb)
             if findType == "dragAndDrop":
                 progress("Dragging: " + value[:20], progression, operations)
-                dragAndDrop(value, command["click"]
-                            ["x"], command["click"]["y"])
+                timeOutError = dragAndDrop(value, command["click"]
+                                           ["x"], command["click"]["y"])
 
         progression += 1
         Wait.printProgressBar(progression, operations,
