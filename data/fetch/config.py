@@ -1,2 +1,3 @@
 HEAD = False
 SLEEPTIME = 0.5
+TIMEOUT = 120

@@ -11,10 +11,11 @@ from selenium.webdriver.common.action_chains import ActionChains
 from terminalOutput import Wait
 
 sleepTime = config.SLEEPTIME
+timeOutTime = config.TIMEOUT
 
-# TODO FIX TIMEOUT
 
-
+# Timeout class respoisble for timeing out when elements are
+# unreactable
 class Timeout:
     def __init__(self, attemts):
         self.a = attemts
@@ -39,8 +40,8 @@ def waitForSiteLoad(xpath):
             time.sleep(sleepTime)
 
 
-def clickFromPivot(content):
-    timeout = Timeout(10)
+# Resposible for clicken on element in pivot table
+def clickFromPivot(content, timeout):
     try:
         element = browser.find_element_by_xpath(
             "//label[contains(text(), '" + content + "')]")
@@ -53,11 +54,11 @@ def clickFromPivot(content):
         if timeout.inc():
             return True
         else:
-            return clickFromPivot(content)
+            return clickFromPivot(content, timeout)
 
 
-def expandPivot(content):
-    timeout = Timeout(10)
+# Resposible for expanding expandables in the pivottable
+def expandPivot(content, timeout):
     try:
         element = browser.find_element_by_xpath(
             "//label[contains(text(), '" + content + "')]")
@@ -68,11 +69,12 @@ def expandPivot(content):
         if timeout.inc():
             return True
         else:
-            return expandPivot(content)
+            return expandPivot(content, timeout)
 
 
-def pivotTableMulti(content, listNumber):
-    timeout = Timeout(10)
+# Resposible for clicken on element in pivot table when
+# Multiply elements are present
+def pivotTableMulti(content, listNumber, timeout):
     try:
         elements = browser.find_elements_by_xpath(
             "//label[contains(text(), '" + content + "')]")
@@ -85,9 +87,10 @@ def pivotTableMulti(content, listNumber):
         if timeout.inc():
             return True
         else:
-            return pivotTableMulti(content, listNumber)
+            return pivotTableMulti(content, listNumber, timeout)
 
 
+# Resposible switching webframes. eg to and <iframe>
 def switchToFrame(to):
     try:
         browser.switch_to.frame(to)
@@ -96,8 +99,8 @@ def switchToFrame(to):
         switchToFrame(to)
 
 
-def xpathClick(value):
-    timeout = Timeout(10)
+# Resposible for clicken on element via xpath
+def xpathClick(value, timeout):
     try:
         browser.find_element_by_xpath(value).click()
         return False
@@ -106,11 +109,11 @@ def xpathClick(value):
         if timeout.inc():
             return True
         else:
-            return xpathClick(value)
+            return xpathClick(value, timeout)
 
 
-def classClick(value):
-    timeout = Timeout(10)
+# Resposible for clicken on element via class name
+def classClick(value, timeout):
     try:
         browser.find_element_by_class_name(value).click()
         return False
@@ -119,10 +122,11 @@ def classClick(value):
         if timeout.inc():
             return True
         else:
-            return classClick(value)
+            return classClick(value, timeout)
 
 
-def idClick(value):
+# Resposible for clicken on element via element ID
+def idClick(value, timeout):
     timeout = Timeout(10)
     try:
         browser.find_element_by_id(value).click()
@@ -131,9 +135,12 @@ def idClick(value):
         if timeout.inc():
             return True
         else:
-            return idClick(value)
+            return idClick(value, timeout)
 
 
+# Resposible for draggning element by xpath to
+# new X and Y cordinate, X and Y 0,0 are current
+# position
 def dragAndDrop(value, x, y):
     try:
         element = browser.find_element_by_xpath(
@@ -143,12 +150,12 @@ def dragAndDrop(value, x, y):
         action = ActionChains(browser)
         action.drag_and_drop_by_offset(element, x, y).perform()
         return False
-    except Exception as e:
+    except:
         time.sleep(sleepTime)
         return True
-        print(e)
 
 
+# Terminal progress bar method
 def progress(doing, pg, op):
     Wait.printProgressBar(pg, op,
                           prefix='Progress:', suffix=' ' * 50, length=50)
@@ -165,6 +172,7 @@ def sleep(sleepTime):
 
 options = Options()
 
+# Finding base path of data
 path = ''
 paths = os.path.realpath(__file__).split('/')
 paths.remove('')
@@ -173,6 +181,7 @@ paths.remove('fetching.py')
 for item in paths:
     path = path + "/" + item
 
+# Setting download dir for selenium
 prefs = {'download.default_directory':  path + "/excel"}
 options.add_experimental_option('prefs', prefs)
 
@@ -182,10 +191,11 @@ browser = webdriver.Chrome(chrome_options=options,
 
 print("Starting Scraping From Web\n")
 
-
+# Fetching instructions from /instructions
 instructions = glob.glob(path + "/fetch/instructions/*.json")
 
-
+# Running throug all instructions json and performing
+# instrcutions in the files.
 for instruction in instructions:
     timeOutError = False
     with open(instruction) as f:
@@ -217,23 +227,24 @@ for instruction in instructions:
 
             if findType == "xpath":
                 progress("Clicking: " + value[:20], progression, operations)
-                timeOutError = xpathClick(value)
+                timeOutError = xpathClick(value, Timeout(timeOutTime))
             if findType == "class":
                 progress("Clicking: " + value[:20], progression, operations)
-                timeOutError = classClick(value)
+                timeOutError = classClick(value, Timeout(timeOutTime))
             if findType == "id":
                 progress("Clicking: " + value[:20], progression, operations)
-                timeOutError = idClick(value)
+                timeOutError = idClick(value, Timeout(timeOutTime))
             if findType == "pivotTable":
                 progress("Clicking: " + value[:20], progression, operations)
-                timeOutError = clickFromPivot(value)
+                timeOutError = clickFromPivot(value, Timeout(timeOutTime))
             if findType == "pivotTableExpand":
                 progress("Expanding: " + value[:20], progression, operations)
-                timeOutError = expandPivot(value)
+                timeOutError = expandPivot(value, Timeout(timeOutTime))
             if findType == "pivotTableMulti":
                 progress("Multi c: " + value[:20], progression, operations)
                 numb = command["click"]["listNumber"]
-                timeOutError = pivotTableMulti(value, numb)
+                timeOutError = pivotTableMulti(
+                    value, numb, Timeout(timeOutTime))
             if findType == "dragAndDrop":
                 progress("Dragging: " + value[:20], progression, operations)
                 timeOutError = dragAndDrop(value, command["click"]
@@ -245,21 +256,3 @@ for instruction in instructions:
     print(os.path.basename(instruction) + " Completed")
 
 browser.quit()
-
-"""
-browser.get(
-    'https://excel.uddannelsesstatistik.dk/_layouts/15/WopiFrame.aspx?sourcedoc={e1597862-3fb5-4b08-a932-79ddb9816146}&action=view')
-
-
-# Wait.WaitTerminal(5)
-time.sleep(5)
-
-
-browser.switch_to.frame("WebApplicationFrame")
-
-selectFromLabelID('Elevtal Kommune')
-
-
-# expandData = browser.find_element_by_xpath(
-#    "//div[@ondblclick='_Ewa.Gim.tpd(event,false,6,0,0);']")
-"""

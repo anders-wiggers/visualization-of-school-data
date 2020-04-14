@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#Check if a program is installed on system
 check_for_program() {
   local program 
   program="${1}"
@@ -13,6 +14,7 @@ check_for_program() {
   fi 
 }
 
+#Check if chromedriver is present on system
 check_for_driver() {
     local DRIVER=fetch/assets/chromedriver
 
@@ -24,6 +26,7 @@ check_for_driver() {
     fi
 }
 
+#Check if index.py is present on system
 FILE=index.py
 if test -f "$FILE"; then
     echo "$FILE exist"

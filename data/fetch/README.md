@@ -66,6 +66,14 @@ The click command clicks on an element in the window frame. The click commands c
 }
 ```
 
+
+## Config
+
+The script can be slightly configured with the `config.py` file 
+* `HEAD` option determents wheater the browser runs in headless mode, false makes the browser run with head
+* `SLEEPTIME` option determents the sleeptime between operations
+* `TIMEOUT` determents the number of attempts before continuing to the fetch instruction. In seconds, the timeout time is `SLEEPTIME * TIMEOUT`
+
 ## Built With
 
 * [Selenium](https://selenium-python.readthedocs.io/) - Framework for webscraping
