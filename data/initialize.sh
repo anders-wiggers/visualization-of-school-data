@@ -37,6 +37,7 @@ extract() {
     pipenv run python extractors/planned_hours.py
     pipenv run python extractors/students_with_minimum.py
     pipenv run python extractors/mean_grades.py
+    pipenv run python extractors/student_absence.py
 }
 
 # Check if index.py is present on system
