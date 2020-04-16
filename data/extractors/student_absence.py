@@ -83,7 +83,7 @@ def insertIntoAbsence(name, year, tenth, preb, middle, grad):
             INSERT INTO absence(tenth_grade,preb_school,middle_school,grad_school)
             VALUES(?,?,?,?) ''', (tenth, preb, middle, grad))
         curid = c.lastrowid
-        insertIntoInstructions(curid, name, year)
+        insertIntoInstitution(curid, name, year)
     else:
         # If record is here update
         # print("update")
@@ -100,7 +100,7 @@ def insertIntoAbsence(name, year, tenth, preb, middle, grad):
 
 def insertIntoDetailedAbsence(mean, native, immigrant, decImmigrant):
     c.execute('''
-        INSERT INTO detailed_absence(mean,native,immigrant, dec_immegrant)
+        INSERT INTO detailed_absence(mean,native,immigrant,dec_immigrant)
         VALUES(?,?,?,?) ''', (mean, native, immigrant, decImmigrant))
     curid = c.lastrowid
     return curid
@@ -108,19 +108,21 @@ def insertIntoDetailedAbsence(mean, native, immigrant, decImmigrant):
 
 def checkExistance(values):
     sqlCheckInstitutionQuery = '''
-    SELECT NAME, YEAR
+    SELECT ABSENCE
     FROM `INSTITUTION`
     WHERE NAME = ? and YEAR = ?;
     '''
     c.execute(sqlCheckInstitutionQuery, values)
     fetchData = c.fetchall()
     if not fetchData:
-        return False
+        return False, None
     else:
-        return True
+        idd = fetchData[0][0]
+        # print(idd)
+        return True, idd
 
 
-def insertIntoInstructions(id, school, year):
+def insertIntoInstitution(id, school, year):
     sqlInsitutionInsertQuery = '''
     INSERT INTO INSTITUTION (NAME, YEAR, ABSENCE)
     VALUES (?,?,?)
@@ -140,24 +142,92 @@ def insertIntoInstructions(id, school, year):
         c.execute(sqlInsitutionInsertQuery, (school, year, id))
 
 
-def checkAbsence(absenceType):
-    pass
-
-
-def insertIntoSpecificAbsence(school, year, absenceType, level, concreteID):
-    sqlInsertQuert = '''
-    INSERT INTO specific_absence (?)
-    VALUES (?)
+def checkAbsence(iddd, level):
+    sqlCheckInstitutionQuery = '''
+    SELECT ''' + level + '''
+    FROM `absence`
+    WHERE id = ?;
     '''
-    sqlUpdate = '''
-    UPDATE specific_absence
-    SET ? = ?
-    '''
-    if checkExistance((school, year)):
-        if checkAbsence(absenceType):
-            pass
+    c.execute(sqlCheckInstitutionQuery, (iddd,))
+    fetchData = c.fetchall()
+    # print(level)
+    # print(fetchData)
+    if not fetchData:
+        return False, None
     else:
-        pass
+        idd = fetchData[0][0]
+        return True, idd
+
+
+def createEmptyAbsense(school, year):
+    createEmptyAbsense = '''
+    INSERT INTO absence (grad_school) 
+    VALUES (NULL)
+    '''
+    insertToInstitution = '''
+    INSERT INTO INSTITUTION (NAME, YEAR, ABSENCE)
+    VALUES (?,?,?)
+    '''
+    updateToInstitution = '''
+    UPDATE INSTITUTION
+    SET ABSENCE = ?
+    WHERE NAME = ? and YEAR = ?;
+    '''
+    c.execute(createEmptyAbsense)
+    curid = c.lastrowid
+    try:
+        c.execute(insertToInstitution, (school, year, curid))
+    except:
+        c.execute(updateToInstitution, (curid, school, year))
+
+
+def createEmptySpecificAbsense(idd, level):
+    createEmptyDetailedAbsense = '''
+    INSERT INTO specific_absence (mean) 
+    VALUES (NULL)
+    '''
+    updateToAbsence = '''
+    UPDATE absence
+    SET ''' + level + ''' = ?
+    WHERE id = ?
+    '''
+    c.execute(createEmptyDetailedAbsense)
+    curid = c.lastrowid
+    c.execute(updateToAbsence, (curid, idd))
+
+
+def insertDetailed(idd, absenceType, concreteID):
+    updateDetailed = '''
+    UPDATE specific_absence
+    SET ''' + absenceType + ''' = ?
+    WHERE id = ?
+    '''
+    c.execute(updateDetailed, (concreteID, idd))
+
+
+# TODO MAKE THIS DONE
+# TODO MAKE THIS DONE
+# TODO MAKE THIS DONE
+# TODO MAKE THIS DONE
+def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
+    isThere, idd = checkExistance((school, year))
+    if isThere and idd != None:
+        # Table exist
+        #print("school and year here id: " + str(idd))
+        isThere, didd = checkAbsence(idd, level)
+        if isThere and didd != None:
+            #print("now it here :)")
+            insertDetailed(didd, absenceType, concreteID)
+        else:
+            #print("is not here xd")
+            createEmptySpecificAbsense(idd, level)
+            insertIntoSpecificAbsence(
+                school, year, level, absenceType, concreteID)
+    else:
+        # Create Absense Entry
+        #print("not here :(")
+        createEmptyAbsense(school, year)
+        insertIntoSpecificAbsence(school, year, level, absenceType, concreteID)
 
 
 print(data.head())
@@ -231,20 +301,24 @@ def prebSchool(name):
 print("Starting Inserstion")
 
 sex = "All"
-# i = rowWithYear + 1
-i = 60
-# Wait.printProgressBar(i, len(data)-1,
-#                       prefix='Progress:', suffix='Complete', length=50)
+i = rowWithYear + 1
+# i = 60
+Wait.printProgressBar(i, len(data)-1,
+                      prefix='Progress:', suffix='Complete', length=50)
 
 decentdentCol = 'Unnamed: 5'
 schoolCol = 'Unnamed: 4'
 typeCol = 'Unnamed: 3'
 gradeLevel = 'Unnamed: 2'
 
-while i < 61:
+
+while i < len(data)-1:
     school = data["Unnamed: 4"][i]
-    print(school)
-    toJump = 1
+    # print(school)
+
+    if str(school) == "nan":
+        i += 1
+        continue
 
     # FINDING GRADELEVEL
     curLevel = str(data[gradeLevel][i])
@@ -266,7 +340,7 @@ while i < 61:
             findStudents = False
         amountOfCategories += 1
 
-    print(amountOfCategories)
+    # print(amountOfCategories)
 
     # FINDING Type of abesence
     absType = str(data[typeCol][i])
@@ -297,15 +371,15 @@ while i < 61:
             if(dataType == "nan"):
                 avage = data[col][i+curCat]
             curCat += 1
-        print(str(school) + " has in year " + year + " " + str(native) +
-              " " + str(imi) + " " + str(dec) + " " + str(avage) + " and was " + absenceType + " in the " + level)
+        # print(str(school) + " has in year " + year + " " + str(native) +
+        #       " " + str(imi) + " " + str(dec) + " " + str(avage) + " and was " + absenceType + " in the " + level)
 
-        # curID = insertIntoDetailedAbsence(avage, native, imi, dec)
-        # insertIntoSpecificAbsence(school, year, absenceType, level, curID)
+        curID = insertIntoDetailedAbsence(avage, native, imi, dec)
+        insertIntoSpecificAbsence(school, year, level, absenceType, curID)
 
-    i += 1 + amountOfCategories
+    i += amountOfCategories
     # con.commit()
-    # Wait.printProgressBar(i, len(data)-1,
-    #                       prefix='Progress:', suffix='Complete', length=50)
+    Wait.printProgressBar(i, len(data)-1,
+                          prefix='Progress:', suffix='Complete', length=50)
 
-# con.commit()
+con.commit()
