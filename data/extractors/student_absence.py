@@ -40,7 +40,7 @@ try:
             preb_school INTEGER,
             middle_school INTEGER,
             grad_school INTEGER,
-            mean INTEGER
+            mean REAL
             )''')
 except Error as e:
     print(e)
@@ -205,10 +205,7 @@ def insertDetailed(idd, absenceType, concreteID):
     c.execute(updateDetailed, (concreteID, idd))
 
 
-# TODO MAKE THIS DONE
-# TODO MAKE THIS DONE
-# TODO MAKE THIS DONE
-# TODO MAKE THIS DONE
+# TODO FIX MEAN
 def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
     isThere, idd = checkExistance((school, year))
     if isThere and idd != None:
@@ -228,6 +225,9 @@ def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
         #print("not here :(")
         createEmptyAbsense(school, year)
         insertIntoSpecificAbsence(school, year, level, absenceType, concreteID)
+
+
+def calculateMeans():
 
 
 print(data.head())
@@ -381,5 +381,7 @@ while i < len(data)-1:
     # con.commit()
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
+
+calculateMeans()
 
 con.commit()
