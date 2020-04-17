@@ -228,6 +228,79 @@ def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
 
 
 def calculateMeans():
+    sqlCheckInstitutionQuery = '''
+            SELECT id, tenth_grade, preb_school, middle_school, grad_school
+            FROM `absence`
+            '''
+    insertMeanAbs = '''
+        UPDATE absence
+        SET mean = ?
+        WHERE id = ?
+    '''
+    fetchSpecAbs = '''
+        SELECT id, legal, illegal, sickleave
+        FROM specific_absence
+        WHERE id = ?
+    '''
+    insertSpecAbs = '''
+        UPDATE specific_absence
+        SET mean = ?
+        WHERE id = ?
+    '''
+    fetchDetail = '''
+        SELECT mean
+        FROM detailed_absence
+        WHERE id = ?
+    '''
+    c.execute(sqlCheckInstitutionQuery)
+    fetchData = c.fetchall()
+
+    # Fetch all schools
+    for data in fetchData:
+        idd = data[0]
+        data = iter(data)
+        next(data)
+        specMeans = []
+        # Handle all grades
+        for value in data:
+
+            if value != None:
+                # Calc mean for each legal illegal and sickleave
+                c.execute(fetchSpecAbs, (value,))
+                specific_abs = c.fetchall()
+                tempMeans = []
+                sid = specific_abs[0][0]
+                specific_abs = iter(specific_abs[0])
+                # print(sid)
+                next(specific_abs)
+                specMean = 0.0
+                for detailed in specific_abs:
+                    c.execute(fetchDetail, (detailed,))
+                    detailedMean = c.fetchall()
+                    if detailedMean[0][0] != None:
+                        # print(detailedMean)
+                        tempMeans.append(detailedMean[0][0])
+                if not tempMeans:
+                    continue
+                for t in tempMeans:
+                    specMean += t
+                specMean = specMean / len(tempMeans)
+                # print(specMean)
+                # Insert mean back into the db
+                c.execute(insertSpecAbs, (specMean, sid))
+                specMeans.append(specMean)
+
+        if not specMeans:
+            continue
+        mean = 0.0
+        for m in specMeans:
+            mean += m
+        mean = mean / len(specMeans)
+        # print("school mean:")
+        # print(specMeans)
+        # print(mean)
+        # print("=====\n\n")
+        c.execute(insertMeanAbs, (mean, idd))
 
 
 print(data.head())
@@ -382,6 +455,10 @@ while i < len(data)-1:
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
 
+print("Caltulating Means...")
+
 calculateMeans()
+
+print("Done")
 
 con.commit()
