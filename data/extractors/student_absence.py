@@ -205,7 +205,6 @@ def insertDetailed(idd, absenceType, concreteID):
     c.execute(updateDetailed, (concreteID, idd))
 
 
-# TODO FIX MEAN
 def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
     isThere, idd = checkExistance((school, year))
     if isThere and idd != None:
