@@ -352,7 +352,7 @@ years, rowWithYear = findYears(data)
 
 print(years)
 print(rowWithYear)
-"""
+
 print("Starting Inserstion")
 
 sex = "All"
@@ -418,7 +418,6 @@ while i < len(data)-1:
                           prefix='Progress:', suffix='Complete', length=50)
 
 
-"""
 print("\n Done inserting")
 print("Calculating means...")
 
