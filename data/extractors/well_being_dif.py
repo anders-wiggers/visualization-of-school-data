@@ -116,13 +116,13 @@ def cascadeMean():
         specMeans = []
         # Handle all grades
         for value in data:
-
             if value != None:
                 # Calc mean for each legal illegal and sickleave
                 c.execute(fetchGender, (value,))
                 specific_abs = c.fetchall()
                 tempMeans = []
                 sid = specific_abs[0][0]
+                print(specific_abs)
                 specific_abs = iter(specific_abs[0])
                 # print(sid)
                 next(specific_abs)
@@ -130,15 +130,19 @@ def cascadeMean():
                 for detailed in specific_abs:
                     c.execute(fetchDetail, (detailed,))
                     detailedMean = c.fetchall()
-                    if detailedMean[0][0] != None:
-                        print(detailedMean)
-                        tempMeans.append(detailedMean[0][0])
+                    print("dt mean: " + str(detailedMean))
+                    try:
+                        if detailedMean[0][0] != None:
+                            print(detailedMean)
+                            tempMeans.append(detailedMean[0][0])
+                    except:
+                        pass
                 if not tempMeans:
                     continue
                 for t in tempMeans:
                     specMean += t
                 specMean = specMean / len(tempMeans)
-                # print(specMean)
+                print("Spec mean " + str(specMean))
                 # Insert mean back into the db
                 c.execute(insertSpecAbs, (specMean, sid))
                 specMeans.append(specMean)
@@ -423,5 +427,5 @@ cascadeMean()
 
 print("Insertion finished")
 
-# con.commit()
+con.commit()
 con.close()
