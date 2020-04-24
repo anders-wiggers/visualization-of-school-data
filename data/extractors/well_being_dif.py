@@ -122,7 +122,7 @@ def cascadeMean():
                 specific_abs = c.fetchall()
                 tempMeans = []
                 sid = specific_abs[0][0]
-                print(specific_abs)
+                # print(specific_abs)
                 specific_abs = iter(specific_abs[0])
                 # print(sid)
                 next(specific_abs)
@@ -130,10 +130,10 @@ def cascadeMean():
                 for detailed in specific_abs:
                     c.execute(fetchDetail, (detailed,))
                     detailedMean = c.fetchall()
-                    print("dt mean: " + str(detailedMean))
+                    # print("dt mean: " + str(detailedMean))
                     try:
                         if detailedMean[0][0] != None:
-                            print(detailedMean)
+                            # print(detailedMean)
                             tempMeans.append(detailedMean[0][0])
                     except:
                         pass
@@ -142,7 +142,7 @@ def cascadeMean():
                 for t in tempMeans:
                     specMean += t
                 specMean = specMean / len(tempMeans)
-                print("Spec mean " + str(specMean))
+                # print("Spec mean " + str(specMean))
                 # Insert mean back into the db
                 c.execute(insertSpecAbs, (specMean, sid))
                 specMeans.append(specMean)
@@ -153,10 +153,10 @@ def cascadeMean():
         for m in specMeans:
             mean += m
         mean = mean / len(specMeans)
-        print("school mean:")
-        print(specMeans)
-        print(mean)
-        print("=====\n\n")
+        # print("school mean:")
+        # print(specMeans)
+        # print(mean)
+        # print("=====\n\n")
         c.execute(insertMeanAbs, (mean, idd))
 
 
