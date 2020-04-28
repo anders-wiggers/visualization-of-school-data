@@ -1,6 +1,5 @@
-h1 {
-    color: blueviolet;
-}
-h2 {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.continent {
+	fill: #f0e4dd;
+	stroke: #e0cabc;
+	stroke-width: 0.5;
 }
