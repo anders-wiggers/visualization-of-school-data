@@ -108,7 +108,7 @@ def checkExistance(values):
 def insertIntoInstructions(id, school, year):
     sqlInsitutionInsertQuery = '''
     INSERT INTO INSTITUTION (NAME, YEAR, PLANNED_HOURS)
-    VALUES (?,?,?) 
+    VALUES (?,?,?)
     '''
     sqlUpdateInstitutionsQuery = '''
     UPDATE INSTITUTION
@@ -147,6 +147,7 @@ while i < len(data)-1:
             insertIntoTable(queryData)
             insertIntoInstructions(idd, school, year)
     i = i + 1
-    con.commit()
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
+
+con.commit()

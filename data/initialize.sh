@@ -56,7 +56,7 @@ if test -f "$FILE"; then
     pipenv run python index.py
 
     # Fetch excel files
-    fetch
+    # fetch
 
     # Extract files
     extract
