@@ -1,19 +1,17 @@
 {
-  "name": "visualization",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "next": "^9.3.5",
-    "react": "^16.13.1",
-    "react-d3-library": "^1.1.8",
-    "react-dom": "^16.13.1"
-  }
+	"name": "d3testing",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"test": "start",
+		"dev": "nodemon index.js",
+		"start": "node index.js"
+	},
+	"author": "Aron Baldvinsson",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.1",
+		"nodemon": "^2.0.3"
+	}
 }
