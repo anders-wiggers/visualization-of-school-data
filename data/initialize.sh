@@ -39,6 +39,7 @@ extract() {
     pipenv run python extractors/mean_grades.py
     pipenv run python extractors/student_absence.py
     pipenv run python extractors/well_being_dif.py
+    pipenv run python extractors/socioeconomicref.py
 }
 
 # Check if index.py is present on system
@@ -55,7 +56,7 @@ if test -f "$FILE"; then
     pipenv run python index.py
 
     # Fetch excel files
-    fetch
+    # fetch
 
     # Extract files
     extract
