@@ -1,17 +1,18 @@
 {
-	"name": "d3testing",
-	"version": "1.0.0",
-	"description": "",
-	"main": "app.js",
-	"scripts": {
-		"test": "start",
-		"dev": "nodemon index.js",
-		"start": "node index.js"
-	},
-	"author": "Aron Baldvinsson",
-	"license": "ISC",
-	"dependencies": {
-		"express": "^4.17.1",
-		"nodemon": "^2.0.3"
-	}
+  "name": "d3testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "start",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "Aron Baldvinsson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3",
+    "sqlite3": "^4.2.0"
+  }
 }
