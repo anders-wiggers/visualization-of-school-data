@@ -21,8 +21,8 @@ router.get('/school', (req, res) => {
 		db.specificYear(req.query.year, (data) => {
 			res.send(data);
 		});
-	} else {
-		db.specificSchool(req.query.school, req.query.year, (data) => {
+	} else if (req.query.school && req.query.year) {
+		db.specificSchools(req.query.school, req.query.year, (data) => {
 			res.send(data);
 		});
 	}
