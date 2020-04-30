@@ -28,4 +28,39 @@ router.get('/school', (req, res) => {
 	}
 });
 
+function illigalInput(data) {
+	return false;
+}
+
+router.get('/combine', (req, res, next) => {
+	let data = req.query.data;
+	let school = req.query.school;
+	let year = req.query.year;
+
+	//test for legal input query for safy
+	if (illigalInput(data)) return res.status(400).send('Error in input');
+
+	// Test for multiply data entries
+	if (data) {
+		try {
+			data = data.split(':');
+		} catch (error) {
+			return res.status(400).send('Error in input');
+		}
+	} else {
+		data = null;
+	}
+
+	// Test for drill command
+	for (d in data) {
+		try {
+			data[d] = data[d].split('>');
+		} catch (error) {}
+	}
+
+	db.combineData([ data, school, year ], (data) => {
+		res.send(data);
+	});
+});
+
 module.exports = router;

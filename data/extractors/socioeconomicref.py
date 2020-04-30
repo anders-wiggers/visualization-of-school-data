@@ -62,7 +62,7 @@ except Error as e:
 try:
     c.execute('''
         ALTER TABLE INSTITUTION
-        ADD COLUMN SOCIOECONOMIC_REF TEXT;
+        ADD COLUMN SOCIOECONOMIC TEXT;
     ''')
 except:
     print("Cannot Create column, column is there")
@@ -74,12 +74,12 @@ def CreateEmptySocEco(school, year):
     VALUES (NULL)
     '''
     insertToInstitution = '''
-    INSERT INTO INSTITUTION (NAME, YEAR, SOCIOECONOMIC_REF)
+    INSERT INTO INSTITUTION (NAME, YEAR, SOCIOECONOMIC)
     VALUES (?,?,?)
     '''
     updateToInstitution = '''
     UPDATE INSTITUTION
-    SET SOCIOECONOMIC_REF = ?
+    SET SOCIOECONOMIC = ?
     WHERE NAME = ? and YEAR = ?;
     '''
     c.execute(createEmptyWB)
@@ -118,7 +118,7 @@ def checkSocEco(curId, fag):
 
 def checkExistance(values):
     sqlCheckInstitutionQuery = '''
-    SELECT SOCIOECONOMIC_REF
+    SELECT SOCIOECONOMIC
     FROM INSTITUTION
     WHERE NAME = ? AND YEAR = ?
     '''
@@ -217,7 +217,7 @@ while i < len(data):
     addSocSpec(temp)
 
     i += 1
-    
+
     Wait.printProgressBar(i, len(data),
                           prefix='Progress:', suffix='Complete', length=50)
 
