@@ -3,3 +3,13 @@
 	stroke: #e0cabc;
 	stroke-width: 0.5;
 }
+
+.circles {
+	fill: black;
+}
+
+.labels {
+	font-family: sans-serif;
+	font-size: 11px;
+	fill:black;
+}

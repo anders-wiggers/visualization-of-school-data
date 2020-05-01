@@ -3,42 +3,16 @@
 <head>
 <meta charset="utf-8">
 <title>My map</title>
-<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
-<script src="//d3js.org/topojson.v3.min.js"></script>
-<link rel="stylesheet" type="text/css" href="map.css">
+<script src="http://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 <h1>Danmark Visualization</h1>
 </head>
 <body>
-    <div id="container" class="svg-container"></div>
-    <script>
-        var w = 500;
-        var h = 400;
 
-        var projection = d3.geoMercator().translate([w/2, h/2]).scale(3500).center([12,56]);
-        var path = d3.geoPath().projection(projection)
-        var worldmap = d3.json("kommuner.geojson");
-
-        const zoom = d3.zoom()
-            .scaleExtent([1, 8])
-            .on("zoom", zoomed);
-        
-        var svg = d3.select("div#container")
-        .append("svg").attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", "0 0 " + w + " " + h)
-        .style("background","#c9e8fd")
-        .classed("svg-content", true);
-    
-
-    
-        Promise.all([worldmap]).then(function(values){    
-    // draw map
-        svg.selectAll("path")
-            .data(values[0].features)
-            .enter()
-            .append("path")
-            .attr("class","continent")
-            .attr("d", path)
-    });
+    <svg id="my_dataviz" width="1000" height="800"></svg>
+    <svg id="textViz" width="200" height="200"></svg>
+    <script src="testMap.js">
     </script>
 </body>
 </html>
