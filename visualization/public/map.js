@@ -1,66 +1,65 @@
-  var w = 1400;
-  var h = 700;
-  var kommunes = [];
-  var antalKommuner = [];
-  var long;
-  var svg = d3.select("div#container")
-              .append("svg")
-              .attr("preserveAspectRatio", "xMinYMin meet")
-              .style("background-color","#c9e8fd")
-              .attr("viewBox", "0 0 " + w + " " + h)
-              .classed("svg-content", true);
-  var projection = d3.geoMercator()
-              .translate([w/2, h/2])
-              .scale(6000)
-              .center([12,56]);
-  var path = d3.geoPath().projection(projection);
+// The svg
+var svg = d3.select("svg"),
+  width = +svg.attr("width"),
+  height = +svg.attr("height");
 
-d3.json("kommuner.geojson").then(worldmap => {    
-// draw map
-for(var foo in worldmap.features){
-  var obj = worldmap.features[foo]
-  var listeAfKommuner = obj.properties.KOMNAVN
-    svg.selectAll("path")
-    .data(worldmap.features)
+var csv=[]
+// Map and projection
+var path = d3.geoPath();
+var projection = d3.geoMercator()
+  .scale(6000)
+  .center([12,56])
+  .translate([width / 2, height / 2]);
+
+// Data and color scale
+var data = d3.map();
+var colorScale = d3.scaleThreshold()
+  .domain([100000, 1000000, 10000000, 30000000, 100000000, 500000000])
+  .range(d3.schemeBlues[7]);
+// Load external data and boot
+
+var svgText = svg.append("text");
+
+d3.csv("kommuner.csv", function(p) {
+    return {
+        x : p.X,
+        y : p.Y,
+        kommune : p.KOMNAVN
+    };
+}).then(function(p){
+    csv.push(p)
+});
+
+
+var worldmap = d3.json("kommuner.geojson");
+Promise.all([worldmap]).then(function(topo){
+  let mouseOver = function(d) {
+    d3.selectAll("text")
+    d3.select(this)
+      .style("stroke", "red")
+    svgText.attr("x",50)
+            .attr("y",50)
+    svgText.text(d.properties.KOMNAVN)
+  }
+
+  let mouseLeave = function(d) {
+    d3.selectAll(".KOMNAVN2")
+    d3.select(this)
+      .style("stroke", "transparent")
+  }
+
+  // Draw the map
+  svg.append("g")
+    .selectAll("path")
+    .data(topo[0].features)
     .enter()
     .append("path")
-    .attr("class","continent")
-    .attr("d", path)
-    antalKommuner.push(obj)
-    kommunes.push(listeAfKommuner)
-    for(var bar in obj.geometry.coordinates) {
-      long = obj.geometry.coordinates[bar]
-      // draw points
-      svg.selectAll("circle")
-      .data(long)
-      .enter()
-      .append("circle")
-      .attr("class","circles")
-      .attr("cx", function(d) {return projection([JSON.stringify(d[0]),JSON.stringify(d[1])])[0]})
-      .attr("cy", function(d) {return projection([JSON.stringify(d[0]),JSON.stringify(d[1])])[1]})
-      .attr("r", "1px")
-
-      svg.selectAll("text")
-      .data(kommunes)
-      .enter()
-      .append("text")
-      .text(function(d) {
-              return JSON.stringify(d);
-          })
-      .attr("cx", function(d) {return projection([JSON.stringify(d[0]),JSON.stringify(d[1])])[0]})
-      .attr("cy", function(d) {return projection([JSON.stringify(d[0]),JSON.stringify(d[1])])[1]})
-      .attr("class","labels");  
-      
-  }
-}
-// add labels
-console.log(antalKommuner.length)
-
-
-function removeDuplicates(kommunes) {
-  return kommunes.filter((a, b) => kommunes.indexOf(a) === b)
-}
-
-console.log(removeDuplicates(kommunes))
-  }); 
- 
+      // draw each country
+      .attr("d", d3.geoPath()
+        .projection(projection)
+      )
+      // set the color of each country
+      .attr("fill", "gray")
+      .on("mouseover", mouseOver )
+      .on("mouseleave", mouseLeave )
+})
