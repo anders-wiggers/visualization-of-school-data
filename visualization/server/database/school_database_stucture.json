@@ -1,0 +1,21 @@
+{
+	"INSTITUTION": {
+		"absence": {
+			"specific_absence": {
+				"detailed_absence": "end"
+			}
+		},
+		"grades": {
+			"distibution": "end"
+		},
+		"planned_hours": "end",
+		"socioeconomic": {
+			"soc_spec": "end"
+		},
+		"well_being": {
+			"wb_gender": {
+				"wb_attributes": "end"
+			}
+		}
+	}
+}

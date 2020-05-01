@@ -36,7 +36,7 @@ c = con.cursor()  # The database will be saved in the location where your 'py' f
 data = pd.read_excel(baseDataDir + "/excel/" + excelFilename)
 
 try:
-    c.execute('''CREATE TABLE IF NOT EXISTS wb_class(
+    c.execute('''CREATE TABLE IF NOT EXISTS well_being(
             id INTEGER PRIMARY KEY,
             fouth_grade INTEGER,
             fifth_grade INTEGER,
@@ -83,10 +83,10 @@ except:
 def cascadeMean():
     fetchGrades = '''
             SELECT id, fouth_grade, fifth_grade, sixth_grade, seventh_grade, eigth_grade, ninth_grade
-            FROM `wb_class`
+            FROM `well_being`
             '''
     insertMeanAbs = '''
-        UPDATE wb_class
+        UPDATE well_being
         SET mean = ?
         WHERE id = ?
     '''
@@ -193,7 +193,7 @@ def checkExistance(values):
 
 def createEmptyWB(school, year):
     createEmptyWB = '''
-    INSERT INTO wb_class (fouth_grade)
+    INSERT INTO well_being (fouth_grade)
     VALUES (NULL)
     '''
     insertToInstitution = '''
@@ -216,7 +216,7 @@ def createEmptyWB(school, year):
 def checkWBClass(iddd, wclass):
     sqlCheckInstitutionQuery = '''
     SELECT ''' + wclass + '''
-    FROM `wb_class`
+    FROM `well_being`
     WHERE id = ?;
     '''
     c.execute(sqlCheckInstitutionQuery, (iddd,))
@@ -236,7 +236,7 @@ def createEmptyWBGender(idd, curClass):
     VALUES (NULL)
     '''
     updateToAbsence = '''
-    UPDATE wb_class
+    UPDATE well_being
     SET ''' + curClass + ''' = ?
     WHERE id = ?
     '''

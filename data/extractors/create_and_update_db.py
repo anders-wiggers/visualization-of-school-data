@@ -32,10 +32,10 @@ c = con.cursor()  # The database will be saved in the location where your 'py' f
 c.execute('''CREATE TABLE IF NOT EXISTS INSTITUTION(
             [NAME] TEXT,
             [YEAR] INTEGER,
-            [GRADES] TEXT,
-            [ABSENCE] TEXT,
-            [STUDENTS] TEXT,
-            [WELL_BEING] TEXT,
+            [GRADES] INTEGER,
+            [ABSENCE] INTEGER,
+            [STUDENTS] INTEGER,
+            [WELL_BEING] INTEGER,
             [PLANNED_HOURS] INTEGER,
             PRIMARY KEY (NAME, YEAR)
             )''')
