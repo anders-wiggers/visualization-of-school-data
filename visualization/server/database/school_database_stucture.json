@@ -16,6 +16,7 @@
 			"wb_gender": {
 				"wb_attributes": "end"
 			}
-		}
+		},
+		"students": "end"
 	}
 }
