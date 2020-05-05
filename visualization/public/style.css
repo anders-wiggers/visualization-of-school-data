@@ -1,15 +1,9 @@
-.continent {
-	fill: #f0e4dd;
-	stroke: #e0cabc;
-	stroke-width: 0.5;
-}
 
-.circles {
-	fill: black;
-}
-
-.labels {
+.test{
+	float: left;
 	font-family: sans-serif;
-	font-size: 11px;
-	fill:black;
+	font-size: 12px;
+	fill: #842297;
+	border: 30px;
+	background-color: tomato;
 }

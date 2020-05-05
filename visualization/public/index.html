@@ -6,12 +6,37 @@
 <script src="http://d3js.org/d3.v5.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="style.css">
 <h1>Danmark Visualization</h1>
 </head>
 <body>
-    <svg id="my_dataviz" width="1000" height="800"></svg>
-    <svg id="textViz" width="200" height="200"></svg>
-    <script src="map.js">
+    <div class="tabBar">
+        <button class="mapButton" >Maps</button>
+        <button class="chartButton">Charts</button>
+    </div>
+
+    <div id="Maps" class="tab">
+        <svg id="MapViz" width="1000" height="800"></svg>
+        <script src="map.js"></script>
+    </div>
+    <div id="Chart" class="tab" style="display:none">
+        <svg id="ChartViz" width="1000" height="800"></svg>
+        <script src="charts.js"></script>
+    </div>
+    <script>
+    $(document).ready(function(){
+        $('.mapButton').click(function(){
+            $.getScript("map.js")
+        });
+    });
+    $(document).ready(function(){
+        $('.chartButton').click(function(){
+            $.getScript( "charts.js" )
+    });
+});
     </script>
+
+   
 </body>
 </html>
