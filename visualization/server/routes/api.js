@@ -36,6 +36,8 @@ router.get('/combine', (req, res, next) => {
 	let data = req.query.data;
 	let school = req.query.school;
 	let year = req.query.year;
+	let commune = req.query.commune;
+	let region = req.query.region;
 
 	//test for legal input query for safy
 	if (illigalInput(data)) return res.status(400).send('Error in input');
@@ -58,7 +60,7 @@ router.get('/combine', (req, res, next) => {
 		} catch (error) {}
 	}
 
-	db.combineData([ data, school, year ], (data) => {
+	db.combineData([ data, school, year, region, commune ], (data) => {
 		res.send(data);
 	});
 });

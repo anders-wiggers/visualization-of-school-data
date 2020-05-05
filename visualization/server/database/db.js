@@ -40,7 +40,40 @@ class SchoolData {
 
 		let joinTables = '';
 
-		//Test if query has data entries
+		let selector = 'WHERE';
+
+		// Choose schools and years
+		if (inputArray[1]) {
+			selector += ` NAME = "${inputArray[1]}"`;
+		}
+
+		if (inputArray[2]) {
+			if (selector !== 'WHERE') {
+				selector += ` AND YEAR = "${inputArray[2]}"`;
+			} else {
+				selector += ` YEAR = "${inputArray[2]}"`;
+			}
+		}
+
+		if (inputArray[3]) {
+			if (selector !== 'WHERE') {
+				selector += ` AND REGION = "${inputArray[3]}"`;
+			} else {
+				selector += ` REGION = "${inputArray[3]}"`;
+			}
+		}
+
+		if (inputArray[4]) {
+			if (selector !== 'WHERE') {
+				selector += ` AND COMMUNE = "${inputArray[4]}"`;
+			} else {
+				selector += ` COMMUNE = "${inputArray[4]}"`;
+			}
+		}
+
+		if (selector === 'WHERE') selector = '';
+
+		// Test if query has data entries
 		if (inputArray[0]) {
 			for (let i of inputArray[0]) {
 				//test if query has drill command
@@ -77,15 +110,18 @@ class SchoolData {
 				}
 			}
 		} else {
+			tablesToGet = ', INSTITUTION.REGION, INSTITUTION.COMMUNE';
 			//TODO get kommune data and adress and such :)
 		}
 
 		let querry = `SELECT INSTITUTION.NAME, INSTITUTION.YEAR ${tablesToGet}
 					FROM INSTITUTION 
 					${joinTables}
-					WHERE NAME LIKE ?`;
+					${selector}`;
+
 		console.log(querry);
-		db.all(querry, inputArray[1], (err, data) => {
+
+		db.all(querry, (err, data) => {
 			if (err) console.log(err);
 			callback(data);
 		});
