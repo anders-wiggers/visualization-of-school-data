@@ -1,0 +1,28 @@
+{
+	"instructions": [
+		{
+			"get": "https://statistik.uni-c.dk/instregudtraek/"
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//option[@value='101000']"
+			}
+		},
+		{
+			"wait": 2
+		},
+		{
+			"click": {
+				"find": "xpath",
+				"value": "//input[@name='ctl00$MainContent$UdtrækButton']"
+			}
+		},
+		{
+			"wait": 10
+		}
+	]
+}
