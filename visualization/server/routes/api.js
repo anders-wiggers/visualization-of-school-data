@@ -1,6 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let db = require('../database/db').database;
+let stats = require('./stats');
 
 router.get('/all-schools', (req, res) => {
 	db.getAllSchools((data) => {
@@ -64,5 +65,7 @@ router.get('/combine', (req, res, next) => {
 		res.send(data);
 	});
 });
+
+router.use('/stats', stats);
 
 module.exports = router;

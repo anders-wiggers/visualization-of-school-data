@@ -141,6 +141,7 @@ Name | Contains
 **well_being** | mean well being on school plus ability to drill to each class 
 **planned_hours** | planned hours for each class 
 **socioeconomic** | ability to drill to more information on the soc spec
+**information** | ability to drill to more information on the soc spec
 
 ---
 * year
