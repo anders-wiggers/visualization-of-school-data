@@ -3,11 +3,20 @@
 <head>
 <meta charset="utf-8">
 <title>My map</title>
-<script src="http://d3js.org/d3.v5.js"></script>
-<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+crossorigin=""/>
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <script src="leaflet.ajax.min.js"></script>
 <h1>Danmark Visualization</h1>
 </head>
 <body>
@@ -16,27 +25,29 @@
         <button class="chartButton">Charts</button>
     </div>
 
-    <div id="Maps" class="tab">
-        <svg id="MapViz" width="1000" height="800"></svg>
-        <script src="map.js"></script>
+    <div>
+        <div id="map" src="mapBox.js">
+            <div class="info"></div>
+        </div>
+        <mapContent></mapContent>
     </div>
-    <div id="Chart" class="tab" style="display:none">
-        <svg id="ChartViz" width="1000" height="800"></svg>
-        <script src="charts.js"></script>
+    <div>
+        <chartContent></chartContent>
     </div>
     <script>
     $(document).ready(function(){
         $('.mapButton').click(function(){
-            $.getScript("map.js")
+            $.getScript("mapBox.js")
         });
     });
+</script>
+<script>
     $(document).ready(function(){
         $('.chartButton').click(function(){
             $.getScript( "charts.js" )
     });
 });
-    </script>
+</script>
 
-   
 </body>
 </html>
