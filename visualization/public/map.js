@@ -1,5 +1,8 @@
 // The svg
-var svg = d3.select("svg");
+$(".chartButton").click(function() {
+  d3.selectAll("svg").remove()
+});
+var svg = d3.select("mapContent").append("svg");
 var width = +svg.attr("width");
 var height = +svg.attr("height");
 
@@ -7,8 +10,8 @@ var schoolData=[]
 // Map and projection
 var path = d3.geoPath();
 var projection = d3.geoMercator()
-  .scale(6000)
-  .center([12,56])
+  .scale(5000)
+  .center([11,56])
   .translate([width / 2, height / 2]);
 
 var svgText = svg.append("text");
