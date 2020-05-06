@@ -59,7 +59,6 @@ function zoomToFeature(e) {
 		response.json().then(function(data) {
 			console.log(data)
 			var i;
-			
 				 for(i = 0; i < data.length; i++){
 					try {
 			let latitude = data[i].latitude
@@ -70,7 +69,9 @@ function zoomToFeature(e) {
 			let replacedLongtiude = longitude.replace(",", ".")
 			let newlatitude = parseFloat(replacedLatitude)
 			let newLongitude = parseFloat(replacedLongtiude)
-				L.marker([newlatitude, newLongitude]).addTo(map)
+			let popInfo = 
+			"<b>Information</b><br>School: " + data[i].NAME +"<br>Adress: "+ data[i].address +"<br>Mail: "+data[i].mail+"<br>Phone number: "+data[i].phone+"<br><a href='data[i].website'>"+data[i].website+"</a>"
+				L.marker([newlatitude, newLongitude]).bindPopup(popInfo).openPopup().addTo(map)
 		}
 		catch(err){
 			console.log("error")
