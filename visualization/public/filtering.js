@@ -191,12 +191,9 @@ document.getElementById('myBtn').addEventListener('click', function() {
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', '/api/stats/grades', true);
 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
 	sendData = {
 		dataArray: curData
 	};
 	// send the collected data as JSON
 	xhr.send(JSON.stringify(sendData));
-
-	console.log(curData);
 });
