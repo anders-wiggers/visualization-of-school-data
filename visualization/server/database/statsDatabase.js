@@ -6,9 +6,6 @@ const db = new sqlite3.Database(dbName);
 db.serialize(() => {
 	// Queries scheduled here will be serialized.
 	db.run(`
-        CREATE TABLE IF NOT EXISTS scented_widget_grade (id INTEGER PRIMARY KEY, value INTEGER)
-        `);
-	db.run(`
     CREATE TABLE IF NOT EXISTS scented_mean_grade(
         id INTEGER PRIMARY KEY,
         mi_tr REAL,
@@ -34,31 +31,64 @@ db.serialize(() => {
 class statistics {
 	static addScentedWidgetStat(array, callback) {
 		let insertArray = [];
-		for (let i = 0; i > 16; i++) {
-			insertArray.push(null);
+		let contained = [];
+		let queryArray = [];
+		for (let i = 0; i < 16; i++) {
+			insertArray.push(0);
 		}
 
-		db.run(
-			`INSERT INTO scented_mean_grade (mi_tr, mi_tw, mi_on, ze, one, tw, tr, fo, fi, si, se, ei ,ni, te, el ,twe)
-		VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-			meanArray
+		for (let i of array) {
+			insertArray[i + 3] = 1;
+		}
+
+		db.all(
+			`
+		        SELECT *
+		        FROM scented_mean_grade
+		        ORDER BY id DESC
+		        LIMIT 1;
+		`,
+			(err, data) => {
+				for (let e in data[0]) {
+					if (e === 'id') continue;
+					contained.push(data[0][e]);
+				}
+				try {
+					for (let i = 0; i < 16; i++) {
+						queryArray[i] = contained[i] + insertArray[i];
+					}
+
+					db.run(
+						`INSERT INTO scented_mean_grade (mi_tr, mi_tw, mi_on, ze, one, tw, tr, fo, fi, si, se, ei ,ni, te, el ,twe)
+					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+						queryArray
+					);
+				} catch (error) {
+					db.run(
+						`INSERT INTO scented_mean_grade (mi_tr, mi_tw, mi_on, ze, one, tw, tr, fo, fi, si, se, ei ,ni, te, el ,twe)
+					VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+						insertArray
+					);
+				}
+			}
 		);
 
 		callback('done');
 	}
 
-	static getScentedWidgetStat() {}
+	static getScentedWidgetStat(callback) {
+		db.all(
+			`
+		        SELECT *
+		        FROM scented_mean_grade
+		        ORDER BY id DESC
+		        LIMIT 1;
+		`,
+			(err, data) => {
+				callback(data);
+			}
+		);
+	}
 }
-
-function calculateMean() {
-	db.all('SELECT value FROM scented_widget_grade', (err, data) => {
-		if (err) console.log(err);
-		let counts = {};
-		data.forEach(function(x) {
-			counts[x.value] = (counts[x.value] || 0) + 1;
-		});
-	});
-}
-
 module.exports = db;
 module.exports.database = statistics;

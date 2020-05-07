@@ -3,7 +3,9 @@ let router = express.Router();
 let db = require('../database/statsDatabase').database;
 
 router.get('/grades', (req, res, next) => {
-	res.send('hi');
+	db.getScentedWidgetStat((data) => {
+		res.send(data);
+	});
 });
 
 router.post('/grades', (req, res, next) => {
@@ -14,7 +16,6 @@ router.post('/grades', (req, res, next) => {
 	} else {
 		res.status(400).send('wrong input');
 	}
-	console.log(req.body.arr);
 
 	for (let i = arr[0]; i < arr[1] + 1; i++) {
 		fullArray.push(i);
