@@ -89,8 +89,8 @@ latCol = "GEO_BREDDE_GRAD"
 
 i = 0
 
-Wait.printProgressBar(i, len(data)-1,
-                      prefix='Progress:', suffix='Complete', length=50)
+# Wait.printProgressBar(i, len(data)-1,
+#                       prefix='Progress:', suffix='Complete', length=50)
 
 while i < len(data):
 
@@ -109,6 +109,12 @@ while i < len(data):
     pricipal = data["INST_LEDER"][i]
     lat = data[latCol][i]
     lon = data[longCol][i]
+
+    try:
+        lat = lat.replace(",", ".")
+        lon = lon.replace(",", ".")
+    except:
+        pass
 
     # Add infomation to db
     c.execute('''

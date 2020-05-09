@@ -41,6 +41,7 @@ extract() {
     pipenv run python extractors/well_being_dif.py
     pipenv run python extractors/socioeconomicref.py
     pipenv run python extractors/commune.py
+    pipenv run python extractors/schoolinfo.py
 }
 
 # Check if index.py is present on system
