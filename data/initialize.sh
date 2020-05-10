@@ -66,3 +66,6 @@ else
     echo "$FILE missing, exiting"
     exit 1
 fi
+
+københanvs
+bornholms

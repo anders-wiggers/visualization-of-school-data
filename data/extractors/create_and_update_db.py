@@ -37,7 +37,9 @@ c.execute('''CREATE TABLE IF NOT EXISTS INSTITUTION(
             [STUDENTS] INTEGER,
             [WELL_BEING] INTEGER,
             [PLANNED_HOURS] INTEGER,
-            PRIMARY KEY (NAME, YEAR)
+            [COMMUNE] TEXT,
+            [REGION] TEXT,
+            PRIMARY KEY (NAME, YEAR, COMMUNE)
             )''')
 
 # Create table - GRADES
@@ -46,9 +48,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS grades(
         mean REAL, 
         female REAL, 
         male REAL, 
-        distribution INTEGER,
-        students_with_2 REAL,  
-        parental_status INTEGER
+        students_with_2 REAL
         )''')
 
 con.commit()

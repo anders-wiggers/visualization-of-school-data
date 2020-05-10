@@ -179,7 +179,7 @@ def checkExistance(values):
     sqlCheckInstitutionQuery = '''
     SELECT WELL_BEING
     FROM `INSTITUTION`
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
     c.execute(sqlCheckInstitutionQuery, values)
     fetchData = c.fetchall()
@@ -191,26 +191,26 @@ def checkExistance(values):
         return True, idd
 
 
-def createEmptyWB(school, year):
+def createEmptyWB(school, year, commune):
     createEmptyWB = '''
     INSERT INTO well_being (fouth_grade)
     VALUES (NULL)
     '''
     insertToInstitution = '''
-    INSERT INTO INSTITUTION (NAME, YEAR, WELL_BEING)
-    VALUES (?,?,?)
+    INSERT INTO INSTITUTION (NAME, YEAR, COMMUNE, WELL_BEING)
+    VALUES (?,?,?,?)
     '''
     updateToInstitution = '''
     UPDATE INSTITUTION
     SET WELL_BEING = ?
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
     c.execute(createEmptyWB)
     curid = c.lastrowid
     try:
-        c.execute(insertToInstitution, (school, year, curid))
+        c.execute(insertToInstitution, (school, year, commune, curid))
     except:
-        c.execute(updateToInstitution, (curid, school, year))
+        c.execute(updateToInstitution, (curid, school, year, commune))
 
 
 def checkWBClass(iddd, wclass):
@@ -267,8 +267,8 @@ def insertWBAtt(idd, gender, concreteID):
     c.execute(updateDetailed, (concreteID, idd))
 
 
-def cascadeUpdate(school, year, gender, curClass, concreteID):
-    isThere, idd = checkExistance((school, year))
+def cascadeUpdate(school, year, commune, gender, curClass, concreteID):
+    isThere, idd = checkExistance((school, year, commune))
     if isThere and idd != None:
         # Table exist
         # print("school and year here id: " + str(idd))
@@ -279,15 +279,15 @@ def cascadeUpdate(school, year, gender, curClass, concreteID):
         else:
             # print("is not here xd")
             createEmptyWBGender(idd, curClass)
-            cascadeUpdate(school, year, gender, curClass, concreteID)
+            cascadeUpdate(school, year, commune, gender, curClass, concreteID)
     else:
         # Create Absense Entry
         # print("not here :(")
-        createEmptyWB(school, year)
-        cascadeUpdate(school, year, gender, curClass, concreteID)
+        createEmptyWB(school, year, commune)
+        cascadeUpdate(school, year, commune, gender, curClass, concreteID)
 
 
-def insertIntoTable(school, year, gender, curClass, dataPoints):
+def insertIntoTable(school, year, commune, gender, curClass, dataPoints):
     insertIntoAttributes = '''
     INSERT INTO wb_attributes (one_two, two_three, tree_four, four_five, mean)
     VALUES(?,?,?,?,?)
@@ -299,7 +299,7 @@ def insertIntoTable(school, year, gender, curClass, dataPoints):
 
     c.execute(insertIntoAttributes, dataPoints + (mean,))
     curid = c.lastrowid
-    cascadeUpdate(school, year, gender, curClass, curid)
+    cascadeUpdate(school, year, commune, gender, curClass, curid)
 
 
 def containTotal(string):
@@ -361,17 +361,39 @@ i = rowWithYear + 1
 Wait.printProgressBar(i, len(data)-1,
                       prefix='Progress:', suffix='Complete', length=50)
 
-dataCol = 'Unnamed: 0'
+dataCol = 'Unnamed: 1'
+communeCol = 'Unnamed: 0'
 
 curType = None
 curClass = None
 
 while i < len(data)-1:
     curDataPoint = str(data[dataCol][i])
+    curCommune = str(data[communeCol][i])
+
     # print(school)
 
     # CHECKING EMPTY ENTRY
     if curDataPoint == "nan":
+        # DETERMENTING BOY OR GIRL
+        if curCommune == "Dreng":
+            curType = "boy"
+            i += 1
+            continue
+        if curCommune == "Pige":
+            curType = "girl"
+            i += 1
+            continue
+
+        # DETERMENT CURRENT CLASS
+        try:
+            if curCommune.split(".")[1] == " klasse":
+                curClass = translateGrade(curCommune)
+                i += 1
+                continue
+        except:
+            pass
+
         i += 1
         continue
 
@@ -379,25 +401,6 @@ while i < len(data)-1:
     if containTotal(curDataPoint):
         i += 1
         continue
-
-    # DETERMENTING BOY OR GIRL
-    if curDataPoint == "Dreng":
-        curType = "boy"
-        i += 1
-        continue
-    if curDataPoint == "Pige":
-        curType = "girl"
-        i += 1
-        continue
-
-    # DETERMENT CURRENT CLASS
-    try:
-        if curDataPoint.split(".")[1] == " klasse":
-            curClass = translateGrade(curDataPoint)
-            i += 1
-            continue
-    except:
-        pass
 
     # PASS REGIONS
     if curDataPoint in CONSTANTS.REGIONS:
@@ -410,9 +413,11 @@ while i < len(data)-1:
         for specificData in years[year]:
             yh_data = yh_data + (data[specificData][i],)
 
-        insertIntoTable(curDataPoint, year, curType, curClass, yh_data)
+        insertIntoTable(curDataPoint, year, curCommune,
+                        curType, curClass, yh_data)
 
     i += 1
+
     # con.commit()
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)

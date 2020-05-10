@@ -62,6 +62,18 @@ except Error as e:
     print(e)
 
 
+def prebCommune(commune):
+    commune = str(commune).split(" ")
+    del commune[-1]
+    commune = "".join(commune)
+
+    c.execute('''SELECT COMMUNE FROM INSTITUTION WHERE COMMUNE = ?''', (commune,))
+    fetch = c.fetchall()
+    if not fetch:
+        return commune[:-1]
+    return commune
+
+
 def isSchoolContainedInDatabase(school):
     sqlCheckInstitutionQuery = '''
     SELECT SOCIOECONOMIC
@@ -89,8 +101,10 @@ latCol = "GEO_BREDDE_GRAD"
 
 i = 0
 
-# Wait.printProgressBar(i, len(data)-1,
-#                       prefix='Progress:', suffix='Complete', length=50)
+print("Starting Inserstion")
+
+Wait.printProgressBar(i, len(data)-1,
+                      prefix='Progress:', suffix='Complete', length=50)
 
 while i < len(data):
 
@@ -101,6 +115,7 @@ while i < len(data):
         i += 1
         continue
 
+    commune = prebCommune(str(data["BEL_KOMMUNE_NAVN"][i]))
     address = data["INST_ADR"][i]
     zipp = data["POSTNR"][i]
     phone = data["TLF_NR"][i]
@@ -127,14 +142,13 @@ while i < len(data):
     c.execute('''
         UPDATE INSTITUTION
         SET INFORMATION = ?
-        WHERE NAME = ?
-    ''', (curid, school))
+        WHERE NAME = ? AND COMMUNE = ?
+    ''', (curid, school, commune))
 
     i += 1
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
 
-print("Starting Inserstion")
 
 con.commit()
 con.close()

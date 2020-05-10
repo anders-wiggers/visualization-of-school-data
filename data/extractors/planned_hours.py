@@ -31,7 +31,7 @@ con = sqlite3.connect(baseDataDir + "/db/" + filename+".db")
 
 c = con.cursor()  # The database will be saved in the location where your 'py' file is saved
 
-data = pd.read_excel(baseDataDir + "/excel/" + excelFilename, index_col=0)
+data = pd.read_excel(baseDataDir + "/excel/" + excelFilename)
 
 try:
     c.execute('''CREATE TABLE IF NOT EXISTS planned_hours (
@@ -81,9 +81,9 @@ for col in data:
 
 def checkExistance(values):
     sqlCheckInstitutionQuery = '''
-    SELECT NAME, YEAR
+    SELECT NAME, YEAR, COMMUNE
     FROM `INSTITUTION`
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
     try:
         c.execute(sqlCheckInstitutionQuery, values)
@@ -96,7 +96,8 @@ def checkExistance(values):
             ABSENCE TEXT,
             STUDENTS TEXT,
             PLANNED_HOURS INTEGER,
-            PRIMARY KEY (NAME, YEAR)
+            COMMUNE TEXT,
+            PRIMARY KEY (NAME, YEAR, COMMUNE)
             )''')
         return False
     if not fetchData:
@@ -105,21 +106,21 @@ def checkExistance(values):
         return True
 
 
-def insertIntoInstructions(id, school, year):
+def insertIntoInstructions(id, school, year, commune):
     sqlInsitutionInsertQuery = '''
-    INSERT INTO INSTITUTION (NAME, YEAR, PLANNED_HOURS)
-    VALUES (?,?,?)
+    INSERT INTO INSTITUTION (NAME, YEAR, COMMUNE, PLANNED_HOURS)
+    VALUES (?,?,?,?)
     '''
     sqlUpdateInstitutionsQuery = '''
     UPDATE INSTITUTION
     SET PLANNED_HOURS = ?
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
 
-    if checkExistance((school, year)):
-        c.execute(sqlUpdateInstitutionsQuery, (id, school, year))
+    if checkExistance((school, year, commune)):
+        c.execute(sqlUpdateInstitutionsQuery, (id, school, year, commune))
     else:
-        c.execute(sqlInsitutionInsertQuery, (school, year, id))
+        c.execute(sqlInsitutionInsertQuery, (school, year, commune, id))
 
 
 try:
@@ -136,16 +137,22 @@ idd = 9999
 Wait.printProgressBar(i, len(data)-1,
                       prefix='Progress:', suffix='Complete', length=50)
 while i < len(data)-1:
-    school = data['Unnamed: 1'][i]
+    school = data['Unnamed: 0'][i]
+    commune = data['Unnamed: 1'][i]
+    if str(commune) == "nan":
+        i += 1
+        continue
     if str(school) != "nan":
-        print(str(data['Unnamed: 1'][i]))
+        # print(str(data['Unnamed: 0'][i]))
+        # print(str(commune))
         for year in years:
             idd = idd + 1
             queryData = (idd,)
             for speceficClass in years[year]:
                 queryData = queryData + (data[speceficClass][i],)
+            # print(queryData)
             insertIntoTable(queryData)
-            insertIntoInstructions(idd, school, year)
+            insertIntoInstructions(idd, school, year, commune)
     i = i + 1
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)

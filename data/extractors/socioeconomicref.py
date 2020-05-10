@@ -68,30 +68,30 @@ except:
     print("Cannot Create column, column is there")
 
 
-def CreateEmptySocEco(school, year):
+def CreateEmptySocEco(school, year, commune):
     createEmptyWB = '''
     INSERT INTO socioeconomic (Dansk)
     VALUES (NULL)
     '''
     insertToInstitution = '''
-    INSERT INTO INSTITUTION (NAME, YEAR, SOCIOECONOMIC)
+    INSERT INTO INSTITUTION (NAME, YEAR, COMMUNE, SOCIOECONOMIC)
     VALUES (?,?,?)
     '''
     updateToInstitution = '''
     UPDATE INSTITUTION
     SET SOCIOECONOMIC = ?
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
     c.execute(createEmptyWB)
     curid = c.lastrowid
     try:
-        c.execute(insertToInstitution, (school, year, curid))
+        c.execute(insertToInstitution, (school, year, commune, curid))
     except:
-        c.execute(updateToInstitution, (curid, school, year))
+        c.execute(updateToInstitution, (curid, school, year, commune))
 
 
 def checkSocEco(curId, fag):
-    print("checkSocEco with fag: " + fag + " And curId: " + str(curId))
+    # print("checkSocEco with fag: " + fag + " And curId: " + str(curId))
     try:
         c.execute('''
         ALTER TABLE socioeconomic
@@ -120,7 +120,7 @@ def checkExistance(values):
     sqlCheckInstitutionQuery = '''
     SELECT SOCIOECONOMIC
     FROM INSTITUTION
-    WHERE NAME = ? AND YEAR = ?
+    WHERE NAME = ? AND YEAR = ? and COMMUNE = ?
     '''
     c.execute(sqlCheckInstitutionQuery, values)
     fetchData = c.fetchall()
@@ -140,8 +140,8 @@ def InsertIntoSocSpec(socId, course, insertId):
     ''', (insertId, socId))
 
 
-def cascadeUpdate(school, year, curId, fag):
-    isThere, idd = checkExistance((school, year))
+def cascadeUpdate(school, year, commune, curId, fag):
+    isThere, idd = checkExistance((school, year, commune))
     # Check if School and Year has socioeco_ref
     if isThere and idd != None:
         # print("Its Here")
@@ -156,8 +156,8 @@ def cascadeUpdate(school, year, curId, fag):
     else:
         # Create Emptry SocEco Entry
         # print("not here :(")
-        CreateEmptySocEco(school, year)
-        cascadeUpdate(school, year, curId, fag)
+        CreateEmptySocEco(school, year, commune)
+        cascadeUpdate(school, year, commune, curId, fag)
 
 
 def addSocSpec(values):
@@ -166,10 +166,10 @@ def addSocSpec(values):
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     '''
 
-    c.execute(insertSocSpecStatement, values[3:])
+    c.execute(insertSocSpecStatement, values[4:])
     curid = c.lastrowid
-    courseType = values[1] + "_" + values[2]
-    cascadeUpdate(values[0], "2019", curid, courseType)
+    courseType = values[2] + "_" + values[3]
+    cascadeUpdate(values[1], "2019", values[0], curid, courseType)
 
     # print(values)
 
@@ -213,11 +213,10 @@ while i < len(data):
         i += 1
         continue
 
-    print(temp)
+    # print(temp)
     addSocSpec(temp)
 
     i += 1
-
     Wait.printProgressBar(i, len(data),
                           prefix='Progress:', suffix='Complete', length=50)
 

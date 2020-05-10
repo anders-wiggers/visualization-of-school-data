@@ -48,13 +48,13 @@ except Error as e:
     print(e)
 
 
-def insertIntoTable(name, year, students_with_2):
+def insertIntoTable(name, year, commune, students_with_2):
     sqlCheckIfShcoolAndYearHasGrades = '''
     SELECT GRADES
     FROM `INSTITUTION`
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
-    c.execute(sqlCheckIfShcoolAndYearHasGrades, (name, year))
+    c.execute(sqlCheckIfShcoolAndYearHasGrades, (name, year, commune))
     fetchData = c.fetchall()
     if not fetchData or None in fetchData[0]:
         # If nothing is here insert
@@ -63,7 +63,7 @@ def insertIntoTable(name, year, students_with_2):
             INSERT INTO grades(students_with_2)
             VALUES(?) ''', (students_with_2,))
         curid = c.lastrowid
-        insertIntoInstructions(curid, name, year)
+        insertIntoInstructions(curid, name, year, commune)
     else:
         # If record is here update
         # print("update")
@@ -79,7 +79,7 @@ def checkExistance(values):
     sqlCheckInstitutionQuery = '''
     SELECT NAME, YEAR
     FROM `INSTITUTION`
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
     c.execute(sqlCheckInstitutionQuery, values)
     fetchData = c.fetchall()
@@ -89,24 +89,24 @@ def checkExistance(values):
         return True
 
 
-def insertIntoInstructions(id, school, year):
+def insertIntoInstructions(id, school, year, commune):
     sqlInsitutionInsertQuery = '''
-    INSERT INTO INSTITUTION (NAME, YEAR, GRADES)
-    VALUES (?,?,?)
+    INSERT INTO INSTITUTION (NAME, YEAR, COMMUNE, GRADES)
+    VALUES (?,?,?,?)
     '''
     sqlUpdateInstitutionsQuery = '''
     UPDATE INSTITUTION
     SET GRADES = ?
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
 
-    if checkExistance((school, year)):
+    if checkExistance((school, year, commune)):
         # print("updating")
-        c.execute(sqlUpdateInstitutionsQuery, (id, school, year))
+        c.execute(sqlUpdateInstitutionsQuery, (id, school, year, commune))
 
     else:
         # print("inserting")
-        c.execute(sqlInsitutionInsertQuery, (school, year, id))
+        c.execute(sqlInsitutionInsertQuery, (school, year, commune, id))
 
 
 print(data.head())
@@ -169,14 +169,18 @@ Wait.printProgressBar(i, len(data)-1,
                       prefix='Progress:', suffix='Complete', length=50)
 
 while i < len(data)-1:
-    school = data['Unnamed: 0'][i]
+    school = data['Unnamed: 1'][i]
+    commune = data['Unnamed: 2'][i]
+    if str(commune) == "nan":
+        i += 1
+        continue
+
     if str(school) != "nan":
         for year in years:
             for speceficClass in years[year]:
-                insertIntoTable(school, year, data[speceficClass][i])
+                insertIntoTable(school, year, commune, data[speceficClass][i])
 
     i = i + 1
-    con.commit()
 
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)

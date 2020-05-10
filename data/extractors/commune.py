@@ -62,14 +62,14 @@ except:
 
 print(data.head())
 
+
 def createStidenEntry(data):
     c.execute('''
         INSERT INTO students (total_students)
         VALUES (?)
-    ''',(data,))
+    ''', (data,))
     curid = c.lastrowid
     return curid
-    
 
 
 def findYears(data):
@@ -111,7 +111,6 @@ def findYears(data):
 years, rowWithYear = findYears(data)
 
 
-
 print("Starting Inserstion")
 print(years)
 print(rowWithYear)
@@ -124,64 +123,59 @@ i = rowWithYear + 1
 
 
 Wait.printProgressBar(i, len(data)-1,
-                    prefix='Progress:', suffix='Complete', length=50)
+                      prefix='Progress:', suffix='Complete', length=50)
 while i < len(data)-1:
     school = data[institution][i]
     region = data[regionRow][i]
     commune = data[communeRow][i]
-
 
     # Check for total or empty row
     if(str(school) == "nan"):
         i += 1
         continue
 
-
     for y in years:
         studentNumber = data[years[y][0]][i]
-
+        # print(studentNumber)
         if(str(studentNumber) == "nan"):
             try:
                 c.execute('''
                 UPDATE INSTITUTION 
-                SET REGION = ?,
-                    COMMUNE = ?,
+                    SET REGION = ?,
                     STUDENTS = ?
                 WHERE 
                     NAME = ? AND
-                    YEAR = ?
-                ''',(region,commune,None,school,y))
+                    YEAR = ? AND
+                    COMMUNE = ?
+                ''', (region, None, school, y, commune))
             except:
                 c.execute('''
                     INSERT INTO INSTITUTION (NAME, YEAR, STUDENTS, REGION, COMMUNE)
                     VALUES (?,?,?,?,?)
-                ''',(school,y,None,region,commune))
+                ''', (school, y, None, region, commune))
         else:
             idd = createStidenEntry(studentNumber)
 
-            
             try:
                 c.execute('''
                     INSERT INTO INSTITUTION (NAME, YEAR, STUDENTS, REGION, COMMUNE)
                     VALUES (?,?,?,?,?)
-                ''',(school,y,idd,region,commune))
+                ''', (school, y, idd, region, commune))
             except:
                 c.execute('''
                 UPDATE INSTITUTION 
                 SET REGION = ?,
-                    COMMUNE = ?,
                     STUDENTS = ?
                 WHERE 
                     NAME = ? AND
-                    YEAR = ?
-                ''',(region,commune,idd,school,y))
-
+                    YEAR = ? AND 
+                    COMMUNE = ?
+                ''', (region, idd, school, y, commune))
     i += 1
     Wait.printProgressBar(i, len(data)-1,
-                        prefix='Progress:', suffix='Complete', length=50)
+                          prefix='Progress:', suffix='Complete', length=50)
 
 
 print("Insertion finished")
 con.commit()
 con.close()
-

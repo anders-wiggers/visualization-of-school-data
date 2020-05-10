@@ -110,7 +110,7 @@ def checkExistance(values):
     sqlCheckInstitutionQuery = '''
     SELECT ABSENCE
     FROM `INSTITUTION`
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
     '''
     c.execute(sqlCheckInstitutionQuery, values)
     fetchData = c.fetchall()
@@ -159,26 +159,26 @@ def checkAbsence(iddd, level):
         return True, idd
 
 
-def createEmptyAbsense(school, year):
+def createEmptyAbsense(school, year, commune):
     createEmptyAbsense = '''
     INSERT INTO absence (grad_school) 
     VALUES (NULL)
     '''
     insertToInstitution = '''
-    INSERT INTO INSTITUTION (NAME, YEAR, ABSENCE)
-    VALUES (?,?,?)
+    INSERT INTO INSTITUTION (NAME, YEAR, COMMUNE, ABSENCE)
+    VALUES (?,?,?,?)
     '''
     updateToInstitution = '''
     UPDATE INSTITUTION
     SET ABSENCE = ?
-    WHERE NAME = ? and YEAR = ?;
+    WHERE NAME = ? AND YEAR = ? AND COMMUNE = ?;
     '''
     c.execute(createEmptyAbsense)
     curid = c.lastrowid
     try:
-        c.execute(insertToInstitution, (school, year, curid))
+        c.execute(insertToInstitution, (school, year, commune, curid))
     except:
-        c.execute(updateToInstitution, (curid, school, year))
+        c.execute(updateToInstitution, (curid, school, year, commune))
 
 
 def createEmptySpecificAbsense(idd, level):
@@ -205,8 +205,8 @@ def insertDetailed(idd, absenceType, concreteID):
     c.execute(updateDetailed, (concreteID, idd))
 
 
-def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
-    isThere, idd = checkExistance((school, year))
+def insertIntoSpecificAbsence(school, year, commune, level, absenceType, concreteID):
+    isThere, idd = checkExistance((school, year, commune))
     if isThere and idd != None:
         # Table exist
         #print("school and year here id: " + str(idd))
@@ -218,12 +218,13 @@ def insertIntoSpecificAbsence(school, year, level, absenceType, concreteID):
             #print("is not here xd")
             createEmptySpecificAbsense(idd, level)
             insertIntoSpecificAbsence(
-                school, year, level, absenceType, concreteID)
+                school, year, commune, level, absenceType, concreteID)
     else:
         # Create Absense Entry
         #print("not here :(")
-        createEmptyAbsense(school, year)
-        insertIntoSpecificAbsence(school, year, level, absenceType, concreteID)
+        createEmptyAbsense(school, year, commune)
+        insertIntoSpecificAbsence(
+            school, year, commune, level, absenceType, concreteID)
 
 
 def calculateMeans():
@@ -314,15 +315,17 @@ def findYears(data):
             try:
                 str(data[col][rowWithYear]).split("/")[1]
                 rightRow = True
-                break
+
             except:
                 pass
-            rowWithYear = rowWithYear + 1
+        if(rightRow):
+            break
+        rowWithYear = rowWithYear + 1
 
-    print(rowWithYear)
     # preb data
     for col in data:
         year = data[col][rowWithYear]
+        print(year)
         try:
             year = str(year).split("/")[1]
 
@@ -335,7 +338,7 @@ def findYears(data):
                 year: arr
             })
         except:
-            print("not a year")
+            pass
 
     return years, rowWithYear
 
@@ -378,15 +381,14 @@ i = rowWithYear + 1
 Wait.printProgressBar(i, len(data)-1,
                       prefix='Progress:', suffix='Complete', length=50)
 
-decentdentCol = 'Unnamed: 5'
-schoolCol = 'Unnamed: 4'
-typeCol = 'Unnamed: 3'
-gradeLevel = 'Unnamed: 2'
+decentdentCol = 'Unnamed: 6'
+typeCol = 'Unnamed: 4'
+gradeLevel = 'Unnamed: 3'
 
 
 while i < len(data)-1:
-    school = data["Unnamed: 4"][i]
-    # print(school)
+    school = data["Unnamed: 5"][i]
+    commune = data["Unnamed: 2"][i]
 
     if str(school) == "nan":
         i += 1
@@ -423,6 +425,9 @@ while i < len(data)-1:
         absenceType = "sickleave"
     if absType == "Ulovligt fravær":
         absenceType = "illegal"
+    if absType == "nan":
+        i += 1
+        continue
 
     # RUNNING THROUGH YEARS
     for year in years:
@@ -443,16 +448,19 @@ while i < len(data)-1:
             if(dataType == "nan"):
                 avage = data[col][i+curCat]
             curCat += 1
-        # print(str(school) + " has in year " + year + " " + str(native) +
-        #       " " + str(imi) + " " + str(dec) + " " + str(avage) + " and was " + absenceType + " in the " + level)
+        # print(str(school) + " has in year " + year + " navtive:" + str(native) +
+        #       " imi:" + str(imi) + " dec:" + str(dec) + " and avage:" + str(avage) + " was " + absenceType + " in the " + level)
 
         curID = insertIntoDetailedAbsence(avage, native, imi, dec)
-        insertIntoSpecificAbsence(school, year, level, absenceType, curID)
+        insertIntoSpecificAbsence(
+            school, year, commune, level, absenceType, curID)
 
     i += amountOfCategories
-    # con.commit()
+
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
+
+con.commit()
 
 print("Caltulating Means...")
 

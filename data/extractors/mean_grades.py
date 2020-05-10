@@ -77,6 +77,35 @@ def insertIntoTable(name, year, boysAvage, girlsAvage, avage):
             ''', (boysAvage, girlsAvage, avage, grade_id))
 
 
+def insertIntoTableCommune(name, year, commune, boysAvage, girlsAvage, avage):
+    sqlCheckIfShcoolAndYearHasGrades = '''
+    SELECT GRADES
+    FROM `INSTITUTION`
+    WHERE NAME = ? and YEAR = ? and COMMUNE = ?;
+    '''
+    c.execute(sqlCheckIfShcoolAndYearHasGrades, (name, year, commune))
+    fetchData = c.fetchall()
+    if not fetchData or None in fetchData[0]:
+        # If nothing is here insert
+        # print("insert")
+        c.execute('''
+            INSERT INTO grades(male,female,mean)
+            VALUES(?,?,?) ''', (boysAvage, girlsAvage, avage))
+        curid = c.lastrowid
+        insertIntoInstructions(curid, name, year)
+    else:
+        # If record is here update
+        # print("update")
+        grade_id = fetchData[0][0]
+        c.execute('''
+            UPDATE grades
+            SET male = ?,
+                female = ?,
+                mean = ?
+            WHERE id = ?;
+            ''', (boysAvage, girlsAvage, avage, grade_id))
+
+
 def checkExistance(values):
     sqlCheckInstitutionQuery = '''
     SELECT NAME, YEAR
@@ -168,6 +197,10 @@ print(rowWithYear)
 def prebSchool(name):
     strArray = str(name).split(" ")
     if "(" in strArray[len(strArray)-1]:
+        commune = strArray[-1]
+        commune = commune.strip()
+        commune = commune.replace('(', '')
+        commune = commune.replace(')', '')
         del strArray[-1]
         nameMinusCounty = ""
         for s in strArray:
@@ -183,14 +216,14 @@ def prebSchool(name):
         if not fetchData:
             pass
         else:
-            return nameMinusCounty
-    return name
+            return nameMinusCounty, commune
+    return name, None
 
 
 print("Starting Inserstion")
 
 sex = "All"
-i = rowWithYear + 1
+i = rowWithYear
 
 Wait.printProgressBar(i, len(data)-1,
                       prefix='Progress:', suffix='Complete', length=50)
@@ -199,8 +232,8 @@ while i < len(data)-1:
     school = data["Skoletrin - Klassetrin"][i]
     toJump = 1
     if str(school) != "nan":
-        school = prebSchool(school)
-        print(school)
+        school, commune = prebSchool(school)
+
         for year in years:
             tempLengt = i
             schoolRunner = True
@@ -221,9 +254,13 @@ while i < len(data)-1:
                         toJump = toJump + 1
 
                     tempLengt = tempLengt + 1
-                insertIntoTable(school, year, boysAvage, girlsAvage, avage)
+                if commune:
+                    insertIntoTableCommune(school, year, commune,
+                                           boysAvage, girlsAvage, avage)
+                else:
+                    insertIntoTable(school, year, boysAvage, girlsAvage, avage)
     i = i + int(toJump / len(years))
-    con.commit()
+
     Wait.printProgressBar(i, len(data)-1,
                           prefix='Progress:', suffix='Complete', length=50)
 
