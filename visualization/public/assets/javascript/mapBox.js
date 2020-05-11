@@ -92,12 +92,15 @@ function zoomToFeature(e) {
 				}
 			}
 			map.on('move', function() {
+				inBounds = [];
 				var bounds = map.getBounds();
 				myLayer.eachLayer(function(marker) {
 					if (bounds.contains(marker.getLatLng())) {
+						
 						inBounds.push(marker.options.title);
 					}
 					addMarkerToList(inBounds)
+					console.log(inBounds)
 				});
 		});
 	});
