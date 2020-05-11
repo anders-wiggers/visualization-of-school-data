@@ -52,6 +52,7 @@ function resetHighlight(e) {
 }
 function zoomToFeature(e) {
 	map.fitBounds(e.target.getBounds());
+	var markers = L.markerClusterGroup();
 	fetch('/api/combine?commune=' + e.target.feature.properties.KOMNAVN + '&year=2018&data=information').then(function(
 		response
 	) {
@@ -75,13 +76,17 @@ function zoomToFeature(e) {
 						"<br><a href='data[i].website'>" +
 						data[i].website +
 						'</a>';
-					L.marker([ latitude, longitude ]).bindPopup(popInfo).openPopup().addTo(map);
+					var marker = L.marker([ latitude, longitude ]).bindPopup(popInfo).openPopup()
+					markers.addLayer(marker)
+			
 				} catch (err) {
 					console.log(err);
 				}
 			}
+			map.addLayer(markers)
 		});
 	});
+
 }
 function onEachFeature(feature, layer) {
 	layer.on({
