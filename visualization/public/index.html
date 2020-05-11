@@ -13,7 +13,16 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
+    <link rel="stylesheet" href="assets/libraries/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="assets/libraries/dist/MarkerCluster.Default.css" />
+    <script src="assets/libraries/dist/leaflet.markercluster.js"></script>
     <script src="/assets/javascript/leaflet.ajax.min.js"></script>
+    <script src="/assets/libraries/listMarkers.js"></script>
+    <link rel="stylesheet" href="/assets/libraries/dist/leaflet-list-markers.css">
+    <script src="/assets/libraries/dist/Control.MiniMap.min.js"></script>
+    <link rel="stylesheet" href="/assets/libraries/dist/Control.MiniMap.min.css"/>
+
+    
 </head>
 <body>
     <h1>Danmark Visualization</h1>
@@ -29,10 +38,14 @@
         </div>
         <mapContent></mapContent>
     </div>
+    <div id="MapListDiv">
+      <li id="mapLi"></li>
+    </div>
     <div>
         <chartContent></chartContent>
     </div>
     <script>
+        $.getScript("/assets/javascript/mapBox.js")
     $(document).ready(function(){
         $('.mapButton').click(function(){
             $.getScript("/assets/javascript/mapBox.js")
