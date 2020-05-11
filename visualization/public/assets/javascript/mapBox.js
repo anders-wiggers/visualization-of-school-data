@@ -7,7 +7,7 @@ var osmLayer = L.tileLayer(
 	}
 ).addTo(map);
 var mapJSON;
-fetch('kommuner.geojson')
+fetch('/assets/geojson/kommuner.geojson')
 	.then(function(response) {
 		if (response.status !== 200) {
 			console.log('Looks like there was a problem. Status Code: ' + response.status);
@@ -52,7 +52,7 @@ function resetHighlight(e) {
 }
 function zoomToFeature(e) {
 	map.fitBounds(e.target.getBounds());
-	var markers = L.markerClusterGroup();
+	//var markers = L.markerClusterGroup();
 	fetch('/api/combine?commune=' + e.target.feature.properties.KOMNAVN + '&year=2018&data=information').then(function(
 		response
 	) {
@@ -76,14 +76,14 @@ function zoomToFeature(e) {
 						"<br><a href='data[i].website'>" +
 						data[i].website +
 						'</a>';
-					var marker = L.marker([ latitude, longitude ]).bindPopup(popInfo).openPopup()
-					markers.addLayer(marker)
+					L.marker([ latitude, longitude ]).bindPopup(popInfo).openPopup().addTo(map)
+					//markers.addLayer(marker)
 			
 				} catch (err) {
 					console.log(err);
 				}
 			}
-			map.addLayer(markers)
+			//map.addLayer(markers)
 		});
 	});
 
