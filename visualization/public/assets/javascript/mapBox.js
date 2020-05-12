@@ -91,18 +91,7 @@ function zoomToFeature(e) {
 					console.log(err);
 				}
 			}
-			map.on('move', function() {
-				inBounds = [];
-				var bounds = map.getBounds();
-				myLayer.eachLayer(function(marker) {
-					if (bounds.contains(marker.getLatLng())) {
-						
-						inBounds.push(marker.options.title);
-					}
-					addMarkerToList(inBounds)
-					console.log(inBounds)
-				});
-		});
+		updateWhileMovingMap();	
 	});
 
 })
@@ -122,6 +111,22 @@ function addMarkerToList(list) {
 
 function clearList() {
 	$(document.getElementById('mapLi')).empty();
+}
+
+function updateWhileMovingMap() {
+	map.on('moveend', function() {
+		inBounds = [];
+		var bounds = map.getBounds();
+		myLayer.eachLayer(function(marker) {
+			if (bounds.contains(marker.getLatLng())) {
+				
+				inBounds.push(marker.options.title);
+			}
+			addMarkerToList(inBounds)
+			console.log(inBounds)
+		});
+});
+
 }
 
 function onEachFeature(feature, layer) {
