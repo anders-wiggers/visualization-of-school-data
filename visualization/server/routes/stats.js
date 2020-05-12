@@ -23,6 +23,7 @@ router.post('/grades', (req, res, next) => {
 
 	db.addScentedWidgetStat(fullArray, (data) => {
 		res.send(data);
+		console.log('added scent:' + fullArray);
 	});
 });
 
