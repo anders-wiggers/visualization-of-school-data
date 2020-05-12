@@ -99,9 +99,9 @@ function zoomToFeature(e) {
 						
 						inBounds.push(marker.options.title);
 					}
-					addMarkerToList(inBounds)
-					console.log(inBounds)
+					
 				});
+				addMarkerToList(inBounds)
 		});
 	});
 
@@ -114,11 +114,13 @@ function addMarkerToList(list) {
 	document.getElementById('mapLi').appendChild(ul);
 	list.forEach(function (item) {
 		let li = document.createElement('li');
+		console.log(list.length)
 		ul.appendChild(li);
 		li.innerHTML += item;	
 	
 })
 }
+
 
 function clearList() {
 	$(document.getElementById('mapLi')).empty();
