@@ -1,5 +1,4 @@
-
-.test{
+.test {
 	float: left;
 	font-family: sans-serif;
 	font-size: 12px;
@@ -8,22 +7,93 @@
 	background-color: tomato;
 }
 #map {
-	width: 960px;
-	height: 500px;
-  }
+	height: calc(100vh - (48px + 30px));
+}
 
-  .leaflet-overlay-pane svg path{
-    pointer-events: auto;
+.leaflet-overlay-pane svg path {
+	pointer-events: auto;
 }
 .info {
-    padding: 6px 8px;
-    font: 14px/16px Arial, Helvetica, sans-serif;
-    background: white;
-    background: rgba(255,255,255,0.8);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
+	padding: 6px 8px;
+	font: 14px/16px Arial, Helvetica, sans-serif;
+	background: white;
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
 }
 .info h4 {
-    margin: 0 0 5px;
-    color: #777;
+	margin: 0 0 5px;
+	color: #777;
+}
+
+.filter-deactivated {
+	background: #bfbfbf;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 5px;
+}
+
+#filterBox {
+	max-width: 60vw;
+
+	background: white;
+
+	padding: 10px;
+
+	position: fixed;
+
+	top: 83px;
+	border-radius: 5px;
+}
+
+.hidden {
+	display: none;
+	transition: all .5s ease-in-out;
+}
+
+.visible {
+	display: inline;
+	transition: all .5s ease-in-out;
+}
+
+.delayedShow {
+	visibility: hidden;
+	animation: 0s linear .5s forwards delayedShow;
+}
+
+.activeFilter {
+	background: #a0c3c8;
+	margin: 10px;
+	padding: 5px;
+	border-radius: 3px;
+	color: white;
+	cursor: pointer;
+	height: 150px;
+
+	transition: all .5s ease-in-out;
+}
+
+.deactiveFilter {
+	background: #cac8c8;
+	margin: 10px;
+	padding: 5px;
+	border-radius: 10px;
+	color: white;
+	height: 50px;
+
+	cursor: pointer;
+	transition: all .5s ease-in-out;
+}
+
+.filterH2 {
+	text-align: center;
+	font-size: 1.3em;
+	padding-top: 10px;
+	width: 300px;
+}
+
+@keyframes delayedShow {
+	to {
+		visibility: visible;
+	}
 }

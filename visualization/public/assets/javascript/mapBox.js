@@ -1,22 +1,22 @@
 // Now we create a map object and add a layer to it.
-var map = new L.Map('map')
-var osmUrl = 'https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=523123eab9074addb51cc220ddc9df2d'
-var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18})
+var map = new L.Map('map');
+var osmUrl = 'https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=523123eab9074addb51cc220ddc9df2d';
+var osm = new L.TileLayer(osmUrl, { minZoom: 5, maxZoom: 18 });
 
-map.addLayer(osm)
-map.setView(new L.LatLng(56.283, 10.491), 6.58)
+map.addLayer(osm);
+map.setView(new L.LatLng(56.283, 10.491), 6.58);
 
-var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom:13});
-var miniMap = new L.Control.MiniMap(osm2, {toggleDisplay:true}).addTo(map)
+var osm2 = new L.TileLayer(osmUrl, { minZoom: 0, maxZoom: 13 });
+var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(map);
 
 var mapJSON;
 var inBounds = [];
-let myLayer = new L.LayerGroup().addTo(map);
-let markers = myLayer.addTo(new L.markerClusterGroup());
+var myLayer = new L.LayerGroup().addTo(map);
+var markers = myLayer.addTo(new L.markerClusterGroup());
 var schoolIcon = L.icon({
 	iconUrl: '/assets/pictures/monuments.png',
-	iconSize: [30, 40]
-})
+	iconSize: [ 30, 40 ]
+});
 
 fetch('/assets/geojson/kommuner.geojson')
 	.then(function(response) {
@@ -39,6 +39,7 @@ fetch('/assets/geojson/kommuner.geojson')
 	.catch(function(err) {
 		console.log('Fetch Error :-S', err);
 	});
+
 function highlightFeature(e) {
 	var layer = e.target;
 
@@ -58,14 +59,14 @@ function resetHighlight(e) {
 	info.update();
 }
 function zoomToFeature(e) {
-	markers.clearLayers()
+	markers.clearLayers();
 	contained = [];
 	map.fitBounds(e.target.getBounds());
-	fetch('/api/combine?commune=' + e.target.feature.properties.KOMNAVN + '&year=2018&data=information').then(function(
+	fetch('/api/combine?commune=' + e.target.feature.properties.KOMNAVN + '&year=2019&data=information').then(function(
 		response
 	) {
 		response.json().then(function(data) {
-			console.log(data)
+			console.log(data);
 			var i;
 			for (i = 0; i < data.length; i++) {
 				try {
@@ -84,9 +85,11 @@ function zoomToFeature(e) {
 						"<br><a href='data[i].website'>" +
 						data[i].website +
 						'</a>';
-					let marker = L.marker([ latitude, longitude ], {icon: schoolIcon, title: data[i].NAME}).bindPopup(popInfo).openPopup()
-					markers.addLayer(marker)
-					this.map.addLayer(markers)				
+					let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: data[i].NAME })
+						.bindPopup(popInfo)
+						.openPopup();
+					markers.addLayer(marker);
+					this.map.addLayer(markers);
 				} catch (err) {
 					console.log(err);
 				}
@@ -96,47 +99,38 @@ function zoomToFeature(e) {
 				var bounds = map.getBounds();
 				myLayer.eachLayer(function(marker) {
 					if (bounds.contains(marker.getLatLng())) {
-						
 						inBounds.push(marker.options.title);
 					}
-					
 				});
-				addMarkerToList(inBounds)
+				addMarkerToList(inBounds);
+			});
 		});
 	});
-
-})
 }
 
 function addMarkerToList(list) {
-	clearList()
+	clearList();
 	ul = document.createElement('ul');
 	document.getElementById('mapLi').appendChild(ul);
-	list.forEach(function (item) {
+	list.forEach(function(item) {
 		let li = document.createElement('li');
-		console.log(list.length)
+		console.log(list.length);
 		ul.appendChild(li);
-		li.innerHTML += item;	
-	
-})
+		li.innerHTML += item;
+	});
 }
-
 
 function clearList() {
 	$(document.getElementById('mapLi')).empty();
 }
 
-
-
 function onEachFeature(feature, layer) {
 	layer.on({
 		mouseover: highlightFeature,
 		mouseout: resetHighlight,
-		click: zoomToFeature,
+		click: zoomToFeature
 	});
 }
-
-
 
 var info = L.control();
 

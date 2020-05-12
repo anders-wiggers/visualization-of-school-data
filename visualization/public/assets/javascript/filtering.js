@@ -59,54 +59,48 @@ function filter() {
 	function createElements(div) {
 		let outer = document.getElementById(div);
 		let h2 = document.createElement('h2');
+		h2.setAttribute('class', 'filterH2');
 		h2.innerText = title;
 
 		let innerDiv = document.createElement('div');
 		innerDiv.setAttribute('class', 'row align-items-center');
 
-		let textDiv = document.createElement('div');
-		textDiv.setAttribute('class', 'col-sm-2');
-
 		let widgetDiv = document.createElement('div');
 		widgetDiv.setAttribute('class', 'col-sm');
+		widgetDiv.setAttribute('id', 'col-sm');
 		let slider = document.createElement('div');
 		slider.setAttribute('id', `slider-${name}`);
+		slider.setAttribute('class', `hidden`);
 
 		let button = document.createElement('button');
 		button.innerText = `Submit ${name}-data`;
 		button.setAttribute('id', `button-${name}`);
 
 		outer.appendChild(h2);
-		innerDiv.appendChild(textDiv);
 		widgetDiv.appendChild(slider);
 		innerDiv.appendChild(widgetDiv);
 
 		outer.appendChild(innerDiv);
-		outer.appendChild(button);
 
-		document.getElementById(`button-${name}`).addEventListener('click', function() {
-			let xhr = new XMLHttpRequest();
-			xhr.open('POST', api, true);
-			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-			let sendData = {
-				dataArray: curData
-			};
-			// send the collected data as JSON
-			xhr.send(JSON.stringify(sendData));
-		});
+		// outer.appendChild(button);
+
+		// document.getElementById(`button-${name}`).addEventListener('click', function() {
+		// 	let xhr = new XMLHttpRequest();
+		// 	xhr.open('POST', api, true);
+		// 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+		// 	let sendData = {
+		// 		dataArray: curData
+		// 	};
+		// 	// send the collected data as JSON
+		// 	xhr.send(JSON.stringify(sendData));
+		// });
 	}
 
 	// Scented Widgets for meanGrade
 	function createSlider(dataSet) {
-		var width = 565;
-		var height = 120;
+		var width = 300;
+		var height = 100;
 		var margin = { top: 20, right: 50, bottom: 50, left: 40 };
-
-		// DATA SET
-		var dataNewYorkTimes = d3.range(1, 41).map((d) => ({
-			year: d,
-			value: 10000 * Math.exp(-(d - 1) / 40)
-		}));
 
 		// create svg
 		var svg = d3.select(`div#slider-${name}`).append('svg').attr('width', width).attr('height', height);
@@ -169,6 +163,7 @@ function filter() {
 		var draw = (selected) => {
 			curData = selected;
 			filteringParameters[name] = curData;
+			filterData();
 			barsEnter
 				.merge(bars)
 				.attr('fill', (d) => (d.year < selected[0] || d.year > selected[1] ? '#e0e0e0' : '#bad80a'));
