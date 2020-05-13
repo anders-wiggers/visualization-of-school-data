@@ -3,6 +3,7 @@ const path = require('path');
 const dbName = path.join(__dirname, '../../../data/db/full_database.db');
 const db = new sqlite3.Database(dbName);
 const dbStructure = require('./school_database_stucture.json').INSTITUTION;
+const nonDrillable = require('./school_database_stucture.json').nonDrillable;
 
 class SchoolData {
 	//Gets all schools
@@ -76,6 +77,11 @@ class SchoolData {
 		// Test if query has data entries
 		if (inputArray[0]) {
 			for (let i of inputArray[0]) {
+				//Test if item is non drillable, if so add to table to get
+				if (nonDrillable.includes(i[0])) {
+					tablesToGet = `${tablesToGet}, ${i} `;
+					continue;
+				}
 				//test if query has drill command
 				if (Array.isArray(i)) {
 					let drillMap = dbStructure[i[0]];

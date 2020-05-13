@@ -142,7 +142,8 @@ Name | Contains
 **planned_hours** | planned hours for each class 
 **socioeconomic** | ability to drill to more information on the soc spec
 **information** | ability to drill to more information on the soc spec
-
+**attent_higher_edu** | amount of student which has continued to a higher education withing 15 month
+**competence_coverage** | percent of cources tought by a teach with a competence level equal to the requirements 
 ---
 * year
 ```html
