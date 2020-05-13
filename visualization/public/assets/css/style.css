@@ -46,6 +46,7 @@
 	border-radius: 5px;
 }
 
+
 .hidden {
 	display: none;
 	transition: all .5s ease-in-out;
@@ -96,4 +97,15 @@
 	to {
 		visibility: visible;
 	}
+}
+
+
+#communeSelector{
+	max-width: 60vw;
+	background: white;
+	padding: 10px;
+	position: fixed;
+	top: 83px;
+	border-radius: 5px;
+	margin-top: 160px;
 }
