@@ -70,22 +70,15 @@
             <div id="grades" class="deactiveFilter"></div>
             <div id="students" class="deactiveFilter"></div>
         </div>
+        <div id="communeSelector" class="active">
+            <div>
+                <h1>Kommunes</h1>
+                <div id="kommunes">
+                </div>
+                <button id="markerButton">Continue</button>
+            </div>
         </div>
-    </div>
-
-  
-
-    <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Tryk for at se skoler i sigte
-        </a>
-      
-        <div class="dropdown-menu" id="mapLi" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="#"></a>
         </div>
-      </div>
-    <div>
-        <chartContent></chartContent>
     </div>
     <script>
         $.getScript("/assets/javascript/mapBox.js")
