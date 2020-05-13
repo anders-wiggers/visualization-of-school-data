@@ -1,5 +1,7 @@
 'use strict';
 
+var fullInfoData = [];
+var selectedCommunes = [];
 var avarageGrade = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
@@ -26,15 +28,19 @@ meanGradeBtn.addEventListener('click', () => {
 
 		gradeStatus = !gradeStatus;
 
-		let commune = 'Svendborg';
+		let commune = selectedCommunes[0];
 		fetch(`api/combine?commune=${commune}&year=2019&data=information:grades`).then((res) => {
 			res.json().then((data) => {
 				avarageGrade = data;
+				filterData();
 			});
 		});
 	} else {
 		meanGradeBtn.setAttribute('class', 'deactiveFilter');
 		document.getElementById('slider-grades').setAttribute('class', 'hidden');
+		for (let s of fullInfoData) {
+			addMarker(s);
+		}
 
 		gradeStatus = !gradeStatus;
 	}
@@ -71,27 +77,7 @@ function filterData() {
 		}
 		markers.clearLayers();
 		for (let s of SchoolsToShow) {
-			let latitude = parseFloat(s.latitude);
-			let longitude = parseFloat(s.longitude);
-			try {
-				let popInfo =
-					'<b>Information</b><br>School: ' +
-					s.NAME +
-					'<br>Adress: ' +
-					s.address +
-					'<br>Mail: ' +
-					s.mail +
-					'<br>Phone number: ' +
-					s.phone +
-					"<br><a href='data[i].website'>" +
-					s.website +
-					'</a>';
-				let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: s.NAME })
-					.bindPopup(popInfo)
-					.openPopup();
-				markers.addLayer(marker);
-				map.addLayer(markers);
-			} catch (err) {}
+			addMarker(s);
 		}
 
 		for (let s of AllSchools) {
@@ -100,4 +86,28 @@ function filterData() {
 	if (studentStatus) {
 		console.log('filter students');
 	}
+}
+
+function addMarker(s) {
+	let latitude = parseFloat(s.latitude);
+	let longitude = parseFloat(s.longitude);
+	try {
+		let popInfo =
+			'<b>Information</b><br>School: ' +
+			s.NAME +
+			'<br>Adress: ' +
+			s.address +
+			'<br>Mail: ' +
+			s.mail +
+			'<br>Phone number: ' +
+			s.phone +
+			"<br><a href='data[i].website'>" +
+			s.website +
+			'</a>';
+		let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: s.NAME })
+			.bindPopup(popInfo)
+			.openPopup();
+		markers.addLayer(marker);
+		map.addLayer(markers);
+	} catch (err) {}
 }

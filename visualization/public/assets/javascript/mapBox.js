@@ -59,6 +59,7 @@ function resetHighlight(e) {
 	info.update();
 }
 function zoomToFeature(e) {
+	selectedCommunes.push(e.target.feature.properties.KOMNAVN);
 	markers.clearLayers();
 	contained = [];
 	map.fitBounds(e.target.getBounds());
@@ -66,6 +67,7 @@ function zoomToFeature(e) {
 		response
 	) {
 		response.json().then(function(data) {
+			fullInfoData = data;
 			console.log(data);
 			var i;
 			for (i = 0; i < data.length; i++) {
