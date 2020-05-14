@@ -164,6 +164,7 @@ info.update = function(props) {
 info.addTo(map);
 document.getElementById('markerButton').onclick = function(e) {
 	fetchMarkersAndPlaceOnMap();
+	console.log(test);
 };
 
 function fetchMarkersAndPlaceOnMap() {
