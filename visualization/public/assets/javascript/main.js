@@ -1,7 +1,7 @@
 'use strict';
 
 var fullInfoData = [];
-var selectedCommunes = [];
+var selectedCommunesNames = [];
 var avarageGrade = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
@@ -28,13 +28,15 @@ meanGradeBtn.addEventListener('click', () => {
 
 		gradeStatus = !gradeStatus;
 
-		let commune = selectedCommunes[0];
-		fetch(`api/combine?commune=${commune}&year=2019&data=information:grades`).then((res) => {
+		//let commune = selectedCommunesNames[0];
+		for(var i = 0; i < selectedCommunesNames.length; i++){
+		fetch(`api/combine?commune=${selectedCommunesNames[i]}&year=2019&data=information:grades`).then((res) => {
 			res.json().then((data) => {
 				avarageGrade = data;
 				filterData();
 			});
 		});
+	}
 	} else {
 		meanGradeBtn.setAttribute('class', 'deactiveFilter');
 		document.getElementById('slider-grades').setAttribute('class', 'hidden');
@@ -104,10 +106,11 @@ function addMarker(s) {
 			"<br><a href='data[i].website'>" +
 			s.website +
 			'</a>';
-		let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: s.NAME })
+		let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: s.NAME})
 			.bindPopup(popInfo)
 			.openPopup();
 		markers.addLayer(marker);
 		map.addLayer(markers);
+
 	} catch (err) {}
 }
