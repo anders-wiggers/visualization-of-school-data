@@ -84,9 +84,9 @@ function drawOnMap(input) {
 				weight: 1,
 				color: 'red'
 			});
+			selectedCommunes.push(object);
 		}
 	}
-	selectedCommunes.push(object);
 }
 
 function resetHighlight(e) {
@@ -149,6 +149,8 @@ function determineWhatHappensOnClick(e) {
 			if (e.target.feature.properties.KOMNAVN === geojson._layers[k].feature.properties.KOMNAVN) {
 				selectedCommunes.push(geojson._layers[k]);
 				object = geojson._layers[k];
+				fullInfoData = [];
+				addMarker(fullInfoData);
 				object.setStyle({
 					weight: 1,
 					color: 'red'
@@ -160,17 +162,21 @@ function determineWhatHappensOnClick(e) {
 		selectedCommunesNames.push(e.target.feature.properties.KOMNAVN);
 		addKommunesToList(selectedCommunesNames);
 	} else {
+		for (var k in selectedCommunes) {
+			console.log(selectedCommunes[k].length);
+			//selectedCommunes.splice(selectedCommunes.indexOf(selectedCommunes[k].feature.properties.KOMNAVN), 2);
+		}
 		selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
-		console.log('should remove from list');
 		addKommunesToList(selectedCommunesNames);
+		selectedCommunes = [];
 		for (var s in geojson._layers) {
 			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+				drawOnMap(selectedCommunes[s]);
 				object = geojson._layers[s];
 				object.setStyle({
 					weight: 0.01,
 					color: 'white'
 				});
-				markers.clearLayers();
 			}
 		}
 	}
@@ -199,55 +205,58 @@ document.getElementById('markerButton').onclick = function(e) {
 function fetchMarkersAndPlaceOnMap() {
 	markers.clearLayers();
 	contained = [];
-	for (var j in selectedCommunes) {
-		boundArray.push(selectedCommunes[j]);
-		var group = new L.featureGroup(boundArray);
-		map.fitBounds(group.getBounds());
-	}
-	let i;
-	queryArray.push(selectedCommunesNames.join('_'));
-	fetch('/api/combine?commune=' + queryArray[queryArray.length - 1] + '&year=2019&data=information').then(function(
-		response
-	) {
-		response.json().then(function(data) {
-			fullInfoData = data;
-			var i;
-			for (i = 0; i < data.length; i++) {
-				try {
-					let latitude = parseFloat(data[i].latitude);
-					let longitude = parseFloat(data[i].longitude);
+	if (selectedCommunes.length == 0) {
+		alert('Please insert a commune to look-up');
+	} else {
+		for (var j in selectedCommunes) {
+			boundArray.push(selectedCommunes[j]);
+			var group = new L.featureGroup(boundArray);
+			map.fitBounds(group.getBounds());
+		}
+		queryArray.push(selectedCommunesNames.join('_'));
+		fetch(
+			'/api/combine?commune=' + queryArray[queryArray.length - 1] + '&year=2019&data=information'
+		).then(function(response) {
+			response.json().then(function(data) {
+				fullInfoData = data;
+				var i;
+				for (i = 0; i < data.length; i++) {
+					try {
+						let latitude = parseFloat(data[i].latitude);
+						let longitude = parseFloat(data[i].longitude);
 
-					let popInfo =
-						'<b>Information</b><br>School: ' +
-						data[i].NAME +
-						'<br>Adress: ' +
-						data[i].address +
-						'<br>Mail: ' +
-						data[i].mail +
-						'<br>Phone number: ' +
-						data[i].phone +
-						"<br><a href='data[i].website'>" +
-						data[i].website +
-						'</a>';
-					let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: data[i].NAME })
-						.bindPopup(popInfo)
-						.openPopup();
-					markers.addLayer(marker);
-					this.map.addLayer(markers);
-				} catch (err) {
-					console.log(err, 'some err');
-				}
-			}
-
-			map.on('moveend', function() {
-				inBounds = [];
-				var bounds = map.getBounds();
-				myLayer.eachLayer(function(marker) {
-					if (bounds.contains(marker.getLatLng())) {
-						inBounds.push(marker.options.kommune);
+						let popInfo =
+							'<b>Information</b><br>School: ' +
+							data[i].NAME +
+							'<br>Adress: ' +
+							data[i].address +
+							'<br>Mail: ' +
+							data[i].mail +
+							'<br>Phone number: ' +
+							data[i].phone +
+							"<br><a href='data[i].website'>" +
+							data[i].website +
+							'</a>';
+						let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: data[i].NAME })
+							.bindPopup(popInfo)
+							.openPopup();
+						markers.addLayer(marker);
+						this.map.addLayer(markers);
+					} catch (err) {
+						console.log(err, 'some err');
 					}
+				}
+
+				map.on('moveend', function() {
+					inBounds = [];
+					var bounds = map.getBounds();
+					myLayer.eachLayer(function(marker) {
+						if (bounds.contains(marker.getLatLng())) {
+							inBounds.push(marker.options.kommune);
+						}
+					});
 				});
 			});
 		});
-	});
+	}
 }
