@@ -13,6 +13,7 @@ function filter() {
 	let gStep = document.currentScript.getAttribute('gstep');
 	let gTick = document.currentScript.getAttribute('gtick');
 	let gDefault = document.currentScript.getAttribute('gdefault');
+	let version = parseInt(document.currentScript.getAttribute('version'));
 
 	if (!gDefault) {
 		gDefault = [ 2, 10 ];
@@ -23,6 +24,10 @@ function filter() {
 	if (!gColor) {
 		gColor = '#bad80a';
 	}
+	if (!version) {
+		version = 2;
+	}
+
 	if (!gIndex) {
 		gIndex = 0;
 	}
@@ -39,18 +44,48 @@ function filter() {
 	fetch(api).then((res) => {
 		res.json().then(function(data) {
 			data = data[0];
-
 			let dataSet = [];
-			let counter = gIndex;
-			for (let d in data) {
-				if (d === 'id') continue;
-				dataSet.push({
-					year: counter,
-					value: data[d]
-				});
-				counter++;
-			}
 
+			if (version === 1) {
+				let counter = gIndex;
+				for (let d in data) {
+					if (d === 'id') continue;
+					dataSet.push({
+						year: counter,
+						value: data[d]
+					});
+					counter++;
+				}
+			}
+			if (version === 2) {
+				let valArray = [];
+				for (let d in data) {
+					let values;
+					if (d === 'id') continue;
+					if (d[0] === '_') {
+						values = d.substr(1);
+					} else {
+						values = d.substr(1);
+						values = `-${values}`;
+					}
+					valArray.push(parseInt(values));
+				}
+				valArray.sort(function(a, b) {
+					return a - b;
+				});
+				for (let val of valArray) {
+					let fetchVal = '';
+					if (val < 0) {
+						fetchVal = `m${val}`;
+					} else {
+						fetchVal = `_${val}`;
+					}
+					dataSet.push({
+						year: val,
+						value: data[fetchVal]
+					});
+				}
+			}
 			createElements(name);
 			createSlider(dataSet);
 		});
@@ -82,18 +117,18 @@ function filter() {
 
 		outer.appendChild(innerDiv);
 
-		// outer.appendChild(button);
+		outer.appendChild(button);
 
-		// document.getElementById(`button-${name}`).addEventListener('click', function() {
-		// 	let xhr = new XMLHttpRequest();
-		// 	xhr.open('POST', api, true);
-		// 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-		// 	let sendData = {
-		// 		dataArray: curData
-		// 	};
-		// 	// send the collected data as JSON
-		// 	xhr.send(JSON.stringify(sendData));
-		// });
+		document.getElementById(`button-${name}`).addEventListener('click', function() {
+			let xhr = new XMLHttpRequest();
+			xhr.open('POST', api, true);
+			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+			let sendData = {
+				dataArray: curData
+			};
+			// send the collected data as JSON
+			xhr.send(JSON.stringify(sendData));
+		});
 	}
 
 	// Scented Widgets for meanGrade
@@ -163,7 +198,10 @@ function filter() {
 		var draw = (selected) => {
 			curData = selected;
 			filteringParameters[name] = curData;
-			filterData();
+			try {
+				filterData();
+			} catch (error) {}
+
 			barsEnter
 				.merge(bars)
 				.attr('fill', (d) => (d.year < selected[0] || d.year > selected[1] ? '#e0e0e0' : '#bad80a'));

@@ -26,6 +26,12 @@ db.serialize(() => {
         twe REAL
     )
 `);
+
+	db.run(`
+    CREATE TABLE IF NOT EXISTS scented_students(
+        id INTEGER PRIMARY KEY
+    )
+`);
 });
 
 class statistics {
@@ -81,6 +87,98 @@ class statistics {
 			`
 		        SELECT *
 		        FROM scented_mean_grade
+		        ORDER BY id DESC
+		        LIMIT 1;
+		`,
+			(err, data) => {
+				callback(data);
+			}
+		);
+	}
+
+	static addScentedWidget(table, array, callback) {
+		let select = '';
+
+		for (let a of array) {
+			let add;
+			if (a < 0) add = `m${a * -1}`;
+			else add = `_${a}`;
+			select = `${select} , ${add}`;
+
+			db.run(
+				`
+				ALTER TABLE ${table}
+				ADD COLUMN ${add} INTEGER
+			`,
+				(err) => {}
+			);
+		}
+
+		db.all(
+			`
+		        SELECT *
+		        FROM ${table}
+		        ORDER BY id DESC
+		        LIMIT 1;
+		`,
+			(err, data) => {
+				if (err) {
+					this.addScentedWidget(table, array, callback);
+				} else {
+					let values = '';
+					let tables = '';
+					console.log(data[0]);
+					if (!data[0]) {
+						console.log('empty');
+						for (let a of array) {
+							let add;
+							if (a < 0) add = `m${a * -1}`;
+							else add = `_${a}`;
+							values = `${values}, ${1}`;
+							tables = `${tables}, ${add}`;
+						}
+					} else {
+						for (let d in data[0]) {
+							if (d === 'id') continue;
+
+							let d_number;
+							if (d[0] === 'm') {
+								d_number = d.substr(1);
+								d_number = `-${d_number}`;
+							} else {
+								d_number = d.substr(1);
+							}
+							console.log('dnumb: ' + d_number);
+							console.log(array);
+							if (array.includes(parseInt(d_number))) {
+								values = `${values}, ${data[0][d] + 1}`;
+							} else {
+								values = `${values}, ${data[0][d]}`;
+								console.log('here');
+							}
+							tables = `${tables}, ${d}`;
+						}
+					}
+
+					values = values.substr(1);
+					tables = tables.substr(2);
+					let query = `INSERT INTO ${table} (${tables})
+								VALUES (${values})`;
+
+					console.log(query);
+					db.run(query, (err, data) => {
+						callback(data);
+					});
+				}
+			}
+		);
+	}
+
+	static getScentedWidget(table, callback) {
+		db.all(
+			`
+		        SELECT *
+		        FROM ${table}
 		        ORDER BY id DESC
 		        LIMIT 1;
 		`,
