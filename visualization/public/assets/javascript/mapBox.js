@@ -9,6 +9,7 @@ map.setView(new L.LatLng(56.283, 10.491), 6.58);
 var osm2 = new L.TileLayer(osmUrl, { minZoom: 0, maxZoom: 13 });
 var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(map);
 var boundArraySecond = [];
+var queryArray = [];
 var allCommuneObjects = [];
 var selectedCommunes = [];
 var stylingCommune = [];
@@ -204,50 +205,49 @@ function fetchMarkersAndPlaceOnMap() {
 		map.fitBounds(group.getBounds());
 	}
 	let i;
-	for (i = 0; i < selectedCommunesNames.length; i++) {
-		fetch('/api/combine?commune=' + selectedCommunesNames[i] + '&year=2019&data=information').then(function(
-			response
-		) {
-			response.json().then(function(data) {
-				fullInfoData = data;
-				var i;
-				for (i = 0; i < data.length; i++) {
-					try {
-						let latitude = parseFloat(data[i].latitude);
-						let longitude = parseFloat(data[i].longitude);
+	queryArray.push(selectedCommunesNames.join('_'));
+	fetch('/api/combine?commune=' + queryArray[queryArray.length - 1] + '&year=2019&data=information').then(function(
+		response
+	) {
+		response.json().then(function(data) {
+			fullInfoData = data;
+			var i;
+			for (i = 0; i < data.length; i++) {
+				try {
+					let latitude = parseFloat(data[i].latitude);
+					let longitude = parseFloat(data[i].longitude);
 
-						let popInfo =
-							'<b>Information</b><br>School: ' +
-							data[i].NAME +
-							'<br>Adress: ' +
-							data[i].address +
-							'<br>Mail: ' +
-							data[i].mail +
-							'<br>Phone number: ' +
-							data[i].phone +
-							"<br><a href='data[i].website'>" +
-							data[i].website +
-							'</a>';
-						let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: data[i].NAME })
-							.bindPopup(popInfo)
-							.openPopup();
-						markers.addLayer(marker);
-						this.map.addLayer(markers);
-					} catch (err) {
-						console.log(err, 'some err');
-					}
+					let popInfo =
+						'<b>Information</b><br>School: ' +
+						data[i].NAME +
+						'<br>Adress: ' +
+						data[i].address +
+						'<br>Mail: ' +
+						data[i].mail +
+						'<br>Phone number: ' +
+						data[i].phone +
+						"<br><a href='data[i].website'>" +
+						data[i].website +
+						'</a>';
+					let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: data[i].NAME })
+						.bindPopup(popInfo)
+						.openPopup();
+					markers.addLayer(marker);
+					this.map.addLayer(markers);
+				} catch (err) {
+					console.log(err, 'some err');
 				}
+			}
 
-				map.on('moveend', function() {
-					inBounds = [];
-					var bounds = map.getBounds();
-					myLayer.eachLayer(function(marker) {
-						if (bounds.contains(marker.getLatLng())) {
-							inBounds.push(marker.options.kommune);
-						}
-					});
+			map.on('moveend', function() {
+				inBounds = [];
+				var bounds = map.getBounds();
+				myLayer.eachLayer(function(marker) {
+					if (bounds.contains(marker.getLatLng())) {
+						inBounds.push(marker.options.kommune);
+					}
 				});
 			});
 		});
-	}
+	});
 }
