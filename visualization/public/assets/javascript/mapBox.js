@@ -11,6 +11,7 @@ var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(map);
 var boundArraySecond = [];
 var allCommuneObjects = [];
 var selectedCommunes = [];
+var stylingCommune = [];
 var selectedCommunesNames = [];
 var nameOfAllCommunes = [];
 let boundArray = [];
@@ -35,9 +36,7 @@ fetch('/assets/geojson/kommuner.geojson')
 
 		response.json().then(function(data) {
 			for (var i = 0; i < data.features.length; i++) {
-				if (nameOfAllCommunes.includes(data.features[i].properties.KOMNAVN) === false)
-					nameOfAllCommunes.push(data.features[i].properties.KOMNAVN);
-				allCommuneObjects.push(data.features[i]);
+				nameOfAllCommunes.push(data.features[i].properties.KOMNAVN);
 			}
 			mapJSON = data;
 			geojson = L.geoJson(mapJSON, {
@@ -54,11 +53,16 @@ fetch('/assets/geojson/kommuner.geojson')
 	});
 
 function highlightFeature(e) {
+	for (var s in geojson._layers) {
+		if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+			object = geojson._layers[s];
+			object.setStyle({
+				weight: 1,
+				color: 'red'
+			});
+		}
+	}
 	var layer = e.target;
-	layer.setStyle({
-		weight: 1,
-		color: 'red'
-	});
 
 	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 		layer.bringToFront();
@@ -83,8 +87,15 @@ function drawOnMap(input) {
 function resetHighlight(e) {
 	if (selectedCommunesNames.includes(e.target.feature.properties.KOMNAVN) === true) {
 	} else {
-		geojson.resetStyle(e.target);
-
+		for (var s in geojson._layers) {
+			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+				var object = geojson._layers[s];
+				object.setStyle({
+					weight: 0.01,
+					color: 'white'
+				});
+			}
+		}
 		info.update();
 	}
 }
@@ -125,24 +136,38 @@ function onEachFeature(feature, layer) {
 }
 
 function determineWhatHappensOnClick(e) {
+	for (var k in geojson._layers) {
+		//Check for duplicates in allCommuneObject array
+		if (allCommuneObjects.includes(geojson._layers[k].feature.properties.KOMNAVN) === false) {
+			allCommuneObjects.push(geojson._layers[k]);
+			//If the mouseOver target has multiple layers, draw them all
+			if (e.target.feature.properties.KOMNAVN === geojson._layers[k].feature.properties.KOMNAVN) {
+				selectedCommunes.push(geojson._layers[k]);
+				object = geojson._layers[k];
+				object.setStyle({
+					weight: 1,
+					color: 'red'
+				});
+			}
+		}
+	}
 	if (selectedCommunesNames.includes(e.target.feature.properties.KOMNAVN) === false) {
-		selectedCommunes.push(e.target);
 		selectedCommunesNames.push(e.target.feature.properties.KOMNAVN);
-		selectMultiple = true;
 		addKommunesToList(selectedCommunesNames);
-		e.target.setStyle({
-			weight: 1,
-			color: 'red'
-		});
-		console.log('im clicking');
 	} else {
 		selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
+		console.log('should remove from list');
 		addKommunesToList(selectedCommunesNames);
-		e.target.setStyle({
-			weight: 0.01,
-			color: 'white'
-		});
-		markers.clearLayers();
+		for (var s in geojson._layers) {
+			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+				object = geojson._layers[s];
+				object.setStyle({
+					weight: 0.01,
+					color: 'white'
+				});
+				markers.clearLayers();
+			}
+		}
 	}
 }
 
@@ -164,19 +189,16 @@ info.update = function(props) {
 info.addTo(map);
 document.getElementById('markerButton').onclick = function(e) {
 	fetchMarkersAndPlaceOnMap();
-	console.log(test);
 };
 
 function fetchMarkersAndPlaceOnMap() {
 	markers.clearLayers();
 	contained = [];
-	for (let i = 0; i < selectedCommunes.length; i++) {
-		boundArray.push(selectedCommunes[i]);
-		console.log(boundArray);
+	for (var j in selectedCommunes) {
+		boundArray.push(selectedCommunes[j]);
 		var group = new L.featureGroup(boundArray);
 		map.fitBounds(group.getBounds());
 	}
-	console.log(selectedCommunes);
 	let i;
 	for (i = 0; i < selectedCommunesNames.length; i++) {
 		fetch('/api/combine?commune=' + selectedCommunesNames[i] + '&year=2019&data=information').then(function(

@@ -33,7 +33,7 @@ new autoComplete({
 			source.setAttribute('id', 'food_list');
 		},
 		destination: document.querySelector('#autoComplete'),
-		position: 'beforebegin',
+		position: 'afterend',
 		element: 'ul'
 	},
 	maxResults: 100, // Max. number of rendered results | (Optional)
