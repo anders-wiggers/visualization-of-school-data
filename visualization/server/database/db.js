@@ -43,50 +43,93 @@ class SchoolData {
 
 		let selector = 'WHERE';
 
+		let commands = [];
+
+		let ss = [];
+		try {
+			ss = inputArray[4].split('_');
+		} catch (err) {}
+
+		for (let s of ss) {
+			if (inputArray[1]) {
+				commands.push(`NAME = "${inputArray[1]}"`);
+			}
+
+			if (inputArray[2]) {
+				commands.push(`YEAR = "${inputArray[2]}"`);
+			}
+
+			if (inputArray[3]) {
+				commands.push(`REGION = "${inputArray[3]}"`);
+			}
+
+			if (inputArray[4]) {
+				commands.push(`COMMUNE = "${s}"`);
+			}
+
+			commands.push(`OR`);
+		}
+
+		commands.pop();
+		for (let c in commands) {
+			if (commands[c] === 'OR') {
+				selector += ' ' + commands[c];
+				continue;
+			}
+			if (selector === 'WHERE') {
+				selector += ' ' + commands[c];
+				continue;
+			}
+			if (commands[c - 1] === 'OR') selector += ` ${commands[c]}`;
+			else {
+				selector += ` AND ${commands[c]}`;
+			}
+		}
+
 		// Choose schools and years
-		if (inputArray[1]) {
-			selector += ` NAME = "${inputArray[1]}"`;
-		}
+		// if (inputArray[1]) {
+		// 	selector += ` NAME = "${inputArray[1]}"`;
+		// }
 
-		if (inputArray[2]) {
-			if (selector !== 'WHERE') {
-				selector += ` AND YEAR = "${inputArray[2]}"`;
-			} else {
-				selector += ` YEAR = "${inputArray[2]}"`;
-			}
-		}
+		// if (inputArray[2]) {
+		// 	if (selector !== 'WHERE') {
+		// 		selector += ` AND YEAR = "${inputArray[2]}"`;
+		// 	} else {
+		// 		selector += ` YEAR = "${inputArray[2]}"`;
+		// 	}
+		// }
 
-		if (inputArray[3]) {
-			if (selector !== 'WHERE') {
-				selector += ` AND REGION = "${inputArray[3]}"`;
-			} else {
-				selector += ` REGION = "${inputArray[3]}"`;
-			}
-		}
+		// if (inputArray[3]) {
+		// 	if (selector !== 'WHERE') {
+		// 		selector += ` AND REGION = "${inputArray[3]}"`;
+		// 	} else {
+		// 		selector += ` REGION = "${inputArray[3]}"`;
+		// 	}
+		// }
 
-		if (inputArray[4]) {
-			let communes = [];
-			try {
-				communes = inputArray[4].split('_');
-				let first = true;
-				for (let c of communes) {
-					if (selector !== 'WHERE' && first) {
-						selector += ` AND COMMUNE = "${c}"`;
-						first = false;
-					} else if (selector !== 'WHERE' && !first) {
-						selector += ` OR COMMUNE = "${c}"`;
-					} else {
-						selector += ` COMMUNE = "${c}"`;
-					}
-				}
-			} catch (error) {
-				if (selector !== 'WHERE') {
-					selector += ` AND COMMUNE = "${inputArray[4]}"`;
-				} else {
-					selector += ` COMMUNE = "${inputArray[4]}"`;
-				}
-			}
-		}
+		// if (inputArray[4]) {
+		// 	let communes = [];
+		// 	try {
+		// 		communes = inputArray[4].split('_');
+		// 		let first = true;
+		// 		for (let c of communes) {
+		// 			if (selector !== 'WHERE' && first) {
+		// 				selector += ` AND COMMUNE = "${c}"`;
+		// 				first = false;
+		// 			} else if (selector !== 'WHERE' && !first) {
+		// 				selector += ` OR COMMUNE = "${c}"`;
+		// 			} else {
+		// 				selector += ` COMMUNE = "${c}"`;
+		// 			}
+		// 		}
+		// 	} catch (error) {
+		// 		if (selector !== 'WHERE') {
+		// 			selector += ` AND COMMUNE = "${inputArray[4]}"`;
+		// 		} else {
+		// 			selector += ` COMMUNE = "${inputArray[4]}"`;
+		// 		}
+		// 	}
+		// }
 
 		if (selector === 'WHERE') selector = '';
 
