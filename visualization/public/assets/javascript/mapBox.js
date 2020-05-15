@@ -18,6 +18,7 @@ var nameOfAllCommunes = [];
 let boundArray = [];
 let selectMultiple = false;
 var mapJSON;
+var lastElement;
 var geojson;
 var inBounds = [];
 var markers = new L.markerClusterGroup({
@@ -212,10 +213,10 @@ function fetchMarkersAndPlaceOnMap() {
 			var group = new L.featureGroup(boundArray);
 			map.fitBounds(group.getBounds());
 		}
-		queryArray.push(selectedCommunesNames.join('_'));
-		fetch(
-			'/api/combine?commune=' + queryArray[queryArray.length - 1] + '&year=2019&data=information'
-		).then(function(response) {
+
+		fetch('/api/combine?commune=' + selectedCommunesNames.join('_') + '&year=2019&data=information').then(function(
+			response
+		) {
 			response.json().then(function(data) {
 				fullInfoData = data;
 				var i;
