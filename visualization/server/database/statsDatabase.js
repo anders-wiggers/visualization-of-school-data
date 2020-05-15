@@ -28,10 +28,34 @@ db.serialize(() => {
 `);
 
 	db.run(`
-    CREATE TABLE IF NOT EXISTS scented_students(
-        id INTEGER PRIMARY KEY
-    )
-`);
+		CREATE TABLE IF NOT EXISTS scented_students
+		(id INTEGER PRIMARY KEY)
+	`);
+
+	db.run(`
+		CREATE TABLE IF NOT EXISTS scented_absence
+		(id INTEGER PRIMARY KEY)
+	`);
+
+	db.run(`
+		CREATE TABLE IF NOT EXISTS scented_well_being
+		(id INTEGER PRIMARY KEY)
+	`);
+
+	db.run(`
+		CREATE TABLE IF NOT EXISTS scented_planned_hours
+		(id INTEGER PRIMARY KEY)
+	`);
+
+	db.run(`
+		CREATE TABLE IF NOT EXISTS scented_socieconomic
+		(id INTEGER PRIMARY KEY)
+	`);
+
+	db.run(`
+		CREATE TABLE IF NOT EXISTS scented_competence_coverage
+		(id INTEGER PRIMARY KEY)
+	`);
 });
 
 class statistics {
@@ -110,7 +134,9 @@ class statistics {
 				ALTER TABLE ${table}
 				ADD COLUMN ${add} INTEGER
 			`,
-				(err) => {}
+				(err) => {
+					// console.log(err);
+				}
 			);
 		}
 
@@ -127,9 +153,9 @@ class statistics {
 				} else {
 					let values = '';
 					let tables = '';
-					console.log(data[0]);
+					// console.log(data[0]);
 					if (!data[0]) {
-						console.log('empty');
+						// console.log('empty');
 						for (let a of array) {
 							let add;
 							if (a < 0) add = `m${a * -1}`;
@@ -148,13 +174,13 @@ class statistics {
 							} else {
 								d_number = d.substr(1);
 							}
-							console.log('dnumb: ' + d_number);
-							console.log(array);
+							// console.log('dnumb: ' + d_number);
+							// console.log(array);
 							if (array.includes(parseInt(d_number))) {
 								values = `${values}, ${data[0][d] + 1}`;
 							} else {
 								values = `${values}, ${data[0][d]}`;
-								console.log('here');
+								// console.log('here');
 							}
 							tables = `${tables}, ${d}`;
 						}
@@ -165,7 +191,7 @@ class statistics {
 					let query = `INSERT INTO ${table} (${tables})
 								VALUES (${values})`;
 
-					console.log(query);
+					// console.log(query);
 					db.run(query, (err, data) => {
 						callback(data);
 					});
