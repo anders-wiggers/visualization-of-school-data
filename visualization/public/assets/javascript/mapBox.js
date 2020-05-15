@@ -19,7 +19,9 @@ let selectMultiple = false;
 var mapJSON;
 var geojson;
 var inBounds = [];
-var markers = new L.markerClusterGroup();
+var markers = new L.markerClusterGroup({
+	showCoverageOnHover: false
+});
 var myLayer = new L.LayerGroup().addTo(map);
 //var markers = myLayer.addTo(new L.markerClusterGroup());
 var schoolIcon = L.icon({
@@ -36,7 +38,9 @@ fetch('/assets/geojson/kommuner.geojson')
 
 		response.json().then(function(data) {
 			for (var i = 0; i < data.features.length; i++) {
-				nameOfAllCommunes.push(data.features[i].properties.KOMNAVN);
+				if (nameOfAllCommunes.includes(data.features[i].properties.KOMNAVN) === false) {
+					nameOfAllCommunes.push(data.features[i].properties.KOMNAVN);
+				}
 			}
 			mapJSON = data;
 			geojson = L.geoJson(mapJSON, {
