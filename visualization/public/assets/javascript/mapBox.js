@@ -149,8 +149,6 @@ function determineWhatHappensOnClick(e) {
 			if (e.target.feature.properties.KOMNAVN === geojson._layers[k].feature.properties.KOMNAVN) {
 				selectedCommunes.push(geojson._layers[k]);
 				object = geojson._layers[k];
-				fullInfoData = [];
-				addMarker(fullInfoData);
 				object.setStyle({
 					weight: 1,
 					color: 'red'
@@ -162,16 +160,17 @@ function determineWhatHappensOnClick(e) {
 		selectedCommunesNames.push(e.target.feature.properties.KOMNAVN);
 		addKommunesToList(selectedCommunesNames);
 	} else {
-		for (var k in selectedCommunes) {
-			console.log(selectedCommunes[k].length);
+		for (var k of selectedCommunes) {
+			if (e.target.feature.properties.KOMNAVN === k.feature.properties.KOMNAVN) {
+				selectedCommunes.splice(selectedCommunes.indexOf(k));
+			}
 			//selectedCommunes.splice(selectedCommunes.indexOf(selectedCommunes[k].feature.properties.KOMNAVN), 2);
 		}
 		selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
 		addKommunesToList(selectedCommunesNames);
-		selectedCommunes = [];
 		for (var s in geojson._layers) {
 			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
-				drawOnMap(selectedCommunes[s]);
+				fetchMarkersAndPlaceOnMap();
 				object = geojson._layers[s];
 				object.setStyle({
 					weight: 0.01,
@@ -206,7 +205,7 @@ function fetchMarkersAndPlaceOnMap() {
 	markers.clearLayers();
 	contained = [];
 	if (selectedCommunes.length == 0) {
-		alert('Please insert a commune to look-up');
+		markers.clearLayers();
 	} else {
 		for (var j in selectedCommunes) {
 			boundArray.push(selectedCommunes[j]);
