@@ -65,10 +65,26 @@ class SchoolData {
 		}
 
 		if (inputArray[4]) {
-			if (selector !== 'WHERE') {
-				selector += ` AND COMMUNE = "${inputArray[4]}"`;
-			} else {
-				selector += ` COMMUNE = "${inputArray[4]}"`;
+			let communes = [];
+			try {
+				communes = inputArray[4].split('_');
+				let first = true;
+				for (let c of communes) {
+					if (selector !== 'WHERE' && first) {
+						selector += ` AND COMMUNE = "${c}"`;
+						first = false;
+					} else if (selector !== 'WHERE' && !first) {
+						selector += ` OR COMMUNE = "${c}"`;
+					} else {
+						selector += ` COMMUNE = "${c}"`;
+					}
+				}
+			} catch (error) {
+				if (selector !== 'WHERE') {
+					selector += ` AND COMMUNE = "${inputArray[4]}"`;
+				} else {
+					selector += ` COMMUNE = "${inputArray[4]}"`;
+				}
 			}
 		}
 
