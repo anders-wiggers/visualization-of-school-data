@@ -211,13 +211,13 @@ function fetchMarkersAndPlaceOnMap() {
 	if (selectedCommunes.length == 0) {
 		markers.clearLayers();
 		map.setView([ 56.283, 10.491 ], 6.58);
+		boundArray = [];
 	} else {
 		for (var j in selectedCommunes) {
 			boundArray.push(selectedCommunes[j]);
 			var group = new L.featureGroup(boundArray);
 			map.fitBounds(group.getBounds());
 		}
-		boundArray = [];
 		fetch('/api/combine?commune=' + selectedCommunesNames.join('_') + '&year=2019&data=information').then(function(
 			response
 		) {
