@@ -4,12 +4,14 @@ var fullInfoData = [];
 var selectedCommunesNames = [];
 var avarageGrade = [];
 var studentsAverage = [];
+var absenceAverage = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
 
 //Global status
 var gradeStatus = false;
 var studentStatus = false;
+var absenceStatus = false;
 
 filterButton.addEventListener('click', () => {
 	if (filterBox.getAttribute('class') === 'visible') {
@@ -44,8 +46,8 @@ meanGradeBtn.addEventListener('click', () => {
 	} else {
 		meanGradeBtn.setAttribute('class', 'deactiveFilter');
 		document.getElementById('slider-grades').setAttribute('class', 'hidden');
-
 		gradeStatus = !gradeStatus;
+		filterData();
 	}
 });
 
@@ -73,31 +75,58 @@ studentBtn.addEventListener('click', () => {
 	} else {
 		studentBtn.setAttribute('class', 'deactiveFilter');
 		document.getElementById('slider-students').setAttribute('class', 'hidden');
-
 		studentStatus = !studentStatus;
+		filterData();
+	}
+});
+
+/*
+* ABSENCE NUMBERS BUTTON
+*/
+let absenceBtn = document.getElementById('absence');
+
+absenceBtn.addEventListener('click', () => {
+	if (!absenceStatus) {
+		absenceBtn.setAttribute('class', 'activeFilter');
+
+		document.getElementById('slider-absence').setAttribute('class', 'delayedShow');
+
+		absenceStatus = !absenceStatus;
+
+		fetch(
+			`api/combine?commune=${selectedCommunesNames.join('_')}&year=2019&data=information:absence`
+		).then((res) => {
+			res.json().then((data) => {
+				absenceAverage = data;
+				filterData();
+			});
+		});
+	} else {
+		absenceBtn.setAttribute('class', 'deactiveFilter');
+		document.getElementById('slider-absence').setAttribute('class', 'hidden');
+		absenceStatus = !absenceStatus;
+		filterData();
 	}
 });
 
 function filterData() {
 	let temp = [ ...fullInfoData ];
+	temp.map((item) => (item.display = true));
 	markers.clearLayers();
 
 	if (gradeStatus) {
+		for (let item of temp) {
+			item.display = !item.display;
+		}
 		let min = filteringParameters.grades[0];
 		let max = filteringParameters.grades[1];
 		for (let s of avarageGrade) {
 			let index = temp.findIndex((i) => i.NAME === s.NAME);
 
-			if (s.mean < min || s.mean > max) {
+			if (s.mean > min && s.mean < max) {
 				//remove all school that doesnt fit from temp
 				if (index > 0) {
-					temp.splice(index, 1);
-				}
-			} else {
-				if (index > 0) {
 					temp[index].display = true;
-				} else {
-					temp[index].display = false;
 				}
 			}
 		}
@@ -111,18 +140,48 @@ function filterData() {
 			if (s.classratio < min || s.classratio > max) {
 				//remove all school that doesnt fit from temp
 				if (index > 0) {
-					temp.splice(index, 1);
+					temp[index].display = false;
 				}
 			} else {
 				if (index > 0) {
-					temp[index].display = true;
+					if (temp[index].display === true) temp[index].display = true;
 				} else {
 					temp[index].display = false;
 				}
 			}
 		}
 	}
+	if (absenceStatus) {
+		console.log(temp);
+		for (let item of temp) {
+			item.display = !item.display;
+		}
+		let min = filteringParameters.absence[0];
+		let max = filteringParameters.absence[1];
+		for (let s of absenceAverage) {
+			let index = temp.findIndex((i) => i.NAME === s.NAME);
 
+			if (temp[index].display === true) {
+				temp[index].display = false;
+				continue;
+			}
+
+			if (s.mean * 100 > min && s.mean * 100 < max) {
+				//remove all school that doesnt fit from temp
+				if (index > 0) {
+					temp[index].display = true;
+					temp[index].e = true;
+				}
+			}
+		}
+		for (let item of temp) {
+			if (item.e === false) {
+				item.display = false;
+			} else {
+				item.e = !item.e;
+			}
+		}
+	}
 	updateMakers(temp);
 }
 
