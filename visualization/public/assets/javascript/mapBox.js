@@ -165,13 +165,11 @@ function determineWhatHappensOnClick(e) {
 			if (e.target.feature.properties.KOMNAVN === k.feature.properties.KOMNAVN) {
 				selectedCommunes.splice(selectedCommunes.indexOf(k));
 			}
-			//selectedCommunes.splice(selectedCommunes.indexOf(selectedCommunes[k].feature.properties.KOMNAVN), 2);
 		}
 		selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
 		addKommunesToList(selectedCommunesNames);
 		for (var s in geojson._layers) {
 			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
-				fetchMarkersAndPlaceOnMap();
 				object = geojson._layers[s];
 				object.setStyle({
 					weight: 0.01,
@@ -179,6 +177,7 @@ function determineWhatHappensOnClick(e) {
 				});
 			}
 		}
+		fetchMarkersAndPlaceOnMap();
 	}
 }
 
@@ -213,7 +212,6 @@ function fetchMarkersAndPlaceOnMap() {
 			var group = new L.featureGroup(boundArray);
 			map.fitBounds(group.getBounds());
 		}
-
 		fetch('/api/combine?commune=' + selectedCommunesNames.join('_') + '&year=2019&data=information').then(function(
 			response
 		) {
@@ -242,9 +240,7 @@ function fetchMarkersAndPlaceOnMap() {
 							.openPopup();
 						markers.addLayer(marker);
 						this.map.addLayer(markers);
-					} catch (err) {
-						console.log(err, 'some err');
-					}
+					} catch (err) {}
 				}
 
 				map.on('moveend', function() {
