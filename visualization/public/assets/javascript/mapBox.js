@@ -18,6 +18,7 @@ var nameOfAllCommunes = [];
 let boundArray = [];
 let selectMultiple = false;
 var mapJSON;
+var inc = 0;
 var lastElement;
 var geojson;
 var inBounds = [];
@@ -162,8 +163,11 @@ function determineWhatHappensOnClick(e) {
 		addKommunesToList(selectedCommunesNames);
 	} else {
 		for (var k of selectedCommunes) {
-			if (e.target.feature.properties.KOMNAVN === k.feature.properties.KOMNAVN) {
-				selectedCommunes.splice(selectedCommunes.indexOf(k));
+			if (k.feature.properties.KOMNAVN === e.target.feature.properties.KOMNAVN) {
+				console.log('k' + k.feature.properties.KOMNAVN);
+				selectedCommunes = selectedCommunes.filter(function(item) {
+					return item.feature.properties.KOMNAVN != k.feature.properties.KOMNAVN;
+				});
 			}
 		}
 		selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
