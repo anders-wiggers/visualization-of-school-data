@@ -117,18 +117,18 @@ function filter() {
 
 		outer.appendChild(innerDiv);
 
-		outer.appendChild(button);
+		// outer.appendChild(button);
 
-		document.getElementById(`button-${name}`).addEventListener('click', function() {
-			let xhr = new XMLHttpRequest();
-			xhr.open('POST', api, true);
-			xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-			let sendData = {
-				dataArray: curData
-			};
-			// send the collected data as JSON
-			xhr.send(JSON.stringify(sendData));
-		});
+		// document.getElementById(`button-${name}`).addEventListener('click', function() {
+		// 	let xhr = new XMLHttpRequest();
+		// 	xhr.open('POST', api, true);
+		// 	xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+		// 	let sendData = {
+		// 		dataArray: curData
+		// 	};
+		// 	// send the collected data as JSON
+		// 	xhr.send(JSON.stringify(sendData));
+		// });
 	}
 
 	// Scented Widgets for meanGrade

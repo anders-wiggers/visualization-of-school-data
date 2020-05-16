@@ -46,7 +46,6 @@
 	border-radius: 5px;
 }
 
-
 .hidden {
 	display: none;
 	transition: all .5s ease-in-out;
@@ -99,18 +98,18 @@
 	}
 }
 
-
-#communeSelector{
+#communeSelector {
 	max-width: 60vw;
 	background: white;
 	padding: 10px;
 	position: fixed;
 	top: 83px;
+	left: calc(100vw - 223px);
 	border-radius: 5px;
-	margin-top: 160px;
+	margin-top: 90px;
 }
 
-#searchBar{
+#searchBar {
 	max-width: 60vw;
 	background: white;
 	padding: 10px;
@@ -118,5 +117,4 @@
 	top: 83px;
 	border-radius: 5px;
 	margin-top: 60px;
-
 }

@@ -3,6 +3,7 @@
 var fullInfoData = [];
 var selectedCommunesNames = [];
 var avarageGrade = [];
+var studentsAverage = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
 
@@ -29,21 +30,20 @@ meanGradeBtn.addEventListener('click', () => {
 		gradeStatus = !gradeStatus;
 
 		//let commune = selectedCommunesNames[0];
-		for (var i = 0; i < selectedCommunesNames.length; i++) {
-			fetch(`api/combine?commune=${selectedCommunesNames[i]}&year=2019&data=information:grades`).then((res) => {
-				res.json().then((data) => {
-					avarageGrade = data;
-					filterData();
-				});
+		fetch(
+			`api/combine?commune=${selectedCommunesNames.join('_')}&year=2019&data=information:grades`
+		).then((res) => {
+			res.json().then((data) => {
+				avarageGrade = data;
+				filterData();
 			});
-		}
+		});
 	} else {
 		meanGradeBtn.setAttribute('class', 'deactiveFilter');
 		document.getElementById('slider-grades').setAttribute('class', 'hidden');
 		for (let s of fullInfoData) {
 			addMarker(s);
 		}
-
 		gradeStatus = !gradeStatus;
 	}
 });
@@ -56,6 +56,16 @@ studentBtn.addEventListener('click', () => {
 
 		document.getElementById('slider-students').setAttribute('class', 'delayedShow');
 
+		fetch(
+			`api/combine?commune=${selectedCommunesNames.join('_')}&year=2019&data=information:students`
+		).then((res) => {
+			res.json().then((data) => {
+				console.log(data);
+				studentsAverage = data;
+				filterData();
+			});
+		});
+
 		studentStatus = !studentStatus;
 	} else {
 		studentBtn.setAttribute('class', 'deactiveFilter');
@@ -66,27 +76,33 @@ studentBtn.addEventListener('click', () => {
 });
 
 function filterData() {
+	let temp = [ ...fullInfoData ];
+	let schoolMissingData = [];
+	markers.clearLayers();
+
 	if (gradeStatus) {
-		let SchoolsToShow = [];
-		let AllSchools = inBounds;
-		let na = [];
 		let min = filteringParameters.grades[0];
 		let max = filteringParameters.grades[1];
 		for (let s of avarageGrade) {
-			if (s.mean > min && s.mean < max) {
-				SchoolsToShow.push(s);
-			}
-		}
-		markers.clearLayers();
-		for (let s of SchoolsToShow) {
-			addMarker(s);
-		}
+			if (s.mean < min || s.mean > max) {
+				//remove all school that doesnt fit from temp
+				let index = temp.findIndex((i) => i.NAME === s.NAME);
 
-		for (let s of AllSchools) {
+				if (index > 0) {
+					temp.splice(index, 1);
+				}
+			} else {
+			}
 		}
 	}
 	if (studentStatus) {
 		console.log('filter students');
+	}
+
+	console.log('temp after: ', temp);
+
+	for (let s of temp) {
+		addMarker(s);
 	}
 }
 

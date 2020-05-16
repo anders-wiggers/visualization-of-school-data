@@ -41,21 +41,45 @@
 
     <!-- filter widget compontents -->
     <script defer src="assets/javascript/filtering.js" 
-        name="grades"
-        api="/api/stats/grades" 
-        title="Mean Grades"
-        gtick="12"
-        gindex="-3"
-        gdefault="2,10">
+                name="grades"
+                api="/api/stats/grades" 
+                title="Mean Grades"
+                gtick="12"
+                gindex="-3"
+                version="1"
+                gdefault="2,10">
     </script>
 
     <script defer src="assets/javascript/filtering.js" 
-        name="students"
-        api="/api/stats/grades" 
-        title="Students"
-        gtick="2"
-        gindex="0"
-        gdefault="5,10">
+                name="students"
+                api="/api/stats/students" 
+                title="Students"
+                gtick="6"
+                gdefault="15,22">
+    </script>
+
+    <script defer src="assets/javascript/filtering.js" 
+                name="absence"
+                api="/api/stats/absence" 
+                title="Student Abesence"
+                gtick="6"
+                gdefault="15,22">
+    </script>
+
+    <script defer src="assets/javascript/filtering.js" 
+                name="well_being"
+                api="/api/stats/well_being" 
+                title="Student Well Being"
+                gtick="6"
+                gdefault="0,5">
+    </script>
+
+    <script defer src="assets/javascript/filtering.js" 
+                name="competence"
+                api="/api/stats/competence" 
+                title="Competence "
+                gtick="10"
+                gdefault="0,100">
     </script>
 
 </head>
@@ -75,6 +99,9 @@
         <div id="filterBox" class="active">
             <div id="grades" class="deactiveFilter"></div>
             <div id="students" class="deactiveFilter"></div>
+            <div id="absence" class="deactiveFilter"></div>
+            <div id="well_being" class="deactiveFilter"></div>
+            <div id="competence" class="deactiveFilter"></div>
         </div>
     
       
