@@ -5,6 +5,8 @@ var selectedCommunesNames = [];
 var avarageGrade = [];
 var studentsAverage = [];
 var absenceAverage = [];
+var wbAverage = [];
+var competenceAverage = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
 
@@ -12,6 +14,8 @@ let filterBox = document.getElementById('filterBox');
 var gradeStatus = false;
 var studentStatus = false;
 var absenceStatus = false;
+var wellbeingStatus = false;
+var competenceStatus = false;
 
 filterButton.addEventListener('click', () => {
 	if (filterBox.getAttribute('class') === 'visible') {
@@ -109,6 +113,64 @@ absenceBtn.addEventListener('click', () => {
 	}
 });
 
+/*
+* WELL BEING BUTTON
+*/
+let wbBtn = document.getElementById('well_being');
+
+wbBtn.addEventListener('click', () => {
+	if (!wellbeingStatus) {
+		wbBtn.setAttribute('class', 'activeFilter');
+
+		document.getElementById(`slider-well_being`).setAttribute('class', 'delayedShow');
+
+		wellbeingStatus = !wellbeingStatus;
+
+		fetch(
+			`api/combine?commune=${selectedCommunesNames.join('_')}&year=2019&data=information:well_being`
+		).then((res) => {
+			res.json().then((data) => {
+				wbAverage = data;
+				filterData();
+			});
+		});
+	} else {
+		wbBtn.setAttribute('class', 'deactiveFilter');
+		document.getElementById(`slider-well_being`).setAttribute('class', 'hidden');
+		wellbeingStatus = !wellbeingStatus;
+		filterData();
+	}
+});
+
+/*
+* COMPETENCE BUTTON
+*/
+let competenceBtn = document.getElementById('competence');
+
+competenceBtn.addEventListener('click', () => {
+	if (!competenceStatus) {
+		competenceBtn.setAttribute('class', 'activeFilter');
+
+		document.getElementById(`slider-competence`).setAttribute('class', 'delayedShow');
+
+		competenceStatus = !competenceStatus;
+
+		fetch(
+			`api/combine?commune=${selectedCommunesNames.join('_')}&year=2019&data=information:competence_coverage`
+		).then((res) => {
+			res.json().then((data) => {
+				competenceAverage = data;
+				filterData();
+			});
+		});
+	} else {
+		competenceBtn.setAttribute('class', 'deactiveFilter');
+		document.getElementById(`slider-competence`).setAttribute('class', 'hidden');
+		competenceStatus = !competenceStatus;
+		filterData();
+	}
+});
+
 function filterData() {
 	let temp = [ ...fullInfoData ];
 	temp.map((item) => (item.display = true));
@@ -132,27 +194,36 @@ function filterData() {
 		}
 	}
 	if (studentStatus) {
+		for (let item of temp) {
+			item.display = !item.display;
+		}
 		let min = filteringParameters.students[0];
 		let max = filteringParameters.students[1];
 		for (let s of studentsAverage) {
 			let index = temp.findIndex((i) => i.NAME === s.NAME);
 
-			if (s.classratio < min || s.classratio > max) {
+			if (temp[index].display === true) {
+				temp[index].display = false;
+				continue;
+			}
+
+			if (s.classratio > min && s.classratio < max) {
 				//remove all school that doesnt fit from temp
 				if (index > 0) {
-					temp[index].display = false;
+					temp[index].display = true;
+					temp[index].e = true;
 				}
+			}
+		}
+		for (let item of temp) {
+			if (item.e === false) {
+				item.display = false;
 			} else {
-				if (index > 0) {
-					if (temp[index].display === true) temp[index].display = true;
-				} else {
-					temp[index].display = false;
-				}
+				item.e = !item.e;
 			}
 		}
 	}
 	if (absenceStatus) {
-		console.log(temp);
 		for (let item of temp) {
 			item.display = !item.display;
 		}
@@ -182,6 +253,68 @@ function filterData() {
 			}
 		}
 	}
+	if (wellbeingStatus) {
+		for (let item of temp) {
+			item.display = !item.display;
+		}
+		let min = filteringParameters.well_being[0];
+		let max = filteringParameters.well_being[1];
+		for (let s of wbAverage) {
+			let index = temp.findIndex((i) => i.NAME === s.NAME);
+
+			if (temp[index].display === true) {
+				temp[index].display = false;
+				continue;
+			}
+
+			if (s.mean > min && s.mean < max) {
+				//remove all school that doesnt fit from temp
+				if (index > 0) {
+					temp[index].display = true;
+					temp[index].e = true;
+				}
+			}
+		}
+		for (let item of temp) {
+			if (item.e === false) {
+				item.display = false;
+			} else {
+				item.e = !item.e;
+			}
+		}
+	}
+
+	if (competenceStatus) {
+		for (let item of temp) {
+			item.display = !item.display;
+		}
+		let min = filteringParameters.competence[0];
+		let max = filteringParameters.competence[1];
+		for (let s of competenceAverage) {
+			let index = temp.findIndex((i) => i.NAME === s.NAME);
+
+			if (temp[index].display === true) {
+				temp[index].display = false;
+				continue;
+			}
+
+			if (s.COMPETENCE_COVERAGE * 100 > min && s.COMPETENCE_COVERAGE * 100 < max) {
+				//remove all school that doesnt fit from temp
+				if (index > 0) {
+					temp[index].display = true;
+					temp[index].e = true;
+				}
+			}
+		}
+		for (let item of temp) {
+			if (item.e === false) {
+				item.display = false;
+			} else {
+				item.e = !item.e;
+			}
+		}
+	}
+
 	updateMakers(temp);
 }
 
