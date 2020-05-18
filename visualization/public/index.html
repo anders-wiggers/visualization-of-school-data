@@ -93,6 +93,23 @@
             <div class="info"></div>
         </div>
 
+        <div id="mainCon" class="row">
+            <div id="selectedList" class="col-3">
+            </div>
+            <div id="detailBox" class="col-6">
+                <div>
+                    <h1 id="schoolName"></h1>
+                    <p id="totalStudents">test test</p>
+                    <p id="mail"></p>
+                    <p id="phone"></p>
+                    <p id="address"></p>
+                    <p id="website"></p>
+                </div>
+            </div>
+            <div id="relationList" class="col-sm"></div>
+        </div>
+  
+
         <div id="filterBox" class="hidden">
             <div id="grades" class="deactiveFilter"></div>
             <div id="students" class="deactiveFilter"></div>
@@ -104,7 +121,7 @@
         <div id="collectedSchools">
             <h3>Selected Schools</h3>
             <div id="schoolContainer"></div>
-            <button id="filterNext" class="conBtn">Continue</button>
+            <button id="filterNext" onclick="updatePhase(2)" class="conBtn">Continue</button>
         </div>
 
      

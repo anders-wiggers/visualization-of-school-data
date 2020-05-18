@@ -16,6 +16,12 @@ h3 {
 	height: calc(100vh - 100px);
 }
 
+#mainCon {
+	height: calc(100vh - 100px);
+	width: 100%;
+	margin: 0 auto;
+}
+
 .leaflet-overlay-pane svg path {
 	pointer-events: auto;
 }
@@ -232,6 +238,11 @@ h3 {
 	overflow: auto;
 }
 
+#schoolContainer {
+	height: 50vh;
+	overflow: auto;
+}
+
 #collectedSchools {
 	text-align: center;
 	max-width: 60vw;
@@ -245,6 +256,7 @@ h3 {
 	background-color: #fafafa;
 }
 .conBtn {
+	margin-top: 20px;
 	background-color: #4caf50; /* Green */
 	border: none;
 	color: white;
@@ -254,4 +266,42 @@ h3 {
 	display: inline-block;
 	font-size: 16px;
 	border-radius: 5px;
+}
+
+.school-con {
+	display: flow-root;
+	text-align: left;
+	padding: 15px;
+	background: #f0f0f0;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+.school-item {
+	float: left;
+	padding: 5px;
+}
+
+.school-icon {
+	float: left;
+
+	height: 29px;
+}
+
+#selectedList {
+	background-color: red;
+	overflow: auto;
+	height: 100%;
+}
+
+#detailBox {
+	background-color: blue;
+}
+
+#relationList {
+	background-color: pink;
+}
+
+.clickable {
+	cursor: pointer;
 }

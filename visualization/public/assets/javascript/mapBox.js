@@ -1,7 +1,7 @@
 // Now we create a map object and add a layer to it.
 var map = new L.Map('map');
 var osmUrl = 'https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=523123eab9074addb51cc220ddc9df2d';
-var osm = new L.TileLayer(osmUrl, { minZoom:6.9, maxZoom: 18 });
+var osm = new L.TileLayer(osmUrl, { minZoom: 6.9, maxZoom: 18 });
 //Adding map, plus zoom of denmark
 map.addLayer(osm);
 map.setView(new L.LatLng(56.283, 10.491), 6.9);
@@ -155,47 +155,47 @@ function onEachFeature(feature, layer) {
 }
 
 function determineWhatHappensOnClick(e) {
-	if(currentPhase === 0){
-	for (var k in geojson._layers) {
-		//Check for duplicates in allCommuneObject array
-		if (allCommuneObjects.includes(geojson._layers[k].feature.properties.KOMNAVN) === false) {
-			allCommuneObjects.push(geojson._layers[k]);
-			//If the mouseOver target has multiple layers, draw them all
-			if (e.target.feature.properties.KOMNAVN === geojson._layers[k].feature.properties.KOMNAVN) {
-				selectedCommunes.push(geojson._layers[k]);
-				object = geojson._layers[k];
-				object.setStyle({
-					weight: 1,
-					color: 'red'
-				});
+	if (currentPhase === 0) {
+		for (var k in geojson._layers) {
+			//Check for duplicates in allCommuneObject array
+			if (allCommuneObjects.includes(geojson._layers[k].feature.properties.KOMNAVN) === false) {
+				allCommuneObjects.push(geojson._layers[k]);
+				//If the mouseOver target has multiple layers, draw them all
+				if (e.target.feature.properties.KOMNAVN === geojson._layers[k].feature.properties.KOMNAVN) {
+					selectedCommunes.push(geojson._layers[k]);
+					object = geojson._layers[k];
+					object.setStyle({
+						weight: 1,
+						color: 'red'
+					});
+				}
 			}
 		}
-	}
-	if (selectedCommunesNames.includes(e.target.feature.properties.KOMNAVN) === false) {
-		selectedCommunesNames.push(e.target.feature.properties.KOMNAVN);
-		addKommunesToList(selectedCommunesNames);
-	} else {
-		for (var k of selectedCommunes) {
-			if (k.feature.properties.KOMNAVN === e.target.feature.properties.KOMNAVN) {
-				console.log('k' + k.feature.properties.KOMNAVN);
-				selectedCommunes = selectedCommunes.filter(function(item) {
-					return item.feature.properties.KOMNAVN != k.feature.properties.KOMNAVN;
-				});
+		if (selectedCommunesNames.includes(e.target.feature.properties.KOMNAVN) === false) {
+			selectedCommunesNames.push(e.target.feature.properties.KOMNAVN);
+			addKommunesToList(selectedCommunesNames);
+		} else {
+			for (var k of selectedCommunes) {
+				if (k.feature.properties.KOMNAVN === e.target.feature.properties.KOMNAVN) {
+					console.log('k' + k.feature.properties.KOMNAVN);
+					selectedCommunes = selectedCommunes.filter(function(item) {
+						return item.feature.properties.KOMNAVN != k.feature.properties.KOMNAVN;
+					});
+				}
 			}
-		}
-		selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
-		addKommunesToList(selectedCommunesNames);
-		for (var s in geojson._layers) {
-			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
-				object = geojson._layers[s];
-				object.setStyle({
-					weight: 0.01,
-					color: 'white'
-				});
+			selectedCommunesNames.splice(selectedCommunesNames.indexOf(e.target.feature.properties.KOMNAVN), 1);
+			addKommunesToList(selectedCommunesNames);
+			for (var s in geojson._layers) {
+				if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+					object = geojson._layers[s];
+					object.setStyle({
+						weight: 0.01,
+						color: 'white'
+					});
+				}
 			}
+			fetchMarkersAndPlaceOnMap();
 		}
-		fetchMarkersAndPlaceOnMap();
-	}
 	}
 }
 
@@ -215,8 +215,8 @@ info.update = function(props) {
 };
 
 info.addTo(map);
+
 document.getElementById('markerButton').onclick = function(e) {
-	fetchMarkersAndPlaceOnMap();
 	updatePhase(1);
 };
 
@@ -238,41 +238,7 @@ function fetchMarkersAndPlaceOnMap() {
 		) {
 			response.json().then(function(data) {
 				fullInfoData = data;
-				var i;
-				for (i = 0; i < data.length; i++) {
-					try {
-						let latitude = parseFloat(data[i].latitude);
-						let longitude = parseFloat(data[i].longitude);
-
-						let popInfo =
-							'<b>Information</b><br>School: ' +
-							data[i].NAME +
-							'<br>Adress: ' +
-							data[i].address +
-							'<br>Mail: ' +
-							data[i].mail +
-							'<br>Phone number: ' +
-							data[i].phone +
-							"<br><a href='data[i].website'>" +
-							data[i].website +
-							'</a>';
-						let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: data[i].NAME })
-							.bindPopup(popInfo)
-							.openPopup();
-						markers.addLayer(marker);
-						this.map.addLayer(markers);
-					} catch (err) {}
-				}
-
-				map.on('moveend', function() {
-					inBounds = [];
-					var bounds = map.getBounds();
-					myLayer.eachLayer(function(marker) {
-						if (bounds.contains(marker.getLatLng())) {
-							inBounds.push(marker.options.kommune);
-						}
-					});
-				});
+				filterData();
 			});
 		});
 	}

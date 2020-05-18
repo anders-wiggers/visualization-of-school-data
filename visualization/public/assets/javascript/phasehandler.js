@@ -1,10 +1,10 @@
 'use strict';
 
-const elements = [ 'communeSelector', 'filterBox' ];
+const elements = [ 'communeSelector', 'filterBox', 'collectedSchools', 'map', 'mainCon' ];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
 
-let currentPhase = 1;
+let currentPhase = 2;
 
 updatePhase(currentPhase);
 
@@ -20,10 +20,17 @@ function setView(phase) {
 	switch (phase) {
 		case 0:
 			display('communeSelector');
+			display('map');
 			break;
 		case 1:
+			fetchMarkersAndPlaceOnMap();
 			display('filterBox');
+			display('collectedSchools');
+			display('map');
 			break;
+		case 2:
+			createSchoolList(inBounds);
+			display('mainCon');
 	}
 }
 
