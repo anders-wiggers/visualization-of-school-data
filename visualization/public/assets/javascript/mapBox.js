@@ -155,6 +155,7 @@ function onEachFeature(feature, layer) {
 }
 
 function determineWhatHappensOnClick(e) {
+	if(currentPhase === 0){
 	for (var k in geojson._layers) {
 		//Check for duplicates in allCommuneObject array
 		if (allCommuneObjects.includes(geojson._layers[k].feature.properties.KOMNAVN) === false) {
@@ -194,6 +195,7 @@ function determineWhatHappensOnClick(e) {
 			}
 		}
 		fetchMarkersAndPlaceOnMap();
+	}
 	}
 }
 
