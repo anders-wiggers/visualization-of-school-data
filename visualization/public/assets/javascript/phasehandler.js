@@ -21,9 +21,11 @@ function setView(phase) {
 		case 0:
 			display('communeSelector');
 			display('map');
+			info.addTo(map);
 			break;
 		case 1:
 			fetchMarkersAndPlaceOnMap();
+			info.remove();
 			display('filterBox');
 			display('collectedSchools');
 			display('map');
