@@ -1,10 +1,10 @@
 // Now we create a map object and add a layer to it.
 var map = new L.Map('map');
 var osmUrl = 'https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=523123eab9074addb51cc220ddc9df2d';
-var osm = new L.TileLayer(osmUrl, { minZoom: 5, maxZoom: 18 });
+var osm = new L.TileLayer(osmUrl, { minZoom:6.9, maxZoom: 18 });
 //Adding map, plus zoom of denmark
 map.addLayer(osm);
-map.setView(new L.LatLng(56.283, 10.491), 6.58);
+map.setView(new L.LatLng(56.283, 10.491), 6.9);
 // Initializing mini map
 var osm2 = new L.TileLayer(osmUrl, { minZoom: 0, maxZoom: 13 });
 var miniMap = new L.Control.MiniMap(osm2, { toggleDisplay: true }).addTo(map);
