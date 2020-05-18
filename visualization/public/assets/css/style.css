@@ -7,7 +7,7 @@
 	background-color: tomato;
 }
 #map {
-	height: calc(100vh - (48px + 30px));
+	height: calc(100vh - 100px);
 }
 
 .leaflet-overlay-pane svg path {
@@ -100,13 +100,15 @@
 
 #communeSelector {
 	max-width: 60vw;
+	width: 350px;
 	background: white;
 	padding: 10px;
 	position: fixed;
-	top: 83px;
-	left: calc(100vw - 223px);
+	top: 5px;
+	left: calc(100vw - 355px);
 	border-radius: 5px;
-	margin-top: 90px;
+	background-color: #fafafa;
+	height: 70vh;
 }
 
 #searchBar {
@@ -117,4 +119,59 @@
 	top: 83px;
 	border-radius: 5px;
 	margin-top: 60px;
+}
+
+#autoComplete {
+	width: 100% !important;
+	background-color: white;
+	color: #707070 !important;
+}
+
+#navBar {
+	padding: 10px;
+}
+
+.navItem {
+	border-radius: 5px;
+	padding: 15px;
+	color: #707070;
+	margin: 10px;
+	background-color: #eaeaea;
+	cursor: pointer;
+	width: 200px;
+	text-align: center;
+}
+
+.boxDeactive {
+	background-color: #f8f8f8;
+	color: #c0c0c0;
+}
+
+.boxDone {
+}
+
+.naactive {
+	margin-top: calc((75px/2) - (16px/2));
+	color: #eaeaea;
+}
+
+.nanoactive {
+	margin-top: calc((75px/2) - (16px/2));
+	color: #f5f5f5;
+}
+
+.nav-ul {
+	list-style-type: none;
+	display: flex;
+	align-items: stretch; /* Default */
+	justify-content: space-between;
+	width: 100%;
+	margin: 0 !important;
+	padding: 0;
+}
+
+.nav-li {
+	display: block;
+	flex: 0 1 auto; /* Default */
+	list-style-type: none;
 }
