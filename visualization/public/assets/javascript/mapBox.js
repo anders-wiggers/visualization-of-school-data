@@ -185,7 +185,7 @@ function determineWhatHappensOnClick(e) {
 	}
 }
 
-var info = L.control();
+var info = L.control({position: 'bottomright'});
 
 info.onAdd = function(map) {
 	this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
