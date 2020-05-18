@@ -120,11 +120,23 @@ function addMarkerToList(list) {
 function addKommunesToList(list) {
 	clearKommunes();
 	ul = document.createElement('ul');
+	ul.classList.add('com-ul');
 	document.getElementById('kommunes').appendChild(ul);
 	list.forEach(function(item) {
 		let li = document.createElement('li');
+		li.classList.add('com-li');
+		let text = document.createElement('div');
+		text.innerHTML = item;
+		text.classList.add('com-item');
+		let close = document.createElement('div');
+		close.classList.add('com-close');
+		close.innerHTML = 'x';
+		let floxFix = document.createElement('div');
+		floxFix.classList.add('fix');
+		floxFix.appendChild(text);
+		floxFix.appendChild(close);
+		li.appendChild(floxFix);
 		ul.appendChild(li);
-		li.innerHTML += item;
 	});
 }
 function clearList() {
@@ -185,7 +197,7 @@ function determineWhatHappensOnClick(e) {
 	}
 }
 
-var info = L.control({position: 'bottomright'});
+var info = L.control({ position: 'bottomright' });
 
 info.onAdd = function(map) {
 	this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
@@ -203,6 +215,7 @@ info.update = function(props) {
 info.addTo(map);
 document.getElementById('markerButton').onclick = function(e) {
 	fetchMarkersAndPlaceOnMap();
+	updatePhase(1);
 };
 
 function fetchMarkersAndPlaceOnMap() {

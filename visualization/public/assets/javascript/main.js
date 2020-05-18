@@ -17,14 +17,6 @@ var absenceStatus = false;
 var wellbeingStatus = false;
 var competenceStatus = false;
 
-filterButton.addEventListener('click', () => {
-	if (filterBox.getAttribute('class') === 'visible') {
-		filterBox.setAttribute('class', 'hidden');
-	} else {
-		filterBox.setAttribute('class', 'visible');
-	}
-});
-
 /*
 * MEAN GRADE BUTTON
 */
@@ -314,14 +306,22 @@ function filterData() {
 			}
 		}
 	}
-
+	console.log(temp);
+	inBounds = [ ...temp ];
 	updateMakers(temp);
 }
 
 function updateMakers(arr) {
 	for (let s of arr) {
-		if (s.display) addMarker(s);
+		if (s.display) {
+			addMarker(s);
+			addSchoolToList(s);
+		}
 	}
+}
+
+function addSchoolToList(school) {
+	let div = document.getElementById;
 }
 
 function addMarker(s) {

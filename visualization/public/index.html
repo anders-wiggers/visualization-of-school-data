@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>My map</title>
+    <title>DEEVA</title>
 
-    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://d19vzq90twjlae.cloudfront.net/leaflet-0.7/leaflet.css" />
     <link rel="stylesheet" href="assets/libraries/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="assets/libraries/dist/MarkerCluster.Default.css" />
@@ -12,7 +11,8 @@
     <link rel="stylesheet" href="/assets/libraries/dist/Control.MiniMap.min.css"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
-    
+    <link rel="stylesheet" href="/assets/css/style.css">
+
 
     <!-- jquery -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -36,6 +36,8 @@
     <script defer src="/assets/javascript/main.js"></script>
     <script defer src="/assets/javascript/mapBox.js"></script>
     <script defer src="/assets/javascript/autocomplete.js"></script>
+    <script defer src="/assets/javascript/phasehandler.js"></script>
+
 
     <!--Auto-complete functionality-->
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
@@ -91,7 +93,6 @@
             <div class="info"></div>
         </div>
 
-
         <div id="filterBox" class="hidden">
             <div id="grades" class="deactiveFilter"></div>
             <div id="students" class="deactiveFilter"></div>
@@ -99,38 +100,42 @@
             <div id="well_being" class="deactiveFilter"></div>
             <div id="competence" class="deactiveFilter"></div>
         </div>
-    
-      
+
+        <div id="collectedSchools">
+            <h3>Selected Schools</h3>
+            <div id="schoolContainer"></div>
+            <button id="filterNext" class="conBtn">Continue</button>
+        </div>
+
+     
         <div id="communeSelector" class="active">
             <div>    
                 <div id="SearchBar">
                     <input id="autoComplete" tabindex="1">    <!-- Default "id" value = "autoComplete"> -->
                 </div>
-                    <h1>Kommunes</h1>
+                    <h2>Communes</h2>
                 <div id="kommunes"></div>
-                    <button id="markerButton">Continue</button>
+                    <button id="markerButton" class="conBtn">Continue</button>
             </div>
         </div>
     </div>
 
     <div id="navBar">
         <ul class ="nav-ul">
-            <li class ="nav-li"><div class="navItem">Overview</div></li>
+            <li class ="nav-li"><div class="navItem" id="overview" onclick="updatePhase(0)">Overview</div></li>
             <li class ="nav-li"><i class="fas fa-caret-right naactive"></i></li>
-            <li class ="nav-li"><div class="navItem boxDeactive">Filter</div></li>
+            <li class ="nav-li"><div class="navItem boxDeactive" id="filter" onclick="updatePhase(1)">Filter</div></li>
+            <li class ="nav-li"><i class="fas fa-caret-right nanoactive" ></i></li>
+            <li class ="nav-li"><div class="navItem boxDeactive" id="detail" onclick="updatePhase(2)">Detail</div></li>
             <li class ="nav-li"><i class="fas fa-caret-right nanoactive"></i></li>
-            <li class ="nav-li"><div class="navItem boxDeactive">Detail</div></li>
+            <li class ="nav-li"><div class="navItem boxDeactive" id="relation" onclick="updatePhase(3)">Relation</div></li>
             <li class ="nav-li"><i class="fas fa-caret-right nanoactive"></i></li>
-            <li class ="nav-li"><div class="navItem boxDeactive">Relation</div></li>
-            <li class ="nav-li"><i class="fas fa-caret-right nanoactive"></i></li>
-            <li class ="nav-li"><div class="navItem boxDeactive">Presentation</div></li>
+            <li class ="nav-li"><div class="navItem boxDeactive" id="presentation" onclick="updatePhase(4)">Presentation</div></li>
           </ul> 
     </div>
 
-     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
