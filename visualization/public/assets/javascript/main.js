@@ -44,6 +44,7 @@ meanGradeBtn.addEventListener('click', () => {
 		meanGradeBtn.setAttribute('class', 'deactiveFilter');
 		document.getElementById('slider-grades').setAttribute('class', 'hidden');
 		gradeStatus = !gradeStatus;
+
 		filterData();
 	}
 });
@@ -307,7 +308,7 @@ function filterData() {
 			}
 		}
 	}
-	inBounds = [ ...temp ];
+	//inBounds = [ ...temp ];
 	addSchoolToList(temp);
 	updateMakers(temp);
 }
@@ -368,57 +369,4 @@ function addMarker(s) {
 		markers.addLayer(marker);
 		map.addLayer(markers);
 	} catch (err) {}
-}
-
-function createSchoolList(list) {
-	let div = document.getElementById('selectedList');
-	div.innerHTML = '';
-	let ul = document.createElement('ul');
-	ul.classList.add('com-ul');
-	div.appendChild(ul);
-	list.forEach(function(item) {
-		if (item.display) {
-			let li = document.createElement('li');
-			li.classList.add('com-li');
-			let text = document.createElement('div');
-			text.innerHTML = item.NAME;
-			text.classList.add('school-item');
-			let icon = document.createElement('img');
-			icon.setAttribute('src', 'assets/pictures/school.svg');
-			icon.classList.add('school-icon');
-			let floxFix = document.createElement('div');
-			floxFix.setAttribute('onclick', `setDetailData("${item.NAME}")`);
-			floxFix.classList.add('school-con');
-			floxFix.classList.add('clickable');
-			floxFix.appendChild(icon);
-			floxFix.appendChild(text);
-			li.appendChild(floxFix);
-			ul.appendChild(li);
-		}
-	});
-}
-
-let selectedSchool;
-
-function setDetailData(school) {
-	let index = inBounds.findIndex((i) => i.NAME === school);
-	let schoolDataSet = inBounds[index];
-
-	let nameBox = document.getElementById('schoolName');
-	let totalStudents = document.getElementById('totalStudents');
-	let mail = document.getElementById('mail');
-	let phone = document.getElementById('phone');
-	let website = document.getElementById('website');
-	let adress = document.getElementById('address');
-
-	selectedSchool = school;
-	nameBox.innerHTML = schoolDataSet.NAME;
-	mail.innerHTML = schoolDataSet.mail;
-	phone.innerHTML = schoolDataSet.phone;
-	website.innerHTML = schoolDataSet.website;
-	adress.innerHTML = schoolDataSet.address;
-}
-
-function addSelected() {
-	relationPhaseList.push(selectedSchool);
 }

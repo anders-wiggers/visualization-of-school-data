@@ -31,8 +31,15 @@ function setView(phase) {
 			display('map');
 			break;
 		case 2:
+			inBounds = [
+				{ NAME: 'Ida Holsts Skole', display: true, COMMUNE: 'Svendborg' },
+				{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
+				{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
+			];
 			createSchoolList(inBounds);
+			setDetailData(inBounds[0].NAME);
 			display('mainCon');
+			break;
 	}
 }
 

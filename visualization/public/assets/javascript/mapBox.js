@@ -1,5 +1,5 @@
 // Now we create a map object and add a layer to it.
-var map = new L.Map('map', {zoomControl: false} );
+var map = new L.Map('map', { zoomControl: false });
 var osmUrl = 'https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=523123eab9074addb51cc220ddc9df2d';
 var osm = new L.TileLayer(osmUrl, { minZoom: 6.9, maxZoom: 18 });
 //Adding map, plus zoom of denmark
@@ -60,23 +60,23 @@ fetch('/assets/geojson/kommuner.geojson')
 	});
 
 function highlightFeature(e) {
-	if(currentPhase === 0){
-	for (var s in geojson._layers) {
-		if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
-			object = geojson._layers[s];
-			object.setStyle({
-				weight: 1,
-				color: 'red'
-			});
+	if (currentPhase === 0) {
+		for (var s in geojson._layers) {
+			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+				object = geojson._layers[s];
+				object.setStyle({
+					weight: 1,
+					color: 'red'
+				});
+			}
 		}
-	}
-	var layer = e.target;
+		var layer = e.target;
 
-	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-		layer.bringToFront();
+		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+			layer.bringToFront();
+		}
+		info.update(layer.feature.properties);
 	}
-	info.update(layer.feature.properties);
-}
 }
 
 function drawOnMap(input) {
@@ -94,20 +94,20 @@ function drawOnMap(input) {
 }
 
 function resetHighlight(e) {
-	if(currentPhase === 0){
-	if (selectedCommunesNames.includes(e.target.feature.properties.KOMNAVN) === true) {
-	} else {
-		for (var s in geojson._layers) {
-			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
-				var object = geojson._layers[s];
-				object.setStyle({
-					weight: 0.01,
-					color: 'white'
-				});
+	if (currentPhase === 0) {
+		if (selectedCommunesNames.includes(e.target.feature.properties.KOMNAVN) === true) {
+		} else {
+			for (var s in geojson._layers) {
+				if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
+					var object = geojson._layers[s];
+					object.setStyle({
+						weight: 0.01,
+						color: 'white'
+					});
+				}
 			}
+			info.update();
 		}
-		info.update();
-	}
 	}
 }
 
@@ -205,7 +205,6 @@ function determineWhatHappensOnClick(e) {
 
 var info = L.control({ position: 'topleft' });
 
-
 info.onAdd = function(map) {
 	this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
 	this.update();
@@ -213,14 +212,11 @@ info.onAdd = function(map) {
 };
 // method that we will use to update the control based on feature properties passed
 info.update = function(props) {
-	this._div.innerHTML = 
-		'<h4>Vælg kommune</h4>' +
-		(props ? '<b>' + props.KOMNAVN + '</b><br />' : 'Tryk på en kommune');
+	this._div.innerHTML =
+		'<h4>Vælg kommune</h4>' + (props ? '<b>' + props.KOMNAVN + '</b><br />' : 'Tryk på en kommune');
 };
 
-
 info.addTo(map);
-
 
 document.getElementById('markerButton').onclick = function(e) {
 	updatePhase(1);

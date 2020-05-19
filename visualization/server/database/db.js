@@ -175,11 +175,11 @@ class SchoolData {
 				}
 			}
 		} else {
-			tablesToGet = ', INSTITUTION.REGION, INSTITUTION.COMMUNE';
+			tablesToGet = ', INSTITUTION.REGION';
 			//TODO get kommune data and adress and such :)
 		}
 
-		let querry = `SELECT INSTITUTION.NAME, INSTITUTION.YEAR ${tablesToGet}
+		let querry = `SELECT INSTITUTION.NAME, INSTITUTION.YEAR, INSTITUTION.COMMUNE ${tablesToGet}
 					FROM INSTITUTION 
 					${joinTables}
 					${selector}`;
