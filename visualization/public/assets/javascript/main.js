@@ -9,6 +9,7 @@ var wbAverage = [];
 var competenceAverage = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
+var relationPhaseList = [];
 
 //Global status
 var gradeStatus = false;
@@ -397,6 +398,8 @@ function createSchoolList(list) {
 	});
 }
 
+let selectedSchool;
+
 function setDetailData(school) {
 	let index = inBounds.findIndex((i) => i.NAME === school);
 	let schoolDataSet = inBounds[index];
@@ -408,9 +411,14 @@ function setDetailData(school) {
 	let website = document.getElementById('website');
 	let adress = document.getElementById('address');
 
+	selectedSchool = school;
 	nameBox.innerHTML = schoolDataSet.NAME;
 	mail.innerHTML = schoolDataSet.mail;
 	phone.innerHTML = schoolDataSet.phone;
 	website.innerHTML = schoolDataSet.website;
 	adress.innerHTML = schoolDataSet.address;
+}
+
+function addSelected() {
+	relationPhaseList.push(selectedSchool);
 }

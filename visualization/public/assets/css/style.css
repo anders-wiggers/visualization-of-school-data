@@ -51,7 +51,8 @@ h3 {
 	padding: 10px;
 	position: fixed;
 	text-align: center;
-	top: 83px;
+	top: 10px;
+	left: 10px;
 	border-radius: 5px;
 }
 
@@ -114,8 +115,8 @@ h3 {
 	background: white;
 	padding: 10px;
 	position: fixed;
-	top: 5px;
-	left: calc(100vw - 355px);
+	top: 10px;
+	left: calc(100vw - 360px);
 	border-radius: 5px;
 	background-color: #fafafa;
 }
@@ -250,8 +251,8 @@ h3 {
 	background: white;
 	padding: 10px;
 	position: fixed;
-	top: 5px;
-	left: calc(100vw - 355px);
+	top: 10px;
+	left: calc(100vw - 360px);
 	border-radius: 5px;
 	background-color: #fafafa;
 }
