@@ -22,6 +22,12 @@ h3 {
 	margin: 0 auto;
 }
 
+#relationPhase {
+	height: calc(100vh - 100px);
+	width: 100%;
+	margin: 0 auto;
+}
+
 .leaflet-overlay-pane svg path {
 	pointer-events: auto;
 }
@@ -234,6 +240,11 @@ h3 {
 	display: flow-root;
 }
 
+#listItems {
+	height: 50vh;
+	overflow: auto;
+}
+
 #kommunes {
 	height: 50vh;
 	overflow: auto;
@@ -297,11 +308,35 @@ h3 {
 #detailBox {
 }
 
+#detailContainer {
+	border-radius: 5px;
+	margin-top: 10px;
+	padding: 10px;
+	min-height: 200px;
+	background-color: #f6f6f6;
+}
+
+#allStats {
+	overflow: auto;
+	max-height: calc(80vh - 100px);
+}
+
 #relationList {
 }
 
 .clickable {
 	cursor: pointer;
+}
+
+.inline {
+	display: inline-block;
+	padding: 10px;
+	color: #505050;
+}
+
+.inline-free {
+	display: inline-block;
+	width: 100px;
 }
 
 .custom-select select {
@@ -365,4 +400,71 @@ h3 {
 	border-radius: 20px;
 	background: #d7d7d7;
 	width: 50px;
+}
+
+.cross {
+	padding: 9px;
+	float: right;
+}
+
+.school-list {
+	display: flow-root;
+	text-align: left;
+	padding: 15px;
+	background: white;
+	border-radius: 5px;
+	margin: 10px;
+}
+
+#relationContainer {
+	margin-top: 10px;
+	border-radius: 5px;
+	padding: 10px;
+	min-height: 300px;
+	background-color: #f6f2f5;
+	text-align: center;
+}
+
+.detailItem {
+	padding: 10px;
+	margin: 5px;
+	border-left: solid;
+	border-width: 2px;
+	border-color: #d5d2d2;
+	margin-bottom: 10px;
+}
+
+.dataPointBox {
+	font-weight: 900;
+	font-size: large;
+}
+
+#selectedSchoolList {
+	height: 100%;
+	background-color: red;
+}
+
+#graphMaker {
+	height: 100%;
+	background-color: blue;
+}
+
+#graphList {
+	height: 100%;
+	background-color: yellow;
+}
+
+#selectedSchoolListCon {
+	padding: 10px;
+	background-color: #f6f2f5;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+#graphMakerBox {
+	min-height: 70vh;
+	background-color: #f6f6f6;
+	padding: 5px;
+	border-radius: 5px;
+	margin-top: 10px;
 }

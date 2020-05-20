@@ -1,10 +1,10 @@
 'use strict';
 
-const elements = [ 'communeSelector', 'filterBox', 'collectedSchools', 'map', 'mainCon' ];
+const elements = [ 'communeSelector', 'filterBox', 'collectedSchools', 'map', 'mainCon', 'relationPhase' ];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
 
-let currentPhase = 2;
+let currentPhase = 3;
 
 updatePhase(currentPhase);
 
@@ -31,14 +31,23 @@ function setView(phase) {
 			display('map');
 			break;
 		case 2:
-			inBounds = [
+			// inBounds = [
+			// 	{ NAME: 'Ida Holsts Skole', display: true, COMMUNE: 'Svendborg' },
+			// 	{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
+			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
+			// ];
+			display('mainCon');
+			createSchoolList(inBounds);
+			setDetailData(inBounds[0].NAME);
+			break;
+		case 3:
+			relationPhaseList = [
 				{ NAME: 'Ida Holsts Skole', display: true, COMMUNE: 'Svendborg' },
 				{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
 				{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			];
-			createSchoolList(inBounds);
-			setDetailData(inBounds[0].NAME);
-			display('mainCon');
+			createRelationPage(relationPhaseList);
+			display('relationPhase');
 			break;
 	}
 }
