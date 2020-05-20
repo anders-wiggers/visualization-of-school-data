@@ -308,7 +308,7 @@ function filterData() {
 			}
 		}
 	}
-	//inBounds = [ ...temp ];
+	inBounds = [ ...temp ];
 	addSchoolToList(temp);
 	updateMakers(temp);
 }

@@ -100,123 +100,190 @@
             <div id="selectedList" class="col-3">
             </div>
             <div id="detailBox" class="col-6">
-                <div>
-                    <h1 id="schoolName"></h1>
-                    <p id="mail"></p>
-                    <p id="phone"></p>
-                    <p id="address"></p>
-                    <p id="website"></p>
-                    
-                    <div style ="display: flex; align-items: baseline;">
-                    <p id="avgrade">Average Grade: </p> <a class="btn btn-primary hidden" id="gradeBtn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
-                        7.5
-                    </a>
-                    </div>
-        
-                    <div class="collapse  multi-collapse" id="collapseExample">
-                        <div class="card card-body">
-                            <table class="table table-striped">
+                <div id="detailContainer">
+                    <div id="allStats">
+                        <h2 id="schoolName" style="text-align: center;"></h2>
+                        <div class="row" style="text-align: center; width: 100%;">
+                        <div class="col-sm">
+                            <div>
+                                <i class="far fa-window-maximize inline"></i><p class="inline" id="website"></p>
+                            </div>
+                            <i class="fas fa-envelope-open-text inline"></i><p class="inline" id="mail"></p>
+                        </div>
+                        <div class="col-sm">
+                            <div>
+                                <i class="fas fa-mobile inline"></i><p class="inline" id="phone"></p>
+                            </div>
+                            <div>
+                                <i class="fas fa-map-marked inline"></i><p class="inline" id="address"></p>
+                            </div>
+                        </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <p class="inline">Dataset from:</p>
+                            <select class="custom-select inline-free" id="year" onchange="updateYear()">
+                                <option value="2019" selected>2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                            </select>
+                        </div>
+
+
+                        <div class="detailItem">
+                            <div style ="display: flex; align-items: baseline;">
+                                    <p id="avgrade">Average Grade: </p> <a class="btn btn-primary hidden" id="gradeBtn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 10px;">
+                                        7.5
+                                    </a>
+                                    <span style="margin-left: 10px; cursor: help;" class="d-inline-block" tabindex="0" data-toggle="tooltip" title="The Average grade of the students final exam"><i class="far fa-question-circle"></i></span>
+                            </div>
+            
+                            <div class="collapse  multi-collapse" id="collapseExample">
+                            <div class="card card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Grade</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Boy's Average</th>
+                                            <td id="bmean"><div class="loading"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Girl's Average</th>
+                                            <td id="gmean"><div class="loading"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Students With over 2</th>
+                                            <td id="over"><div class="loading"/></td>                               
+                                        </tr>
+                                        </tbody>
+                                    </table>                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detailItem">
+                            <p class="inline">Competence Coverage: <a class="dataPointBox" id="competanceLabel"></a></p>
+                            <span style="margin-left: 10px; cursor: help;" class="d-inline-block inline" tabindex="0" data-toggle="tooltip" title="Competence Coerage is the percent of planned school hours that are being tought by a competent teacher"><i class="far fa-question-circle"></i></span>
+                        </div>
+
+                        <div class="detailItem">
+                            <p class="inline">Total Students: <a class="dataPointBox" id="totalStudents"></a></p>
+                        
+                            <p class="inline">Students per class: <a class="dataPointBox" id="students2"></a></p>
+                        </div>
+
+                        
+                        <div class="detailItem">
+                        <div style ="display: flex; align-items: baseline;">
+                            <p id="abs">Absence: </p>
+                            <a class="btn btn-primary" id="absenceBtn" data-toggle="collapse" href="#collapseAbesence" role="button" aria-expanded="false" aria-controls="collapseAbsence" style="margin-left: 10px;">
+                                3%
+                            </a>
+                            <span style="margin-left: 10px; cursor: help;" class="d-inline-block inline" tabindex="0" data-toggle="tooltip" title="Average absence of students"><i class="far fa-question-circle"></i></span>
+
+                        </div>
+                
+                            <div class="collapse  multi-collapse" id="collapseAbesence">
+                                <div class="card card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Grade</th>
+                                            <th scope="col">Absence</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th scope="row">Tenth Grade</th>
+                                            <td id="tenthGrade"><div class="loading"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">School Leaving Grades</th>
+                                            <td id="gradschool"><div class="loading"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Middlegrade</th>
+                                            <td id="middleschool"><div class="loading"/></td>                               
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Kindergrade</th>
+                                            <td id="kinderschool"><div class="loading"/></td>                               
+                                        </tr>
+                                        </tbody>
+                                    </table>                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detailItem">
+                            <p class="inline">Studetns Well-Being: <a class="dataPointBox" id="wbLabel"></a></p>
+                            <span style="margin-left: 10px; cursor: help;" class="d-inline-block inline" tabindex="0" data-toggle="tooltip" title="Metric from 0-5, where 0 is the least and 5 is the highest. Submited anonymously by the students"><i class="far fa-question-circle"></i></span>
+
+                        </div>  
+
+                        <div class="detailItem">
+                            <table class="table table-striped" id="planned_hours">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Type</th>
                                     <th scope="col">Grade</th>
+                                    <th scope="col">Planned hours</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <th scope="row">Boy's Average</th>
-                                    <td id="bmean"><div class="loading"/></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Girl's Average</th>
-                                    <td id="gmean"><div class="loading"/></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Students With over 2</th>
-                                    <td id="over"><div class="loading"/></td>                               
+                                    <th scope="row"><div class="loading"/></th>
+                                    <td ><div class="loading"/></td>
                                 </tr>
                                 </tbody>
-                            </table>                    
-                        </div>
-                    </div>
-
-                    <p>Total Students: <a id="totalStudents"></a></p>
-                    <p>Students per class: <a id="students2"></a></p>
-
-                    
-
-                    <div style ="display: flex; align-items: baseline;">
-                        <p id="abs">Absence: </p>
-                        <a class="btn btn-primary" id="absenceBtn" data-toggle="collapse" href="#collapseAbesence" role="button" aria-expanded="false" aria-controls="collapseAbsence" style="margin-left: 10px;">
-                            3%
-                        </a>
-                    </div>
-            
-                        <div class="collapse  multi-collapse" id="collapseAbesence">
-                            <div class="card card-body">
-                                <table class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Grade</th>
-                                        <th scope="col">Absence</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">Tenth Grade</th>
-                                        <td id="tenthGrade"><div class="loading"/></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">School Leaving Grades</th>
-                                        <td id="gradschool"><div class="loading"/></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Middlegrade</th>
-                                        <td id="middleschool"><div class="loading"/></td>                               
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Kindergrade</th>
-                                        <td id="kinderschool"><div class="loading"/></td>                               
-                                    </tr>
-                                    </tbody>
-                                </table>                    
-                            </div>
+                            </table>   
                         </div>
 
-                        <p>Studetns Well-Being: <a id="wbLabel"></a></p>
+                        <div class="detailItem">
+                            <select class="custom-select" id="soceco" onchange="updateSocio()">
+                                <option value="Gennemsnit_Gennemsnit" selected>Average</option>
+                                <option value="Dansk_Læsning">Danish Readning</option>
+                                <option value="Dansk_Mundtlig">Danish Oral</option>
+                                <option value="Dansk_Retskrivning">Danish Orthography</option>
+                                <option value="Dansk_Skriftlig">Danish Writing</option>
+                                <option value="Engelsk_Mundtlig">Engelsk Oral</option>
+                                <option value="Matematik_Uden_hjælpemidler">Mathmatik without help</option>
+                                <option value="Fysik_Kemi_Biologi_Geografi_Praktisk_mundtlig">Physic/Kemi/Bioligy/Geography</option>
+                            </select>
 
-                        <select class="custom-select" id="year" onchange="updateYear()">
-                            <option value="2019" selected>2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                        </select>
+                            <table class="table table-striped" id="socecoTable">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><div class="loading"/></th>
+                                        <td ><div class="loading"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>   
+                        </div>
+                        
 
-                        <table class="table table-striped" id="planned_hours">
-                            <thead>
-                            <tr>
-                                <th scope="col">Grade</th>
-                                <th scope="col">Planned hours</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row"><div class="loading"/></th>
-                                <td ><div class="loading"/></td>
-                            </tr>
-                            </tbody>
-                        </table>   
-
-
+                        </div>
                     <button class="btn btn-light" onclick="addSelected()">Add</button>
                 </div>
             </div>
-            <div id="relationList" class="col-sm"></div>
+            <div id="relationList" class="col-sm">
+                <div id="relationContainer">
+                    <h3>Relation List</h3>
+                    <div id="listItems"></div>
+                </div>
+            </div>
         </div>
   
+        <div id="relationPhase">
+            
+        </div>
+
 
         <div id="filterBox" class="hidden">
             <div id="grades" class="deactiveFilter"></div>

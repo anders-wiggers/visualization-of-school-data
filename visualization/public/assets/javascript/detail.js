@@ -1,6 +1,8 @@
 'use strict';
 let selectedSchool;
+let selectedObject;
 let year = 2019;
+let socSelectorValue = 'Gennemsnit_Gennemsnit';
 
 function createSchoolList(list) {
 	let div = document.getElementById('selectedList');
@@ -29,6 +31,38 @@ function createSchoolList(list) {
 		}
 	});
 }
+
+function createRelationList(list) {
+	let div = document.getElementById('listItems');
+	div.innerHTML = '';
+	let ul = document.createElement('ul');
+	ul.classList.add('com-ul');
+	div.appendChild(ul);
+	list.forEach(function(item) {
+		if (item.display) {
+			let li = document.createElement('li');
+			li.classList.add('com-li');
+			let text = document.createElement('div');
+			text.innerHTML = item.NAME;
+			text.classList.add('school-item');
+			let icon = document.createElement('img');
+			icon.setAttribute('src', 'assets/pictures/school.svg');
+			icon.classList.add('school-icon');
+			let floxFix = document.createElement('div');
+			floxFix.classList.add('school-list');
+			floxFix.classList.add('clickable');
+			let removeIcon = document.createElement('a');
+			removeIcon.setAttribute('class', 'fas fa-times cross');
+			removeIcon.setAttribute('onclick', `removeSchoolFromList('${item.NAME}')`);
+			floxFix.appendChild(icon);
+			floxFix.appendChild(text);
+			floxFix.appendChild(removeIcon);
+			li.appendChild(floxFix);
+			ul.appendChild(li);
+		}
+	});
+}
+
 function setDetailData(school) {
 	$('.collapse').collapse('hide');
 	let missing = 'Data not provided';
@@ -46,6 +80,7 @@ function setDetailData(school) {
 	let adress = document.getElementById('address');
 
 	selectedSchool = school;
+	selectedObject = schoolDataSet;
 	nameBox.innerHTML = schoolDataSet.NAME;
 	mail.innerHTML = schoolDataSet.mail;
 	phone.innerHTML = schoolDataSet.phone;
@@ -156,7 +191,8 @@ function setDetailData(school) {
 	).then((res) => {
 		res.json().then((data) => {
 			try {
-				document.getElementById('wbLabel').innerHTML = round(data[0].mean, 2);
+				if (data[0].mean === null || data[0].mean === 0) document.getElementById('wbLabel').innerHTML = missing;
+				else document.getElementById('wbLabel').innerHTML = data[0].mean;
 			} catch (error) {
 				document.getElementById('wbLabel').innerHTML = missing;
 			}
@@ -195,14 +231,92 @@ function setDetailData(school) {
 			}
 		});
 	});
+
+	fetchSocio(schoolDataSet);
+
+	fetch(
+		`api/combine?school=${schoolDataSet.NAME}&year=${year}&data=competence_coverage&commune=${schoolDataSet.COMMUNE}`
+	).then((res) => {
+		res.json().then((data) => {
+			try {
+				if (data[0].COMPETENCE_COVERAGE === null)
+					document.getElementById('competanceLabel').innerHTML = missing;
+				else document.getElementById('competanceLabel').innerHTML = round(data[0].COMPETENCE_COVERAGE, 4);
+			} catch (error) {
+				document.getElementById('competanceLabel').innerHTML = missing;
+			}
+		});
+	});
+}
+
+function fetchSocio(schoolDataSet) {
+	fetch(
+		`api/combine?school=${schoolDataSet.NAME}&year=${year}&data=socioeconomic>${socSelectorValue}&commune=${schoolDataSet.COMMUNE}`
+	).then((res) => {
+		res.json().then((data) => {
+			try {
+				let d = data[0];
+				delete d.id;
+				let tableRef = document.getElementById('socecoTable').getElementsByTagName('tbody')[0];
+				$('#socecoTable tbody tr').remove();
+				for (let point in d) {
+					let word = point;
+					if (/^[A-Z]/.test(word)) continue;
+					if (d[point] === null) continue;
+
+					let grade = document.createTextNode(d[point]);
+					// Append a text node to the cell
+					let text = '';
+					if (point === 'grade_period') text = 'Average Grade over a 3 year period';
+					else if (point === 'soc_period') text = 'Expeded Grade over a 3 year period';
+					else if (point === 'dif_period') text = 'Difference';
+					else if (point === 'significant_period') {
+						text = 'Significant';
+						if (d[point] === 0) grade = document.createTextNode('No');
+						else grade = document.createTextNode('Yes');
+					} else {
+						continue;
+					}
+
+					// Insert a row in the table at the last row
+					let newRow = tableRef.insertRow();
+
+					// Insert a cell in the row at index 0
+					let g = newRow.insertCell(0);
+					let h = newRow.insertCell(0);
+
+					let hours = document.createTextNode(text);
+
+					g.appendChild(grade);
+					h.appendChild(hours);
+				}
+			} catch (err) {}
+		});
+	});
 }
 
 function addSelected() {
-	relationPhaseList.push(selectedSchool);
+	if (!relationPhaseList.includes(selectedObject)) {
+		relationPhaseList.push(selectedObject);
+		createRelationList(relationPhaseList);
+	}
+}
+
+function removeSchoolFromList(name) {
+	let index = relationPhaseList.findIndex((i) => i.NAME === name);
+	if (index > -1) {
+		relationPhaseList.splice(index, 1);
+	}
+	createRelationList(relationPhaseList);
 }
 
 function updateYear() {
 	year = document.getElementById('year').value;
+	setDetailData(selectedSchool);
+}
+
+function updateSocio() {
+	socSelectorValue = document.getElementById('soceco').value;
 	setDetailData(selectedSchool);
 }
 
