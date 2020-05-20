@@ -5,59 +5,134 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
     </head>
     <body>
+        <div id="buttonSVG">
+        <svg id="customButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282.93 282.39" height="200" width="200">
+            <g id="filter">
+              <g id="filterPath">
+                <path d="M170.9,220.13a70.62,70.62,0,0,0,58.56-65.31v-.47h0c0-.53,0-1.07.07-1.6h-.07l0-2.51h.08V30.1l1.29.77a139.59,139.59,0,0,1,49.48,187.56l-1,1.75Z" transform="translate(-15.73 -8.88)" fill="#e9c369"/>
+                <path d="M230.11,31l.53.32A139.09,139.09,0,0,1,280,218.18l-.86,1.5h-2.21l-101.12,0a71.11,71.11,0,0,0,54.18-64.57h0l0-.68c0-.54,0-1.08.07-1.63H230l0-2.53h.08V31m-1-1.76V145.71L229,154.8l0-.47.07-1.6c0,.54,0,1.07-.07,1.6l0,.69v-.22a70.44,70.44,0,0,1-67.75,65.83l115.67.05h2.79l1.15-2A140.1,140.1,0,0,0,231.16,30.44l-2-1.22Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+              <g id="filterIcon">
+                <line x1="242.85" y1="118.65" x2="243.1" y2="146.01" fill="#6dbe45" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+                <line x1="250.57" y1="118.61" x2="250.82" y2="145.97" fill="#6dbe45" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+                <line x1="258.46" y1="118.59" x2="258.71" y2="145.95" fill="#6dbe45" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+                <circle cx="242.97" cy="123.23" r="2.52" fill="#e9c369" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+                <circle cx="250.79" cy="142.61" r="2.52" fill="#e9c369" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+                <circle cx="258.58" cy="129.75" r="2.52" fill="#e9c369" stroke="#fff" stroke-miterlimit="10" stroke-width="2"/>
+              </g>
+              <g id="filterShadow" opacity="0.2">
+                <path d="M179.71,219.09a85.69,85.69,0,0,0,8.72-3.23,71.12,71.12,0,0,0,8-4.4l1.27-.77a35.78,35.78,0,0,0,5.12-3.57l.52-.42a64.32,64.32,0,0,0,7-6.21l.63-.69c1.31-1.42,3.67-4,4.78-5.51l60.83,24.82Z" transform="translate(-15.73 -8.88)"/>
+                <path d="M215.87,194.9,274,218.61l-91.17,0c3.23-1.13,5.48-2.12,5.82-2.27a71.28,71.28,0,0,0,8.05-4.43l1.27-.77a37.89,37.89,0,0,0,5.18-3.61l.5-.41a63.51,63.51,0,0,0,7-6.28l.62-.68c1.24-1.33,3.39-3.67,4.59-5.24m-.35-1.23a82.69,82.69,0,0,1-5.6,6.48,69,69,0,0,1-7.42,6.58,43.67,43.67,0,0,1-6.34,4.31,71.91,71.91,0,0,1-7.94,4.37A87.17,87.17,0,0,1,178.17,219l-2.34.55,103.25,0-63.56-25.94Z" transform="translate(-15.73 -8.88)"/>
+              </g>
+            </g>
+            <g id="overview">
+              <g id="overviewPath">
+                <path d="M226.79,136.64a70.64,70.64,0,0,0-65.3-58.56h-.43v0L159.4,78v.07l-7-.12H36.75l.77-1.3A139.59,139.59,0,0,1,225.08,27.16l1.75,1Z" transform="translate(-15.73 -8.88)" fill="#2a9d8f"/>
+                <path d="M156.88,9.88a139,139,0,0,1,68,17.71l1.5.86v2.21l0,101.11a71.14,71.14,0,0,0-64.57-54.18h0l-.68,0-1.62-.07v.07l-2.53,0v-.08H37.63L38,76.9a138.91,138.91,0,0,1,118.93-67m0-1A139.93,139.93,0,0,0,37.09,76.38l-1.22,2.05H152.36l9.09.15-.46,0-1.61-.07,1.61.07.68,0h-.22a70.44,70.44,0,0,1,65.83,67.75l.05-115.67V27.87l-2-1.15A139.43,139.43,0,0,0,156.88,8.88Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+              <g id="overviewShadow" opacity="0.2">
+                <path d="M225.65,127.53a46.09,46.09,0,0,0-3.32-8.76,71.44,71.44,0,0,0-4.38-8.11c-.67-1.1-1.18-1.9-1.66-2.6-1.44-2.1-2.49-3.44-2.6-3.59-.4-.5-1.22-1.53-2.33-2.8-1.59-1.81-2.87-3.07-4.23-4.41s-2.55-2.39-3.72-3.4l-1.63-1.44a9.75,9.75,0,0,0-1.21-.91l25.25-60.57v97.22C225.77,128,225.71,127.74,225.65,127.53Z" transform="translate(-15.73 -8.88)"/>
+                <path d="M225.32,33.44v91.3a42.66,42.66,0,0,0-2.55-6.21,75.55,75.55,0,0,0-4.39-8.14c-.68-1.11-1.18-1.89-1.68-2.61-1.44-2.1-2.5-3.47-2.62-3.62-.69-.88-1.52-1.88-2.35-2.82-1.6-1.83-2.89-3.1-4.25-4.44s-2.57-2.4-3.74-3.42c-.52-.45-1.05-.91-1.63-1.43a9.7,9.7,0,0,0-.92-.73l24.13-57.88m1-5L199.94,91.7a9.35,9.35,0,0,1,1.5,1.1c1.84,1.64,3.24,2.74,5.34,4.81,1.43,1.41,2.65,2.63,4.2,4.39,1.21,1.38,2.06,2.45,2.31,2.78s1.35,1.76,2.59,3.56c.45.67.94,1.43,1.65,2.58a72.93,72.93,0,0,1,4.34,8,44.93,44.93,0,0,1,3.3,8.69s1.08,4.09,1.15,4.09V28.44Z" transform="translate(-15.73 -8.88)"/>
+              </g>
+              <g id="overviewIcon">
+                <path d="M174.58,41.43a19.33,19.33,0,0,0-3.05-9.29h-.06v-.06a19.63,19.63,0,0,0-1.7-2.26,11,11,0,0,0,1.09-4.24c0-5.2-3.36-8.56-8.56-8.56-4.39,0-7.46,2.39-8.32,6.26a19.42,19.42,0,1,0,20.6,18.16ZM162.24,18.07h0c3.62,0,7.49,2,7.49,7.49a10.09,10.09,0,0,1-1.13,4.09v0a45.67,45.67,0,0,1-6.35,9.23c-1.6-1.84-7.49-9-7.49-13.35C154.74,20,158.61,18.07,162.24,18.07ZM136.81,42.64A18.34,18.34,0,0,1,149,25.33a4.87,4.87,0,0,0,.8,3.42,16.2,16.2,0,0,0,1.88,2.56c1.32,1.56,1.87,2.2.43,3.9a6.73,6.73,0,0,1-3.47,1.7c-2.32.64-4.94,1.35-5.29,5.6C143,47,142.1,49,141.47,49.21c-.07,0-.21.08-.49-.16a6.16,6.16,0,0,1-.61-2.32c-.29-1.8-.58-3.66-1.82-4.12a2,2,0,0,0-1.74.27Zm.46,4.13a20,20,0,0,1-.41-2.65v0c.57-.43,1-.61,1.31-.51.65.24.93,2,1.14,3.29s.39,2.5,1,3a1.66,1.66,0,0,0,1.08.42,1.3,1.3,0,0,0,.52-.1c1.66-.67,2.32-4.51,2.56-7.6.29-3.49,2.25-4,4.51-4.65a7.47,7.47,0,0,0,4-2c2-2.39.9-3.73-.43-5.29a14.88,14.88,0,0,1-1.76-2.41c-.83-1.46-.82-2.3-.67-2.76a1.08,1.08,0,0,1,.51-.62,18.57,18.57,0,0,1,3.13-.51,10,10,0,0,0-.07,1.22c0,5.49,7.83,14.16,8.17,14.53a.54.54,0,0,0,.76,0l0,0a49.12,49.12,0,0,0,6.57-9.25,19.58,19.58,0,0,1,1.37,1.91,2.89,2.89,0,0,1-1.22,3.84c-1.77,1.24-2.7,2.48-2.84,3.79a4.9,4.9,0,0,0,1.64,3.75,6.65,6.65,0,0,1,1.44,5.81,3.75,3.75,0,0,1-2.36,2.82c-1.85.66-7.76,3.14-7.94,7.81A18.35,18.35,0,0,1,137.27,46.77Zm25.56,12.52a18.26,18.26,0,0,1-2.46.93v0c.43-3.79,5.55-5.93,7.21-6.51a4.81,4.81,0,0,0,3-3.58,7.75,7.75,0,0,0-1.71-6.79,3.86,3.86,0,0,1-1.35-2.91c.1-1,.88-2,2.39-3a4.37,4.37,0,0,0,1.83-2.43A18.35,18.35,0,0,1,162.83,59.29Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+                <path d="M162.24,21.1a4.47,4.47,0,1,0,0,8.94h0a4.47,4.47,0,0,0,0-8.94Zm0,7.89a3.41,3.41,0,1,1,3.41-3.41A3.41,3.41,0,0,1,162.24,29Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+            </g>
+            <g id="relate">
+              <g id="relatePath">
+                <path d="M83.49,269.14A139.59,139.59,0,0,1,34,81.58l1-1.75,108.49,0a70.64,70.64,0,0,0-58.57,65.31v.48h0c0,.53-.05,1.07-.07,1.6h.07l-.11,7V269.91Z" transform="translate(-15.73 -8.88)" fill="#e76f51"/>
+                <path d="M35.3,80.33h2.22l101.11,0a71.11,71.11,0,0,0-54.18,64.57h0l0,.68c0,.54-.06,1.08-.08,1.62h.07l0,2.53h-.07V269l-.54-.32A139.09,139.09,0,0,1,34.44,81.83l.86-1.5m-.58-1-1.15,2A140.1,140.1,0,0,0,83.23,269.57l2.06,1.22V154.3l.14-9.09,0,.47-.07,1.6c0-.54,0-1.07.07-1.6l0-.69v.22a70.45,70.45,0,0,1,67.76-65.83l-115.67,0Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+              <g id="relateShadow" opacity="0.2">
+                <path d="M37.89,80.89l96.16.2a44.06,44.06,0,0,0-7.58,2.7,73.15,73.15,0,0,0-8.29,4.42l-.66.4a37,37,0,0,0-5.43,3.82l-1.16.93A53.13,53.13,0,0,0,104.6,99c-.23.24-.73.72-1.32,1.27a30.49,30.49,0,0,0-4.65,5Z" transform="translate(-15.73 -8.88)"/>
+                <path d="M40.49,81.4l90.18.18a35.52,35.52,0,0,0-4.41,1.75,76.67,76.67,0,0,0-8.34,4.45l-.66.41A37.21,37.21,0,0,0,111.78,92l-1.16.93a54,54,0,0,0-6.39,5.64c-.21.23-.71.7-1.29,1.24a35.47,35.47,0,0,0-4.51,4.74L40.49,81.4m-5.21-1,63.58,25.45c.81-1.85,5.23-5.59,6.11-6.56a67.17,67.17,0,0,1,7.43-6.46,40.36,40.36,0,0,1,6-4.18,73.33,73.33,0,0,1,8.23-4.39,43,43,0,0,1,8.73-3l3.37-.66L35.28,80.39Z" transform="translate(-15.73 -8.88)"/>
+              </g>
+              <g id="relateIcon">
+                <path d="M53.85,167.36A1.9,1.9,0,0,0,55.68,166h9.05a1.89,1.89,0,0,0,3.64,0h3.07a.53.53,0,0,0,0-1.06H68.37a1.89,1.89,0,0,0-1.22-1.27,21.83,21.83,0,0,0-4-11.57l-4-5.62.79-.48A14.86,14.86,0,0,0,67,135a1.91,1.91,0,0,0,1.39-1.32h3.07a.53.53,0,0,0,0-1.06H68.37a1.89,1.89,0,0,0-3.64,0H55.68a1.9,1.9,0,0,0-3.65,0H43.35a1.9,1.9,0,0,0-3.65,0H36.4a.53.53,0,0,0,0,1.06h3.3A2,2,0,0,0,40.94,135a22.31,22.31,0,0,0,3.94,10.95l3.87,5.55-.57.34A14.81,14.81,0,0,0,41,163.63a1.91,1.91,0,0,0-1.33,1.3H36.4a.53.53,0,0,0,0,1.06h3.3a1.9,1.9,0,0,0,3.65,0H52A1.9,1.9,0,0,0,53.85,167.36Zm13.54-1.9a.84.84,0,0,1-1.68,0v0a.84.84,0,0,1,1.68,0Zm-.84-33.14a.84.84,0,1,1-.84.85h0v0A.84.84,0,0,1,66.55,132.32Zm-12.7,0a.84.84,0,1,1-.84.85h0A.84.84,0,0,1,53.85,132.32Zm-13.17.84a.84.84,0,1,1,.84.84A.85.85,0,0,1,40.68,133.16Zm5.07,12.15A21.21,21.21,0,0,1,42,135a1.93,1.93,0,0,0,1.34-1.3H52A1.89,1.89,0,0,0,53.4,135a22,22,0,0,0,3.44,10.06.52.52,0,0,0,.73.16.54.54,0,0,0,.16-.73A20.85,20.85,0,0,1,54.46,135a1.93,1.93,0,0,0,1.22-1.27h9.05A1.9,1.9,0,0,0,65.92,135a13.81,13.81,0,0,1-6.56,10.13l-9.7,5.84Zm-3.66,18.34a13.69,13.69,0,0,1,6.64-10.93L58.2,147l4,5.69a20.79,20.79,0,0,1,3.84,10.92,1.88,1.88,0,0,0-1.36,1.31H55.68a1.92,1.92,0,0,0-1.26-1.28A22.35,22.35,0,0,0,51,152.9a.52.52,0,0,0-.73-.17.53.53,0,0,0-.16.73,21.27,21.27,0,0,1,3.25,10.17,1.91,1.91,0,0,0-1.33,1.3H43.35A1.92,1.92,0,0,0,42.09,163.65Zm-.57,2.65a.84.84,0,1,1,.84-.84A.85.85,0,0,1,41.52,166.3ZM53,165.47v0a.84.84,0,1,1,.84.85A.84.84,0,0,1,53,165.45Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+            </g>
+            <g id="details">
+              <g id="detailPath">
+                <path d="M156.92,290.76A139.46,139.46,0,0,1,88.72,273L87,272,87,163.5a70.62,70.62,0,0,0,65.31,58.56h.47v0c.53,0,1.07.06,1.6.07v-.07l2.51,0v.08H277.05l-.77,1.3a139.45,139.45,0,0,1-119.36,67.25Z" transform="translate(-15.73 -8.88)" fill="#f4a261"/>
+                <path d="M87.51,168.37a71.15,71.15,0,0,0,64.57,54.18h0l.68,0,1.63.07v-.07l2.53,0v.07H276.17l-.32.53A139.09,139.09,0,0,1,89,272.55l-1.49-.86v-2.21l0-101.11m-1-14.56,0,115.67v2.79l2,1.15a140.1,140.1,0,0,0,188.24-49.66l1.22-2H161.44l-9.09-.15.47,0,1.6.07c-.53,0-1.07,0-1.6-.07l-.69,0h.22a70.45,70.45,0,0,1-65.83-67.75Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+              <g id="detailShadow" opacity="0.2">
+                <path d="M88,172.08l0,.07a55,55,0,0,0,3.3,8.84,73.24,73.24,0,0,0,4.31,8.07c.44.71.77,1.27,1.06,1.75a28.47,28.47,0,0,0,3,4.32l.44.54a64.44,64.44,0,0,0,6.21,7l.79.73c1.51,1.4,4.23,3.93,5.76,5L88,269.16Z" transform="translate(-15.73 -8.88)"/>
+                <path d="M88.52,175.34a47.53,47.53,0,0,0,2.37,5.86,70.83,70.83,0,0,0,4.34,8.12c.43.71.76,1.27,1,1.74a29,29,0,0,0,3,4.38l.44.55a65.32,65.32,0,0,0,6.26,7l.8.74c1.42,1.31,3.89,3.61,5.49,4.83L88.5,266.62l0-91.28m-1-6.87,0,103.23,26-63.48c-1.71-1.13-5.86-5.08-6.84-6a68.34,68.34,0,0,1-6.59-7.45,39.41,39.41,0,0,1-4-6,71.85,71.85,0,0,1-4.28-8A53.9,53.9,0,0,1,88.53,172l-1-3.55Z" transform="translate(-15.73 -8.88)"/>
+              </g>
+              <g id="detailGlass">
+                <path d="M153.68,251.46a13,13,0,1,0,4-3.7l-9.63-9.57a2.73,2.73,0,1,0-4,3.77l.1.1Zm10.66-.89a8.42,8.42,0,1,1-8.42,8.44,8.44,8.44,0,0,1,8.42-8.44Z" transform="translate(-15.73 -8.88)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1.5"/>
+              </g>
+            </g>
+            <g id="presentation">
+              <circle id="presentationCircle" cx="139.47" cy="140.43" r="61.52" fill="#264653"/>
+              <g id="presentationIcon">
+                <path d="M179.74,130.29a.77.77,0,0,0,.77-.78v-3.09a.77.77,0,0,0-.77-.78H142.58a.78.78,0,0,0-.78.78v3.09a.78.78,0,0,0,.78.78h.77v12.79a7,7,0,0,0-1.52,12.37,2.47,2.47,0,0,0,0,.39h-2.32a7,7,0,0,0-7,7v10.07a.78.78,0,0,0,.78.77h20.9a.77.77,0,0,0,.77-.77v-5.82a3.85,3.85,0,0,1,1.14-2.74l10.8-10.8h12.84a.76.76,0,0,0,.77-.77v-3.1a.76.76,0,0,0-.77-.77H179V130.29Zm-36.39-3.1H179v1.55H143.35Zm2.32,17a5.32,5.32,0,0,1,1.2.14,7,7,0,0,1-5.07,2.18h-.57A5.42,5.42,0,0,1,145.67,144.22Zm14.39,6.2L158.51,152h-6.28a6.17,6.17,0,0,0,.36-1.54Zm5.94,1.8-.2.2L163,149.64l.2-.2a1.94,1.94,0,0,1,1.38-.57,2,2,0,0,1,1.39,3.35Zm-20.33,4.39a7,7,0,0,0,2.29-.39,2.32,2.32,0,0,1-4.57,0A6.91,6.91,0,0,0,145.67,156.61Zm3.85-1.16a6.89,6.89,0,0,0,1.94-1.94H157l-1.19,1.19a3.89,3.89,0,0,1-2.74,1.14h-3.5c0-.13,0-.27,0-.39ZM148.39,145a5.5,5.5,0,0,1,2.11,2.22,6.92,6.92,0,0,1-2.93-1.36A8.38,8.38,0,0,0,148.39,145Zm-8.14,4.68a5.28,5.28,0,0,1,.23-1.55h1.32a8.58,8.58,0,0,0,4.51-1.3,8.52,8.52,0,0,0,4.71,2,5.55,5.55,0,0,1,.07.82,5.42,5.42,0,0,1-10.84,0ZM155,163.22a5.39,5.39,0,0,0-1.59,3.83v5H140.25v-8.51h-1.54v8.51h-4.65V162.8a5.42,5.42,0,0,1,5.42-5.42h2.65a3.86,3.86,0,0,0,7.09,0H153a5.38,5.38,0,0,0,3.83-1.58l5.06-5.06,2.78,2.77ZM179,152h-11a3.32,3.32,0,0,0,.2-1.13,2.71,2.71,0,0,0,0-.41H179Zm-1.55-3.09h-9.89a3.5,3.5,0,0,0-5.39-.52l-.52.52h-9a7,7,0,0,0-6.92-6.2,6.49,6.49,0,0,0-.77.05V130.29h32.51Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+                <path d="M153.41,142.67a5.42,5.42,0,1,0-5.41-5.42A5.42,5.42,0,0,0,153.41,142.67Zm0-1.54a3.87,3.87,0,0,1-2.84-1.27l3.06-1.83h3.58a3.89,3.89,0,0,1-3.8,3.1Zm3.8-4.65h-3v-3A3.9,3.9,0,0,1,157.21,136.48Zm-4.57-3v3.36l-2.86,1.71a3.83,3.83,0,0,1-.24-1.28A3.89,3.89,0,0,1,152.64,133.46Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+                <path d="M162.71,143.45h12.38a.78.78,0,0,0,.78-.78v-3.09a.78.78,0,0,0-.78-.78h-.77v-2.32h-1.55v2.32h-1.55v-3.87h-1.55v3.87h-1.55v-5.42h-1.54v5.42H165v-7h-1.55v7h-.77a.78.78,0,0,0-.78.78v3.09A.78.78,0,0,0,162.71,143.45Zm.77-3.1h10.84v1.55H163.48Z" transform="translate(-15.73 -8.88)" fill="#fff"/>
+              </g>
+            </g>
+          </svg>
+        </div>
         <script>
-        anime({
-            targets: '#OverviewContainer',
-            left: '240px',
-            backgroundColor: '#FFF',
-            borderRadius: ['0%', '50%'],
-            easing: 'easeInOutQuad'
-        })
+        var presentationCircle = document.getElementById("presentationCircle"),
+            overview = document.getElementById("overview"),
+            filter = document.getElementById("filter"),
+            details = document.getElementById("details"),
+            relate = document.getElementById("relate"),
+            originPoint = document.getElementById("customButton"),
+            animateButton = document.getElementById("animateButton");
+            gsap.to([filter, details,relate],{css:{opacity:"0.5"}})
+        var selectorArray = [overview, filter, details, relate]
+
+        let animateOverview = () => {
+            gsap.to([overview, filter, details, relate],{duration:1,rotation:0, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["overview"]});     
+        }
+        let animateFilter = () => {
+            gsap.to([overview, filter, details, relate], {duration:1,rotation:-90, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["filter"]});  
+        }
+        let animatedetails = () => {
+            gsap.to([overview, filter, details, relate], {duration:1,rotation:-180, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["details"]});  
+        }
+        let animateRelation = () => {
+            gsap.to([overview, filter, details, relate], {duration:1,rotation:-270, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["relate"]});  
+        }
+        let animatePresentationCircle = () => {
+            gsap.to(presentation, {scale:1.5, transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["everything"]})
+        }
+
+        
+        let changeOpacity = (change) => {
+            console.log(change)
+            switch(change) {
+            case "overview":
+                gsap.to([filter, details, relate], {css:{opacity:"0.5"}});
+                gsap.to(overview, {css:{opacity:"1"}})
+                break;
+            case "filter":
+                gsap.to([overview, details, relate], {css:{opacity:"0.5"}});
+                gsap.to(filter, {css:{opacity:"1"}})
+                break;
+            case "details":
+                gsap.to([overview, filter, relate], {css:{opacity:"0.5"}});
+                gsap.to(details, {css:{opacity:"1"}})
+                break;
+            case "relate":
+                gsap.to([overview, filter, details], {css:{opacity:"0.5"}});
+                gsap.to(relate, {css:{opacity:"1"}})
+                break;
+            case "everything":
+                gsap.to([overview, filter, details, relate], {css:{opacity:"0.5"}});
+                break
+        }
+    }
+        overview.onclick = animateOverview
+        filter.onclick = animateFilter
+        relate.onclick = animateRelation
+        details.onclick = animatedetails
+        presentationCircle.onclick = animatePresentationCircle
 
         </script>   
     </body> 
 </html>
-<div class="buttonDiv">
-<svg id="wholeButton" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 461.97 443.58">
-    <title>theButton</title>
-    <path id="OverviewContainer" d="M357,347.19a194.64,194.64,0,0,0,.35-275.42l-76.2,76A87.13,87.13,0,0,1,281,271l75.93,76.13" transform="translate(10.24 13.56)" fill="#ededed" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"/>
-    <path id="FilteringContainer" d="M351,353.13a194.64,194.64,0,0,1-275.42-.35l76.2-76a87.13,87.13,0,0,0,123.22.16L351,353.06" transform="translate(10.24 13.56)" fill="#ededed" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"/>
-    <path id="RelationContainer" d="M74.86,64.34a194.64,194.64,0,0,1,275.42.35l-76.2,76a87.13,87.13,0,0,0-123.22-.16L74.93,64.41" transform="translate(10.24 13.56)" fill="#ededed" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"/>
-    <path id="DetailContainer" d="M68.9,70.28a194.64,194.64,0,0,0-.35,275.42l76.2-76a87.13,87.13,0,0,1,.16-123.22L69,70.35" transform="translate(10.24 13.56)" fill="#ededed" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"/>
-    <text id="o" transform="matrix(0.44, 0.87, -0.89, 0.45, 348.04, 152.79)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">O</text>
-    <text id="v" transform="translate(359.3 175.57) rotate(72.08) scale(0.98 1)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">v</text>
-    <text id="e" transform="translate(364.59 191.6) rotate(79.31) scale(0.98 1)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">e</text>
-    <text id="r" transform="matrix(0.08, 0.98, -1, 0.08, 367.81, 209.41)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">r</text>
-    <text id="v" transform="matrix(-0.03, 0.98, -1, -0.04, 368.93, 221.85)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">v</text>
-    <text id="i" transform="translate(368.11 239.28) rotate(97.5) scale(0.98 1)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">i</text>
-    <text id="e" transform="matrix(-0.22, 0.95, -0.97, -0.23, 367.32, 247.42)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">e</text>
-    <text id="w" transform="translate(363.72 264.86) rotate(112.76) scale(0.98 1)" font-size="38.27" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">w</text>
-    <text transform="translate(280.98 348.91) rotate(159.86) scale(1.02 1)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">F</text>
-    <text transform="matrix(-0.99, 0.26, -0.26, -0.97, 265.63, 354.38)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">i</text>
-    <text transform="matrix(-1.01, 0.2, -0.19, -0.98, 257.76, 356.48)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">l</text>
-    <text transform="matrix(-1.02, 0.12, -0.12, -0.99, 249.76, 358.13)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">t</text>
-    <text transform="translate(238.65 359.64) rotate(179.76) scale(1.02 1)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">e</text>
-    <text transform="translate(221 359.57) rotate(-173.83) scale(1.02 1)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">r</text>
-    <text transform="translate(209.47 358.27) rotate(-169.46) scale(1.02 1)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">i</text>
-    <text transform="matrix(-0.98, -0.29, 0.29, -0.96, 201.6, 357.16)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">n</text>
-    <text transform="translate(182.96 351.67) rotate(-154.86) scale(1.02 1)" font-size="35.65" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">g</text>
-    <text transform="translate(87.78 272.72) rotate(-107.26) scale(1.01 1)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">D</text>
-    <text transform="matrix(-0.14, -1, 0.99, -0.14, 80.96, 250.17)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">e</text>
-    <text transform="matrix(-0.03, -1.01, 1, -0.03, 78.6, 232.68)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">t</text>
-    <text transform="matrix(0.08, -1.01, 1, 0.08, 78.07, 221.26)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">a</text>
-    <text transform="matrix(0.18, -0.99, 0.98, 0.17, 79.6, 204.29)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">i</text>
-    <text transform="translate(81.01 196.23) rotate(-76.35) scale(1.01 1)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">l</text>
-    <text transform="translate(82.79 188.29) rotate(-71.48) scale(1.01 1)" font-size="36.21" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">s</text>
-    <text transform="matrix(0.89, -0.38, 0.39, 0.92, 165.19, 97.17)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">R</text>
-    <text transform="translate(181.97 90.02) rotate(-15.31) scale(0.97 1)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">e</text>
-    <text transform="translate(198.42 85.72) rotate(-9.82) scale(0.97 1)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">l</text>
-    <text transform="matrix(0.97, -0.08, 0.08, 1, 206.02, 84.18)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">a</text>
-    <text transform="matrix(0.97, 0.03, -0.03, 1, 222.11, 83.02)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">t</text>
-    <text transform="matrix(0.97, 0.1, -0.1, 0.99, 233.29, 83.38)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">i</text>
-    <text transform="matrix(0.95, 0.2, -0.21, 0.98, 240.91, 83.84)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">o</text>
-    <text transform="translate(258.92 87.56) rotate(20.49) scale(0.97 1)" font-size="36.18" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro">n</text>
-    <circle id="PresentationBubble" cx="222.8" cy="221.55" r="84.12" fill="#ededed" stroke="#000" stroke-miterlimit="10" stroke-width="2"/>
-    <text transform="translate(175.43 266.45)" font-size="19.56" fill="#231f20" font-family="MyriadPro-Regular, Myriad Pro"><tspan letter-spacing="-0.02em">P</tspan><tspan x="10.09" y="0" letter-spacing="-0.01em">r</tspan><tspan x="16.29" y="0">ese</tspan><tspan x="43.63" y="0" letter-spacing="0em">n</tspan><tspan x="54.41" y="0" letter-spacing="0em">t</tspan><tspan x="60.88" y="0" letter-spacing="0em">a</tspan><tspan x="70.23" y="0">tion</tspan></text>
-    <path id="SaveIcon" d="M246.94,179a10.45,10.45,0,0,0-2.16-3.41L232.2,163a12,12,0,0,0-7.37-3.06H183.12a4.3,4.3,0,0,0-4.32,4.31v60.41a4.29,4.29,0,0,0,4.31,4.31h60.41a4.29,4.29,0,0,0,4.31-4.27s0,0,0,0V183A10.38,10.38,0,0,0,246.94,179Zm-39.37-11.86a1.46,1.46,0,0,1,1.44-1.44h8.63a1.46,1.46,0,0,1,1.44,1.44v14.39a1.46,1.46,0,0,1-1.44,1.44H209a1.46,1.46,0,0,1-1.44-1.44V167.16Zm23,56.09H196.07V206h34.52Zm11.51,0h-5.75v-18.7a4.3,4.3,0,0,0-4.28-4.32H194.63a4.3,4.3,0,0,0-4.31,4.28s0,0,0,0v18.7h-5.75V165.72h5.75v18.7a4.3,4.3,0,0,0,4.28,4.31h25.92a4.3,4.3,0,0,0,4.31-4.28s0,0,0,0v-18.7a6.4,6.4,0,0,1,3.28,1.35l12.63,12.63a4.84,4.84,0,0,1,.9,1.55,5,5,0,0,1,.45,1.73v40.27Z" transform="translate(10.24 13.56)" fill="#171715"/>
-  </svg>
-</div>
