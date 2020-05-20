@@ -41,6 +41,12 @@ function setView(phase) {
 			setDetailData(inBounds[0].NAME);
 			break;
 		case 3:
+			relationPhaseList = [
+				{ NAME: 'Ida Holsts Skole', display: true, COMMUNE: 'Svendborg' },
+				{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
+				{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
+			];
+			createRelationPage(relationPhaseList);
 			display('relationPhase');
 			break;
 	}

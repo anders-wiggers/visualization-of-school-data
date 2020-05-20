@@ -240,6 +240,11 @@ h3 {
 	display: flow-root;
 }
 
+#listItems {
+	height: 50vh;
+	overflow: auto;
+}
+
 #kommunes {
 	height: 50vh;
 	overflow: auto;
@@ -417,6 +422,7 @@ h3 {
 	padding: 10px;
 	min-height: 300px;
 	background-color: #f6f2f5;
+	text-align: center;
 }
 
 .detailItem {
@@ -431,4 +437,34 @@ h3 {
 .dataPointBox {
 	font-weight: 900;
 	font-size: large;
+}
+
+#selectedSchoolList {
+	height: 100%;
+	background-color: red;
+}
+
+#graphMaker {
+	height: 100%;
+	background-color: blue;
+}
+
+#graphList {
+	height: 100%;
+	background-color: yellow;
+}
+
+#selectedSchoolListCon {
+	padding: 10px;
+	background-color: #f6f2f5;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+#graphMakerBox {
+	min-height: 70vh;
+	background-color: #f6f6f6;
+	padding: 5px;
+	border-radius: 5px;
+	margin-top: 10px;
 }

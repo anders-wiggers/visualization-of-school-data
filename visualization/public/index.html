@@ -34,17 +34,22 @@
     <script src="https://kit.fontawesome.com/d48741e927.js" crossorigin="anonymous"></script>
 
     <!-- Basic site functionality -->
+    <script defer src="assets/javascript/palette.js"></script>
     <script defer src="/assets/javascript/main.js"></script>
     <script defer src="/assets/javascript/mapBox.js"></script>
     <script defer src="/assets/javascript/autocomplete.js"></script>
     <script defer src="/assets/javascript/detail.js"></script>
+    <script defer src="/assets/javascript/relation.js"></script>
     <script defer src="/assets/javascript/phasehandler.js"></script>
+
    
 
 
     <!--Auto-complete functionality-->
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
     <!-- filter widget compontents -->
     <script defer src="assets/javascript/filtering.js" 
@@ -276,12 +281,42 @@
                 <div id="relationContainer">
                     <h3>Relation List</h3>
                     <div id="listItems"></div>
+                    <button id="filterNext" onclick="updatePhase(3)" class="conBtn">Continue</button>
                 </div>
             </div>
         </div>
   
-        <div id="relationPhase">
-            
+        <div id="relationPhase" class="row">
+            <div id="selectedSchoolList" class="col-3">
+                <div id="selectedSchoolListCon">
+                    
+                </div>
+            </div>
+            <div id="graphMaker" class="col-6">
+                <div id="graphMakerBox">
+                    <input>
+                    <select id="graphTyper" onchange="changeType()">
+                        <option value="line" selected>Line Graph</option>
+                        <option value="bar" >Histogram</option>
+                        <option value="pie" >Pie Chart</option>
+                        <option value="scatter" >Scatterplot</option>
+                    </select>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                    <select id="graphY" onchange="changeY()">
+                        <option value="line" selected>Line Graph</option>
+                        <option value="bar" >Histogram</option>
+                        <option value="pie" >Pie Chart</option>
+                        <option value="scatter" >Scatterplot</option>
+                    </select>
+                    <select id="graphX" onchange="changeX()">
+                        <option value="line" selected>Line Graph</option>
+                        <option value="bar" >Histogram</option>
+                        <option value="pie" >Pie Chart</option>
+                        <option value="scatter" >Scatterplot</option>
+                    </select>
+                </div>
+            </div>
+            <div id="graphList" class="col-sm"></div>
         </div>
 
 
