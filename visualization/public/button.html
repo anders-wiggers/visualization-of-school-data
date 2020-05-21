@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
     </head>
     <body>
         <div id="buttonSVG">
-        <svg id="customButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282.93 282.39" height="200" width="200">
+        <svg id="customButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 282.93 282.39" height="400" width="400">
             <g id="filter">
               <g id="filterPath">
                 <path d="M170.9,220.13a70.62,70.62,0,0,0,58.56-65.31v-.47h0c0-.53,0-1.07.07-1.6h-.07l0-2.51h.08V30.1l1.29.77a139.59,139.59,0,0,1,49.48,187.56l-1,1.75Z" transform="translate(-15.73 -8.88)" fill="#e9c369"/>
@@ -76,7 +77,13 @@
           </svg>
         </div>
         <script>
-        var presentationCircle = document.getElementById("presentationCircle"),
+
+
+        var presentationBool = false;
+        var stopBool = false;
+        var topPosition = [];
+        var elementsArray = [];
+        var presentationCircle = document.getElementById("presentation"),
             overview = document.getElementById("overview"),
             filter = document.getElementById("filter"),
             details = document.getElementById("details"),
@@ -84,54 +91,189 @@
             originPoint = document.getElementById("customButton"),
             animateButton = document.getElementById("animateButton");
             gsap.to([filter, details,relate],{css:{opacity:"0.5"}})
-        var selectorArray = [overview, filter, details, relate]
+        topPosition.push(overview)
+        //if(Math.sign(gsap.getProperty(details, "rotation"))=== 1){ //Negative round
+        let startForth = () => {
+         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")-90}`, svgOrigin: "141 141" , onStart: changeOpacity, onStartParam: []});
+        }
 
-        let animateOverview = () => {
-            gsap.to([overview, filter, details, relate],{duration:1,rotation:0, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["overview"]});     
+        let startBack = () => {
+         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")+90}`, svgOrigin: "141 141" , onStart: changeOpacity, onStartParam: []});
         }
-        let animateFilter = () => {
-            gsap.to([overview, filter, details, relate], {duration:1,rotation:-90, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["filter"]});  
+        let startHalfCircle = () => {
+         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")+180}`, svgOrigin: "141 141",onStart: changeOpacity,  onStartParam: []});
+  
         }
-        let animatedetails = () => {
-            gsap.to([overview, filter, details, relate], {duration:1,rotation:-180, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["details"]});  
-        }
-        let animateRelation = () => {
-            gsap.to([overview, filter, details, relate], {duration:1,rotation:-270, svgOrigin:"141 141", onStart: changeOpacity, onStartParams: ["relate"]});  
-        }
+
+          $("#filter").click(function(){
+            if(topPosition[0] === overview){ //Works
+              topPosition.pop()
+              topPosition.push(filter)
+              startForth();
+            }
+            if(topPosition[0]=== relate){//Works
+              topPosition.pop()
+              topPosition.push(filter)
+              startHalfCircle();
+            }
+            if(topPosition[0]=== details){ //Works
+              topPosition.pop()
+              topPosition.push(filter)
+              startBack();
+            }
+          })
+          $("#overview").click(function(){
+            if(topPosition[0] === filter){ //works
+              topPosition.pop()
+              topPosition.push(overview)
+              startBack();
+            }
+            if(topPosition[0]=== relate){//Works
+              topPosition.pop()
+              topPosition.push(overview)
+              startForth();
+            }
+            if(topPosition[0]=== details){//Works
+              topPosition.pop()
+              topPosition.push(overview)
+              startHalfCircle();
+            }
+          })
+          $("#details").click(function(){
+            if(topPosition[0] === overview){//Works
+              topPosition.pop()
+              topPosition.push(details)
+              startHalfCircle();
+            }
+            if(topPosition[0]=== relate){//Works
+              topPosition.pop()
+              topPosition.push(details)
+              startBack();
+            }
+            if(topPosition[0]=== filter){//Works
+              topPosition.pop()
+              topPosition.push(details)
+              startForth();
+            }
+          })
+          $("#relate").click(function(){
+            if(topPosition[0] === overview){//Works
+              topPosition.pop()
+              topPosition.push(relate)
+              startBack();
+            }
+            if(topPosition[0]=== filter){ //Works
+              topPosition.pop()
+              topPosition.push(relate)
+              startHalfCircle();
+            }
+            if(topPosition[0]=== details){//Works
+              topPosition.pop()
+              topPosition.push(relate)
+              startForth();
+            }
+          })
+
         let animatePresentationCircle = () => {
-            gsap.to(presentation, {scale:1.5, transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["everything"]})
+          if(presentationBool === false) {
+            presentationBool = true;
+            console.log(presentationBool)
+            gsap.to(presentation, {scale:1.5, opacity:"1", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["everything"]})
+          } else {
+            presentationBool = false;
+            gsap.to(presentation, {scale:1,opacity:"0.5", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["reset"]})
+          }
         }
 
         
-        let changeOpacity = (change) => {
-            console.log(change)
-            switch(change) {
-            case "overview":
+        let changeOpacity = (a) => {
+          console.log(a)
+            switch(a) {
+            case "#overview":
                 gsap.to([filter, details, relate], {css:{opacity:"0.5"}});
                 gsap.to(overview, {css:{opacity:"1"}})
                 break;
-            case "filter":
+            case "#filter":
                 gsap.to([overview, details, relate], {css:{opacity:"0.5"}});
                 gsap.to(filter, {css:{opacity:"1"}})
                 break;
-            case "details":
+            case "#details":
                 gsap.to([overview, filter, relate], {css:{opacity:"0.5"}});
                 gsap.to(details, {css:{opacity:"1"}})
                 break;
-            case "relate":
+            case "#relate":
                 gsap.to([overview, filter, details], {css:{opacity:"0.5"}});
                 gsap.to(relate, {css:{opacity:"1"}})
                 break;
             case "everything":
                 gsap.to([overview, filter, details, relate], {css:{opacity:"0.5"}});
                 break
+            case "reset":
+                gsap.to(topPosition[0], {css:{opacity:"1"}});
+                break
         }
+       
     }
-        overview.onclick = animateOverview
-        filter.onclick = animateFilter
-        relate.onclick = animateRelation
-        details.onclick = animatedetails
+
         presentationCircle.onclick = animatePresentationCircle
+
+
+        var overviewHighlight = () => {
+            gsap.to(overview, {css:{opacity:"1"}})
+        }
+        var filterHighlight = () => {
+            gsap.to(filter, {css:{opacity:"1"}})
+        }
+        var relateHighlight = () => {
+            gsap.to(relate, {css:{opacity:"1"}})
+        }
+        var detailsHighlight = () => {
+            gsap.to(details, {css:{opacity:"1"}})
+        }
+
+        var enlargenCircle = () => {
+          gsap.to(presentationCircle, {css:{opacity:"1"}});
+        }
+
+        overview.onmouseover = overviewHighlight
+        filter.onmouseover= filterHighlight
+        relate.onmouseover= relateHighlight
+        details.onmouseover = detailsHighlight
+        presentationCircle.onmouseover = enlargenCircle
+
+        var DoverviewHighlight = () => {
+          if(topPosition[0] === overview) {}else {
+            gsap.to(overview, {css:{opacity:"0.5"}})
+          }
+        }
+        var DfilterHighlight = () => {
+          if(topPosition[0] === filter) {}else {
+            gsap.to(filter, {css:{opacity:"0.5"}})
+          }
+        }
+        var DrelateHighlight = () => {
+          if(topPosition[0] === relate) {}else {
+            gsap.to(relate, {css:{opacity:"0.5"}})
+          }
+        }
+        var DdetailsHighlight = () => {
+          if(topPosition[0] === details) {}else {
+            gsap.to(details, {css:{opacity:"0.5"}})
+          }
+        }
+        var delargenCircle = () => {
+          if(presentationBool === false) {
+            gsap.to(presentationCircle, {css:{opacity:"0.5"}});
+          }
+        }
+
+
+        overview.onmouseleave = DoverviewHighlight
+        filter.onmouseleave= DfilterHighlight
+        relate.onmouseleave= DrelateHighlight
+        details.onmouseleave = DdetailsHighlight
+        presentationCircle.onmouseleave = delargenCircle
+
 
         </script>   
     </body> 
