@@ -94,14 +94,14 @@
         topPosition.push(overview)
         //if(Math.sign(gsap.getProperty(details, "rotation"))=== 1){ //Negative round
         let startForth = () => {
-         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")-90}`, svgOrigin: "141 141" , onStart: changeOpacity, onStartParam: []});
+         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")-90}`, svgOrigin: "141 141" , onStart: changeOpacity, onStartParams: [topPosition, "param"]});
         }
 
         let startBack = () => {
-         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")+90}`, svgOrigin: "141 141" , onStart: changeOpacity, onStartParam: []});
+         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")+90}`, svgOrigin: "141 141" , onStart: changeOpacity, onStartParams: [topPosition, "param"]});
         }
         let startHalfCircle = () => {
-         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")+180}`, svgOrigin: "141 141",onStart: changeOpacity,  onStartParam: []});
+         gsap.to([overview, filter, details, relate], {duration:1, rotation: `${gsap.getProperty(overview, "rotation")+180}`, svgOrigin: "141 141",onStart: changeOpacity,  onStartParams: [topPosition, "param"]});
   
         }
 
@@ -188,20 +188,23 @@
         
         let changeOpacity = (a) => {
           console.log(a)
-            switch(a) {
-            case "#overview":
+          if(a[0] === filter) {
+            console.log("Filter selected")
+          }
+            switch(a[0]) {
+            case overview:
                 gsap.to([filter, details, relate], {css:{opacity:"0.5"}});
                 gsap.to(overview, {css:{opacity:"1"}})
                 break;
-            case "#filter":
+            case filter:
                 gsap.to([overview, details, relate], {css:{opacity:"0.5"}});
                 gsap.to(filter, {css:{opacity:"1"}})
                 break;
-            case "#details":
+            case details:
                 gsap.to([overview, filter, relate], {css:{opacity:"0.5"}});
                 gsap.to(details, {css:{opacity:"1"}})
                 break;
-            case "#relate":
+            case relate:
                 gsap.to([overview, filter, details], {css:{opacity:"0.5"}});
                 gsap.to(relate, {css:{opacity:"1"}})
                 break;
