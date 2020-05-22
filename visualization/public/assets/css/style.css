@@ -468,3 +468,9 @@ h3 {
 	border-radius: 5px;
 	margin-top: 10px;
 }
+#navigationButton {
+	padding: 10px;
+	position: fixed;
+	top: 610px;
+	right: calc(100vw - 230px);
+}
