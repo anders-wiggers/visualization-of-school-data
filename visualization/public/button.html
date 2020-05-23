@@ -75,6 +75,7 @@
         </div>
         <script>
         var presentationBool = false;
+        var phaseState
         var stopBool = false;
         var topPosition = [];
         var elementsArray = [];
@@ -109,40 +110,53 @@
         }
 
         var animateForth = () => {
-              updatePhase(1)
-              topPosition.pop()
-              topPosition.push(filter)
-              startForth();
+          startForth();
+          if(currentPhase === 0) {
+            topPosition.pop()
+            topPosition.push(overview)  
+          }
+          if(currentPhase === 1) {
+            topPosition.pop()
+            topPosition.push(filter)  
+          }
+          if(currentPhase === 2) {
+            topPosition.pop()
+            topPosition.push(details)  
+          }
+          if(currentPhase === 3) {
+            topPosition.pop()
+            topPosition.push(relate)  
+          }
         }
         var animateBack = () => {
-              updatePhase(2)
-              topPosition.pop()
-              topPosition.push(filter)
-              startHalfCircle();
-        }
-        var animateHCircle = () => {
-              updatePhase(3)
-              topPosition.pop()
-              topPosition.push(filter)
               startBack();
         }
+        var animateHCircle = () => {
+              startHalfCircle();
+        }
           $("#filter").click(function(){
-          if(animationState === false){  
-            updatePhase(1)
+          if(animationState === false){
+            updatePhase(1)  
             if(topPosition[0] === overview){ //Works
+              topPosition.pop()
+              topPosition.push(filter)
               animateForth();
             }
             if(topPosition[0]=== relate){//Works
+              topPosition.pop()
+              topPosition.push(filter)
               animateHCircle();
             }
             if(topPosition[0]=== details){ //Works
+              topPosition.pop()
+              topPosition.push(filter)
               animateBack();
             }
           }
           })
           $("#overview").click(function(){
-          if(animationState === false){  
-           updatePhase(0)
+          if(animationState === false){
+            updatePhase(0)  
             if(topPosition[0] === filter){ //works
               topPosition.pop()
               topPosition.push(overview)
@@ -161,8 +175,8 @@
           }
           })
           $("#details").click(function(){
-          if(animationState === false){  
-          updatePhase(2)              
+          if(animationState === false){ 
+            updatePhase(2)
             if(topPosition[0] === overview){//Works
               topPosition.pop()
               topPosition.push(details)
@@ -204,10 +218,11 @@
         let animatePresentationCircle = () => {
           if(presentationBool === false) {
             presentationBool = true;
+            phaseState = currentPhase;
             updatePhase(4)
             gsap.to(presentation, {scale:1.5, opacity:"1", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["everything"]})
           } else {
-            updatePhase(3)
+            updatePhase(phaseState)
             presentationBool = false;
             gsap.to(presentation, {scale:1,opacity:"0.5", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["reset"]})
           }
