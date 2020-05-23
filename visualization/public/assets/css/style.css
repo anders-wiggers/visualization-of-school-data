@@ -474,3 +474,17 @@ h3 {
 	top: 610px;
 	right: calc(100vw - 230px);
 }
+#navigationButton2 {
+	padding: 10px;
+	position: fixed;
+	top: 610px;
+	right: calc(100vw - 630px);
+}
+
+#presentationSeperate {
+	position: absolute;
+	padding: 10px;
+	position: fixed;
+	top: 715px;
+	right: calc(128vw - 663px);
+}
