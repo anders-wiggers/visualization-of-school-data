@@ -2,8 +2,16 @@
 let charType = 'line';
 let myChart;
 let graphSchool = [];
+let xAxis = [ 'ida', 'nymark', 'tes' ];
+let yAxis = [ 20, 30, 40 ];
+let xAxisColor = [];
+
+let xAxisOptions = [];
+let yAxisOptions = [];
 
 function createRelationPage(list) {
+	xAxisColor = getRandomColor();
+	drawChart();
 	let div = document.getElementById('selectedSchoolListCon');
 	div.innerHTML = '';
 	let ul = document.createElement('ul');
@@ -47,10 +55,11 @@ function addToGraph(id) {
 		}
 		updateButton(school, false);
 	} else {
-		school.color = getRandomColor()[index];
+		school.color = xAxisColor[index];
 		updateButton(school, true);
 		graphSchool.push(school);
 	}
+	drawChart();
 }
 
 function updateButton(school, isOn) {
@@ -67,27 +76,12 @@ function drawChart() {
 	myChart = new Chart(ctx, {
 		type: charType,
 		data: {
-			labels: [ 'Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange' ],
+			labels: xAxis,
 			datasets: [
 				{
 					label: '# of Votes',
-					data: [ 12, 19, 3, 5, 2, 3 ],
-					backgroundColor: [
-						'rgba(255, 99, 132, 0.2)',
-						'rgba(54, 162, 235, 0.2)',
-						'rgba(255, 206, 86, 0.2)',
-						'rgba(75, 192, 192, 0.2)',
-						'rgba(153, 102, 255, 0.2)',
-						'rgba(255, 159, 64, 0.2)'
-					],
-					borderColor: [
-						'rgba(255, 99, 132, 1)',
-						'rgba(54, 162, 235, 1)',
-						'rgba(255, 206, 86, 1)',
-						'rgba(75, 192, 192, 1)',
-						'rgba(153, 102, 255, 1)',
-						'rgba(255, 159, 64, 1)'
-					],
+					data: yAxis,
+					backgroundColor: xAxisColor,
 					borderWidth: 1
 				}
 			]
@@ -110,3 +104,5 @@ function getRandomColor() {
 	let pal = palette('tol-rainbow', relationPhaseList.length);
 	return pal;
 }
+
+function chooseDataType() {}
