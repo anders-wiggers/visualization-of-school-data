@@ -9,6 +9,12 @@ router.get('/all-schools', (req, res) => {
 	});
 });
 
+router.get('/dist', (req, res) => {
+	db.getDist(req.query.item, (data) => {
+		res.send(data);
+	});
+});
+
 router.get('/school', (req, res) => {
 	console.log(req.query);
 

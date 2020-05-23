@@ -14,6 +14,14 @@ class SchoolData {
 		});
 	}
 
+	//Gets all dist
+	static getDist(item, callback) {
+		db.all(`SELECT DISTINCT ${item} FROM INSTITUTION`, (err, data) => {
+			//console.log(data);
+			callback(data);
+		});
+	}
+
 	//Get a specific school with name and year
 	static specificSchools(name, year, commune, callback) {
 		db.all(

@@ -4,12 +4,17 @@ let myChart;
 let graphSchool = [];
 let xAxis = [ 'ida', 'nymark', 'tes' ];
 let yAxis = [ 20, 30, 40 ];
+let dataToInsert = [];
 let xAxisColor = [];
 
 let xAxisOptions = [];
 let yAxisOptions = [];
 
+let graphYears = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
+
 function createRelationPage(list) {
+	changeX();
+	changeY();
 	xAxisColor = getRandomColor();
 	drawChart();
 	let div = document.getElementById('selectedSchoolListCon');
@@ -59,9 +64,12 @@ function addToGraph(id) {
 		updateButton(school, true);
 		graphSchool.push(school);
 	}
-	fetchDataPoints(() => {
-		drawChart();
-	});
+
+	createChartData();
+
+	// fetchDataPoints(() => {
+	// 	drawChart();
+	// });
 }
 
 function updateButton(school, isOn) {
@@ -79,14 +87,7 @@ function drawChart() {
 		type: charType,
 		data: {
 			labels: xAxis,
-			datasets: [
-				{
-					label: '# of Votes',
-					data: yAxis,
-					backgroundColor: xAxisColor,
-					borderWidth: 1
-				}
-			]
+			datasets: dataToInsert
 		},
 		options: {
 			responsive: true,
@@ -110,19 +111,120 @@ function getRandomColor() {
 
 function chooseDataType() {}
 
-function fetchDataPoints() {
-	for (let index in graphSchool) {
-		console.log(index);
-		fetch(
-			`api/school?year=2019&school=${graphSchool[index].NAME}&commune=${graphSchool[index].COMMUNE}`
-		).then((res) => {
-			res.json().then((data) => {
-				console.log(data);
-				for (let d in data[0]) {
-					console.log(d);
-				}
-			});
-		});
+// function fetchDataPoints() {
+// 	for (let index in graphSchool) {
+// 		fetch(
+// 			`api/school?year=2019&school=${graphSchool[index].NAME}&commune=${graphSchool[index].COMMUNE}`
+// 		).then((res) => {
+// 			res.json().then((data) => {
+// 				let stats = [];
+// 				for (let d in data[0]) {
+// 					let fetchMap = data[0];
+// 					// if (fetchMap[d] !== null) {
+// 					if (d === 'COMMUNE' || d === 'INFORMATION' || d === 'REGION') continue;
+// 					stats.push(d);
+// 					// }
+// 				}
+// 				graphSchool[index].stats = stats;
+// 				$('#graphY').empty();
+// 				$('#graphX').empty();
+// 				for (let value of graphSchool[index].stats) {
+// 					$('#graphY').append(`<option value=${value}>${value}</option>`);
+// 					$('#graphX').append(`<option value=${value}>${value}</option>`);
+// 				}
+// 			});
+// 		});
+// 	}
+// }
+
+function changeX() {
+	let x = document.getElementById('graphX').value;
+	xAxis = [];
+
+	switch (x) {
+		case 'year':
+			xAxis = graphYears;
+			break;
+		case 'grade':
+			break;
 	}
-	// fetch(`api/school?year=2019&school=${school}&commune=${commune}`);
+
+	drawChart();
+}
+
+function changeY() {
+	let y = document.getElementById('graphY').value;
+	let chartData;
+	switch (y) {
+		case 'year':
+			let chartData = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
+			break;
+		case 'grade':
+			break;
+	}
+
+	createChartData();
+}
+
+function createChartData() {
+	dataToInsert = [];
+
+	processArray(graphSchool);
+	// for (let school of graphSchool) {
+	// 	let y = document.getElementById('graphY').value;
+	// 	let chartData;
+	// 	switch (y) {
+	// 		case 'year':
+	// 			chartData = graphYears;
+	// 			break;
+	// 		case 'grade':
+	// 			fetch(`api/combine?data=grades&school=${school.NAME}&commune=${school.COMMUNE}`).then()
+	// 			chartData = [ 123, 32, 21 ];
+	// 			break;
+	// 	}
+
+	// 	let d = {
+	// 		label: school.NAME,
+	// 		data: chartData,
+	// 		backgroundColor: `#${school.color}`,
+	// 		borderWidth: 1
+	// 	};
+
+	// 	dataToInsert.push(d);
+	// }
+	drawChart();
+}
+
+let simpleArray = [];
+
+async function processArray(array) {
+	// map array to promises
+	simpleArray = [];
+
+	for (let u of array) {
+		const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&year=2019`);
+		const data = await res.json();
+		simpleArray.push(data);
+	}
+
+	// let promises = array.map((u) =>
+	// 	fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&year=2019`).then((res) => {
+	// 		simpleArray.push(1);
+	// 	})
+	// );
+	// await console.log(Promise.all(promises));
+	// // wait until all promises are resolved
+	// await Promise.all(promises);
+	console.log('Done');
+
+	for (let item of simpleArray) {
+		console.log(item);
+		let d = {
+			label: 'test',
+			data: chartData,
+			backgroundColor: `#${school.color}`,
+			borderWidth: 1
+		};
+		dataToInsert.push[d];
+	}
 }
