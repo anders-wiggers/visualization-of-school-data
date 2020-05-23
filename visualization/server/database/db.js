@@ -15,10 +15,14 @@ class SchoolData {
 	}
 
 	//Get a specific school with name and year
-	static specificSchools(name, year, callback) {
-		db.all('SELECT * FROM INSTITUTION WHERE NAME = ? AND YEAR = ?', [ name, year ], (err, data) => {
-			callback(data);
-		});
+	static specificSchools(name, year, commune, callback) {
+		db.all(
+			'SELECT * FROM INSTITUTION WHERE NAME = ? AND YEAR = ? AND COMMUNE = ?',
+			[ name, year, commune ],
+			(err, data) => {
+				callback(data);
+			}
+		);
 	}
 
 	//Get a specific school with name

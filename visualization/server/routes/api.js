@@ -23,7 +23,7 @@ router.get('/school', (req, res) => {
 			res.send(data);
 		});
 	} else if (req.query.school && req.query.year) {
-		db.specificSchools(req.query.school, req.query.year, (data) => {
+		db.specificSchools(req.query.school, req.query.year, req.query.commune, (data) => {
 			res.send(data);
 		});
 	}

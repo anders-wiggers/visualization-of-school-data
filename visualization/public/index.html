@@ -311,13 +311,17 @@
                         <option value="pie" >Pie Chart</option>
                         <option value="scatter" >Scatterplot</option>
                     </select>
-                    <canvas id="myChart" width="400" height="400"></canvas>
-                    <select id="graphY" onchange="changeY()">
-                        <option value="line" selected>Line Graph</option>
-                        <option value="bar" >Histogram</option>
-                        <option value="pie" >Pie Chart</option>
-                        <option value="scatter" >Scatterplot</option>
-                    </select>
+                    <div style="display: flex;">
+                        <select id="graphY" onchange="changeY()">
+                            <option value="line" selected>Line Graph</option>
+                            <option value="bar" >Histogram</option>
+                            <option value="pie" >Pie Chart</option>
+                            <option value="scatter" >Scatterplot</option>
+                        </select>
+                        <div style="position: relative; width:100%">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
                     <select id="graphX" onchange="changeX()">
                         <option value="line" selected>Line Graph</option>
                         <option value="bar" >Histogram</option>

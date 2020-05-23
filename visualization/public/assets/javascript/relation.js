@@ -59,7 +59,9 @@ function addToGraph(id) {
 		updateButton(school, true);
 		graphSchool.push(school);
 	}
-	drawChart();
+	fetchDataPoints(() => {
+		drawChart();
+	});
 }
 
 function updateButton(school, isOn) {
@@ -87,6 +89,7 @@ function drawChart() {
 			]
 		},
 		options: {
+			responsive: true,
 			scales: {
 				yAxes: [
 					{
@@ -106,3 +109,20 @@ function getRandomColor() {
 }
 
 function chooseDataType() {}
+
+function fetchDataPoints() {
+	for (let index in graphSchool) {
+		console.log(index);
+		fetch(
+			`api/school?year=2019&school=${graphSchool[index].NAME}&commune=${graphSchool[index].COMMUNE}`
+		).then((res) => {
+			res.json().then((data) => {
+				console.log(data);
+				for (let d in data[0]) {
+					console.log(d);
+				}
+			});
+		});
+	}
+	// fetch(`api/school?year=2019&school=${school}&commune=${commune}`);
+}
