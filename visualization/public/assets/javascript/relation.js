@@ -10,6 +10,9 @@ let xAxisColor = [];
 let xAxisOptions = [];
 let yAxisOptions = [];
 
+let yAxisValue;
+let xAxisValue;
+
 let graphYears = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
 
 function createRelationPage(list) {
@@ -140,6 +143,7 @@ function chooseDataType() {}
 function changeX() {
 	let x = document.getElementById('graphX').value;
 	xAxis = [];
+	xAxisValue = x;
 
 	switch (x) {
 		case 'year':
@@ -155,13 +159,7 @@ function changeX() {
 function changeY() {
 	let y = document.getElementById('graphY').value;
 	let chartData;
-	switch (y) {
-		case 'year':
-			let chartData = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
-			break;
-		case 'grade':
-			break;
-	}
+	yAxisValue = y;
 
 	createChartData();
 }
@@ -197,34 +195,30 @@ function createChartData() {
 
 let simpleArray = [];
 
-async function processArray(array) {
+async function processArray(array, type) {
 	// map array to promises
 	simpleArray = [];
 
 	for (let u of array) {
-		const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&year=2019`);
-		const data = await res.json();
+		const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${type}`);
+		let data = await res.json();
+		data.color = u.color;
+		data.name = u.NAME;
 		simpleArray.push(data);
 	}
-
-	// let promises = array.map((u) =>
-	// 	fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&year=2019`).then((res) => {
-	// 		simpleArray.push(1);
-	// 	})
-	// );
-	// await console.log(Promise.all(promises));
-	// // wait until all promises are resolved
-	// await Promise.all(promises);
-	console.log('Done');
-
 	for (let item of simpleArray) {
-		console.log(item);
+		let chartData = [];
+		for (let a of item) {
+			chartData.push(a.mean);
+		}
 		let d = {
-			label: 'test',
+			label: item.name,
+			fill: false,
 			data: chartData,
-			backgroundColor: `#${school.color}`,
-			borderWidth: 1
+			borderColor: `#${item.color}`,
+			borderWidth: 2
 		};
-		dataToInsert.push[d];
+		dataToInsert.push(d);
 	}
+	drawChart();
 }
