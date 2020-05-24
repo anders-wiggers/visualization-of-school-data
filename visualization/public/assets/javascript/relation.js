@@ -13,6 +13,8 @@ let yAxisOptions = [];
 let yAxisValue;
 let xAxisValue;
 
+let savedCharts = [];
+
 let graphYears = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
 
 function createRelationPage(list) {
@@ -147,18 +149,18 @@ function changeX() {
 
 	switch (x) {
 		case 'year':
-			xAxis = graphYears;
+			charType = 'line';
 			break;
-		case 'grade':
+		default:
+			charType = 'scatter';
 			break;
 	}
 
-	drawChart();
+	createChartData();
 }
 
 function changeY() {
 	let y = document.getElementById('graphY').value;
-	let chartData;
 	yAxisValue = y;
 
 	createChartData();
@@ -167,29 +169,14 @@ function changeY() {
 function createChartData() {
 	dataToInsert = [];
 
-	processArray(graphSchool);
-	// for (let school of graphSchool) {
-	// 	let y = document.getElementById('graphY').value;
-	// 	let chartData;
-	// 	switch (y) {
-	// 		case 'year':
-	// 			chartData = graphYears;
-	// 			break;
-	// 		case 'grade':
-	// 			fetch(`api/combine?data=grades&school=${school.NAME}&commune=${school.COMMUNE}`).then()
-	// 			chartData = [ 123, 32, 21 ];
-	// 			break;
-	// 	}
+	if (xAxisValue === 'year') {
+		xAxis = graphYears;
+		processArray(graphSchool, yAxisValue);
+	} else {
+		xAxis = [];
+		processScatter(graphSchool, xAxisValue, yAxisValue);
+	}
 
-	// 	let d = {
-	// 		label: school.NAME,
-	// 		data: chartData,
-	// 		backgroundColor: `#${school.color}`,
-	// 		borderWidth: 1
-	// 	};
-
-	// 	dataToInsert.push(d);
-	// }
 	drawChart();
 }
 
@@ -199,17 +186,32 @@ async function processArray(array, type) {
 	// map array to promises
 	simpleArray = [];
 
-	for (let u of array) {
-		const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${type}`);
-		let data = await res.json();
-		data.color = u.color;
-		data.name = u.NAME;
-		simpleArray.push(data);
+	if (type === 'year') {
+		for (let u of array) {
+			let data = [];
+
+			for (let d of graphYears) {
+				data.push({ mean: d });
+			}
+
+			data.color = u.color;
+			data.name = u.NAME;
+
+			simpleArray.push(data);
+		}
+	} else {
+		for (let u of array) {
+			const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${type}`);
+			let data = await res.json();
+			data.color = u.color;
+			data.name = u.NAME;
+			simpleArray.push(data);
+		}
 	}
 	for (let item of simpleArray) {
 		let chartData = [];
 		for (let a of item) {
-			chartData.push(a.mean);
+			chartData.push(correctlyRound(a.mean));
 		}
 		let d = {
 			label: item.name,
@@ -221,4 +223,97 @@ async function processArray(array, type) {
 		dataToInsert.push(d);
 	}
 	drawChart();
+}
+
+async function processScatter(array, typeX, typeY) {
+	// map array to promises
+	simpleArray = [];
+
+	for (let u of array) {
+		try {
+			let input = {};
+			const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${typeX}&year=2019`);
+			let dataXAxis = await res.json();
+			input.x = correctlyRound(dataXAxis[0].mean);
+			const res1 = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${typeY}&year=2019`);
+			let dataYAxis = await res1.json();
+
+			input.y = correctlyRound(dataYAxis[0].mean);
+
+			input.color = u.color;
+			input.name = u.NAME;
+			simpleArray.push(input);
+		} catch (error) {}
+	}
+
+	for (let item of simpleArray) {
+		let chartData = [];
+		let d = {
+			label: item.name,
+			fill: false,
+			data: [ { x: item.x, y: item.y } ],
+			borderColor: `#${item.color}`,
+			borderWidth: 2
+		};
+		dataToInsert.push(d);
+	}
+	drawChart();
+}
+
+function correctlyRound(input) {
+	if (!input) {
+		return null;
+	}
+
+	if (1 > input) {
+		input = input * 100;
+	}
+	input = Math.round(input * 100) / 100;
+
+	return input;
+}
+
+function saveChart() {
+	if (document.getElementById('graphName').value === '') {
+		alert('Please enter a graph name');
+	} else {
+		let chart = {
+			name: document.getElementById('graphName').value,
+			xAxis: xAxisValue,
+			yAxis: yAxisValue,
+			graph: myChart.toBase64Image()
+		};
+		savedCharts.push(chart);
+		//clear items
+
+		//Add to List
+		createSavedChartList(savedCharts);
+
+		// console.log(myChart.toBase64Image());
+	}
+}
+
+function createSavedChartList(list) {
+	let div = document.getElementById('savedGraphs');
+	div.innerHTML = '';
+	let ul = document.createElement('ul');
+	ul.classList.add('com-ul');
+	div.appendChild(ul);
+	list.forEach((item) => {
+		let li = document.createElement('li');
+		li.classList.add('com-li');
+		let text = document.createElement('div');
+		text.innerHTML = item.name;
+		text.classList.add('school-item');
+		let icon = document.createElement('img');
+		icon.setAttribute('src', item.graph);
+		icon.classList.add('school-icon');
+		let floxFix = document.createElement('div');
+		floxFix.classList.add('school-list');
+		floxFix.classList.add('clickable');
+		floxFix.appendChild(icon);
+		floxFix.appendChild(text);
+		li.appendChild(floxFix);
+		ul.appendChild(li);
+	});
 }

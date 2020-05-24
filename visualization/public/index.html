@@ -304,31 +304,54 @@
             </div>
             <div id="graphMaker" class="col-6">
                 <div id="graphMakerBox">
-                    <input>
-                    <select id="graphTyper" onchange="changeType()">
+                    <input id="graphName" class="form-control" placeholder="Beautiful Graph">
+                    <!-- <select id="graphTyper" onchange="changeType()">
                         <option value="line" selected>Line Graph</option>
                         <option value="bar" >Histogram</option>
                         <option value="pie" >Pie Chart</option>
                         <option value="scatter" >Scatterplot</option>
-                    </select>
-                    <div style="display: flex;">
-                        <select id="graphY" onchange="changeY()">
-                            <option value="year" selected>Year</option>
-                            <option value="grade" selected>Average Grades</option>
-                            <option value="absence" selected>Students Absence</option>
-                        </select>
-                        <div style="position: relative; width:100%">
-                            <canvas id="myChart"></canvas>
+                    </select> -->
+                    <div class="d-flex align-items-center">
+                        <div class="p-2">
+                            <select id="graphY" class="custom-select" style="width: 100px;" onchange="changeY()">
+                                <option value="year" selected>Year</option>
+                                <option value="grades" selected>Average Grades</option>
+                                <option value="absence" selected>Students Absence</option>
+                            </select>
+                        </div>
+                        <div class="p-2" style="width: 100%;">
+                            <div style="position: relative; width: 100%;">
+                                <canvas id="myChart"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <select id="graphX" onchange="changeX()">
-                        <option value="year" selected>Year</option>
-                        <option value="grade" selected>Grades</option>
-                        <option value="absence" selected>Students Absence</option>
-                    </select>
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <select id="graphX" class="custom-select inline-free" style="width: 200px;" onchange="changeX()">
+                                <option value="year" selected>Year</option>
+                                <option value="grades" selected>Grades</option>
+                                <option value="absence" selected>Students Absence</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-light" onclick="saveChart()">Save Graph</button>
+
+                        </div>
+
+                    </div>
+                    
                 </div>
             </div>
-            <div id="graphList" class="col-sm"></div>
+            <div id="graphList" class="col-sm">
+                <div id="graphContainer">
+                    <h3>Saved Graphs</h3>
+                    <div id="savedGraphs">
+
+                    </div>
+                    <button id="presentationNext" onclick="updatePhase(4), animateForth()" class="conBtn">Continue</button>
+                </div>
+            </div>
         </div>
 
 
