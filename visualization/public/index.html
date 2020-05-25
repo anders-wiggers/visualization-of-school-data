@@ -100,7 +100,7 @@
     <!--Navigation button -->
     <script>
         $(document).ready(function() {
-        $('#navigationButton').load('button.html');
+        $('#navigationButton').load('newbutton.html');
     });
     </script>
 
@@ -291,7 +291,7 @@
                 <div id="relationContainer">
                     <h3>Relation List</h3>
                     <div id="listItems"></div>
-                    <button id="filterNext" onclick="updatePhase(3), animateForth()" class="conBtn">Continue</button>
+                    <button id="filterNext" onclick="$('#relate').trigger('click')" class="conBtn">Continue</button>
                 </div>
             </div>
         </div>
@@ -349,7 +349,7 @@
                     <div id="savedGraphs">
 
                     </div>
-                    <button id="presentationNext" onclick="updatePhase(4), animateForth()" class="conBtn">Continue</button>
+                    <button id="presentationNext" onclick="$('#presentation').trigger('click');" class="conBtn">Continue</button>
                 </div>
             </div>
         </div>
@@ -366,7 +366,7 @@
         <div id="collectedSchools">
             <h3>Selected Schools</h3>
             <div id="schoolContainer"></div>
-            <button id="filterNext" onclick="updatePhase(2), animateForth()" class="conBtn">Continue</button>
+            <button id="filterNext" onclick="$('#details').trigger('click');" class="conBtn">Continue</button>
         </div>
 
         <div id="navigationButton"></div>

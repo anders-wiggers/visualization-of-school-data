@@ -1,15 +1,7 @@
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <link rel="stylesheet" href="/assets/css/style.css">
-        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/MotionPathPlugin.min.js"></script>
-    </head>
-    <body>
+
         <div style="text-align:center">
-          <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350.94 350.94" width="400" height="400">
+          <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350.94 350.94" width="200" height="200">
             <g id="rotate">
             <circle id="rotateAround" opacity=0 cx="175.47" cy="175.47" r="109.88" fill="none" stroke="#969696" stroke-miterlimit="10"/>
             <g id="overview">
@@ -61,6 +53,7 @@
         var elementsArray = [];
         var clickedElement = [];
         var theRest = [];
+        var animationState = false;
         var elementSizeEnlarge = "+=.2"
         var elementSizeDelarge = "-=.6"
         var presentationCircle = document.getElementById("presentation"),
@@ -85,7 +78,7 @@
         let startForth = () => {
         const tl = gsap.timeline({defaults: {duration: 1}})
         .to("#rotate",{rotation: `${gsap.getProperty("#rotate", "rotation")-90}`},0)
-        .to(clickedElement[0], {scale:"+=.2",onStart: changeOpacity, onStartParams: [topPosition, "param"]},0) 
+        .to(clickedElement[0], {scale:"+=.2",onStart: changeOpacity, onStartParams: [topPosition, "param"],onComplete: setAnimationState},0) 
         .to(theRest[0], {scale:"-=.6"},0)
         .to([theRest[1],theRest[2]], {scale:"+=.2"},0)
         }
@@ -93,23 +86,33 @@
         console.log("startback")
         const tl2 = gsap.timeline({defaults: {duration: 1}})
         .to("#rotate",{rotation: `${gsap.getProperty("#rotate", "rotation")+90}`},0)
-        .to(clickedElement[0], {scale:"+=.6",onStart: changeOpacity, onStartParams: [topPosition, "param"]},0) 
+        .to(clickedElement[0], {scale:"+=.6",onStart: changeOpacity, onStartParams: [topPosition, "param"],onComplete: setAnimationState},0) 
         .to([theRest[0],theRest[1],theRest[2]], {scale:"-=.2"},0) 
       }
         let startHalfCircle = () => {
         const tl3 = gsap.timeline({defaults: {duration: 1}})
         .to("#rotate",{rotation: `${gsap.getProperty("#rotate", "rotation")+180}`},0)
-        .to(clickedElement[0], {scale:"+=.4",onStart: changeOpacity, onStartParams: [topPosition, "param"]},0)   
+        .to(clickedElement[0], {scale:"+=.4",onStart: changeOpacity, onStartParams: [topPosition, "param"],onComplete: setAnimationState},0)   
         .to(theRest[0], {scale:"-=.4"},0)
         .to(theRest[1], {scale:"+=.4"},0)
         .to(theRest[2], {scale:"-=.4"},0)
 
         }
-
+/*         var animateForth = () => {
+          startForth();
+        }
+        var animateBack = () => {
+          startBack();
+        }
+        var animateHCircle = () => {
+          startHalfCircle();
+        } */
 
 
         
           $("#filter").click(function(){
+            if(animationState === false){
+              updatePhase(1)
             if(topPosition[0] === overview){ //Works
               topPosition=[];
               topPosition.push(filter)
@@ -137,8 +140,11 @@
               clickedElement.push(filter);
               startBack();
             }
+            }
           })
           $("#overview").click(function(){
+            if(animationState === false){
+            updatePhase(0)
             if(topPosition[0] === filter){ //works
               topPosition=[];
               topPosition.push(overview)
@@ -166,8 +172,11 @@
               clickedElement.push(overview);
               startHalfCircle();
             }
+            }
           })
           $("#details").click(function(){
+            if(animationState === false){
+            updatePhase(2)
             if(topPosition[0] === overview){//Works
               topPosition=[];
               topPosition.push(details)
@@ -195,8 +204,11 @@
               clickedElement.push(details);
               startForth();
             }
+            }
           })
           $("#relate").click(function(){
+            if(animationState === false){
+            updatePhase(3)
             if(topPosition[0] === overview){//Works
               topPosition=[];
               topPosition.push(relate)
@@ -224,12 +236,14 @@
               clickedElement.push(relate);
               startForth();
             }
+          }
           })
+          
 
-        let animatePresentationCircle = () => {
+        var animatePresentationCircle = () => {
           if(presentationBool === false) {
+            updatePhase(4);
             presentationBool = true;
-            console.log(presentationBool)
             gsap.to(presentation, {scale:3, opacity:"1", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["everything"]})
           } else {
             presentationBool = false;
@@ -237,21 +251,21 @@
           }
         }
 
+        var setAnimationState = () => {
+          animationState = false;
+        }
+
         
-        let changeOpacity = (a) => {
-          console.log(a)
-          if(a[0] === filter) {
-            console.log("Filter selected")
-          }
+        var changeOpacity = (a) => {
+          animationState = true;
             switch(a[0]) {
             case overview:
                 gsap.to([filter, details, relate], {css:{opacity:"0.5"}});
                 gsap.to(overview, {css:{opacity:"1"}})
                 break;
             case filter:
-                gsap.to([details, relate], {/* scale: "+=.2" ,*/ opacity:"0.5"});
-                gsap.to(overview, {/* scale: "-=.2" */})
-                gsap.to(filter, {opacity:1,})
+                gsap.to([overview, details, relate], {css:{opacity:"0.5"}});
+                gsap.to(filter, {css:{opacity:"1"}})
                 break;
             case details:
                 gsap.to([overview, filter, relate], {css:{opacity:"0.5"}});
