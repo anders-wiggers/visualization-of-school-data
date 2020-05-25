@@ -501,8 +501,53 @@ h3 {
 	border-radius: 50px;
 }
 
-#relationPhase {
+#presentationPhase {
 	height: calc(100vh - 100px);
 	width: 100%;
 	margin: 0 auto;
+}
+
+#presentationList {
+	height: 100%;
+	background-color: yellow;
+}
+
+#finishedCharts {
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #f2f6f5;
+	text-align: center;
+	border-radius: 5px;
+}
+
+#bodyContainer {
+	background-color: #f6f6f6;
+	min-height: 70vh;
+	border-radius: 5px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#presnetationBody {
+	height: 100%;
+	background-color: green;
+}
+
+#exportOption {
+	height: 100%;
+	background-color: pink;
+}
+
+#extractButtons {
+	padding: 10px;
+	margin-top: 10px;
+	border-radius: 5px;
+	text-align: center;
+	height: 60vh;
+	background-color: white;
+}
+
+.itemInPresentation {
+	margin: 10px;
+	padding: 5px;
 }

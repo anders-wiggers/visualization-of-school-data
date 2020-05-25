@@ -315,8 +315,8 @@
                         <option value="scatter" >Scatterplot</option>
                     </select> -->
                     <div class="d-flex align-items-center">
-                        <div class="p-2">
-                            <select id="graphY" class="custom-select" style="width: 100px;" onchange="changeY()">
+                        <div class="p-2" style="width: 50px;transform: rotate(-90deg);">
+                            <select id="graphY" class="custom-select" style="width: 200px;margin-left: -75px;" onchange="changeY()">
                                 <option value="grades*mean" selected>Average Grades</option>
                                 <option value="absence*mean" selected>Students Absence</option>
                                 <option value="students*classratio" selected>Students Per Class</option>
@@ -363,8 +363,22 @@
         </div>
 
         <div id="presentationPhase" class="row">
-            <div class="col" id="presentationList"></div>
-            <div class="col" id="presnetationBody"></div>
+            <div class="col-3" id="presentationList">
+                <div id="finishedCharts"></div>
+            </div>
+            <div class="col-6" id="presnetationBody">
+                <div id="bodyContainer"></div>
+            </div>
+            <div class="col-3" id="exportOption">
+                <div id="extractButtons">
+                    <div >
+                        <button class="btn btn-light"><i class="fas fa-download"></i> Download PDF</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-light"><i class="fas fa-share-square"></i> Get Shareable Link</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="filterBox" class="hidden">
