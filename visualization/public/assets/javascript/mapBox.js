@@ -226,7 +226,7 @@ document.getElementById('markerButton').onclick = function(e) {
 function fetchMarkersAndPlaceOnMap() {
 	markers.clearLayers();
 	contained = [];
-	if (selectedCommunes.length == 0) {
+	if (selectedCommunes.length === 0) {
 		markers.clearLayers();
 		map.setView([ 56.283, 10.491 ], 6.58);
 		boundArray = [];
@@ -245,4 +245,16 @@ function fetchMarkersAndPlaceOnMap() {
 			});
 		});
 	}
+}
+
+function fetchAllMarkersAndPlaceOnMap(callback) {
+	markers.clearLayers();
+	contained = [];
+	fetch('/api/combine?commune=&year=2019&data=information').then(function(response) {
+		response.json().then(function(data) {
+			fullInfoData = data;
+			filterData();
+			if (callback) callback();
+		});
+	});
 }

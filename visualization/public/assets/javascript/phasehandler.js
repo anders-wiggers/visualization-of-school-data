@@ -24,7 +24,12 @@ function setView(phase) {
 			info.addTo(map);
 			break;
 		case 1:
-			fetchMarkersAndPlaceOnMap();
+			//fetch all if non is selected
+			if (selectedCommunesNames.length === 0) {
+				fetchAllMarkersAndPlaceOnMap();
+			} else {
+				fetchMarkersAndPlaceOnMap();
+			}
 			info.remove();
 			display('filterBox');
 			display('collectedSchools');
@@ -36,16 +41,24 @@ function setView(phase) {
 			// 	{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
-			display('mainCon');
+			try {
+				setDetailData(inBounds[0].NAME);
+			} catch (error) {
+				fetchAllMarkersAndPlaceOnMap(() => {
+					setDetailData(inBounds[0].NAME);
+					createSchoolList(inBounds);
+					display('mainCon');
+				});
+			}
 			createSchoolList(inBounds);
-			setDetailData(inBounds[0].NAME);
+			display('mainCon');
 			break;
 		case 3:
-			// relationPhaseList = [
-			// 	{ NAME: 'Ida Holsts Skole', display: true, COMMUNE: 'Svendborg' },
-			// 	{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
-			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
-			// ];
+			relationPhaseList = [
+				{ NAME: 'Ida Holsts Skole', display: true, COMMUNE: 'Svendborg' },
+				{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
+				{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
+			];
 			createRelationPage(relationPhaseList);
 			display('relationPhase');
 			break;
