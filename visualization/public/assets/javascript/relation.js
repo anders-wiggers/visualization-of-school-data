@@ -186,6 +186,14 @@ async function processArray(array, type) {
 	// map array to promises
 	simpleArray = [];
 
+	simpleArray = [];
+	let dataToGetY = 'mean';
+	try {
+		let aa = type.split('*');
+		type = aa[0];
+		dataToGetY = aa[1];
+	} catch (error) {}
+
 	if (type === 'year') {
 		for (let u of array) {
 			let data = [];
@@ -211,7 +219,7 @@ async function processArray(array, type) {
 	for (let item of simpleArray) {
 		let chartData = [];
 		for (let a of item) {
-			chartData.push(correctlyRound(a.mean));
+			chartData.push(correctlyRound(a[dataToGetY]));
 		}
 		let d = {
 			label: item.name,
@@ -228,17 +236,29 @@ async function processArray(array, type) {
 async function processScatter(array, typeX, typeY) {
 	// map array to promises
 	simpleArray = [];
+	let dataToGetX = 'mean';
+	let dataToGetY = 'mean';
+
+	try {
+		let aa = typeX.split('*');
+		typeX = aa[0];
+		dataToGetX = aa[1];
+	} catch (error) {}
+	try {
+		let aa = typeY.split('*');
+		typeY = aa[0];
+		dataToGetY = aa[1];
+	} catch (error) {}
 
 	for (let u of array) {
 		try {
 			let input = {};
 			const res = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${typeX}&year=2019`);
 			let dataXAxis = await res.json();
-			input.x = correctlyRound(dataXAxis[0].mean);
+			input.x = correctlyRound(dataXAxis[0][dataToGetX]);
 			const res1 = await fetch(`api/combine?school=${u.NAME}&commune=${u.COMMUNE}&data=${typeY}&year=2019`);
 			let dataYAxis = await res1.json();
-
-			input.y = correctlyRound(dataYAxis[0].mean);
+			input.y = correctlyRound(dataYAxis[0][dataToGetY]);
 
 			input.color = u.color;
 			input.name = u.NAME;

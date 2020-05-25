@@ -13,7 +13,7 @@ h3 {
 	background-color: tomato;
 }
 #map {
-	height: calc(100vh - 100px);
+	height: 100vh;
 }
 
 #mainCon {
@@ -469,14 +469,8 @@ h3 {
 #navigationButton {
 	padding: 10px;
 	position: fixed;
-	top: 610px;
-	right: calc(100vw - 230px);
-}
-#navigationButton2 {
-	padding: 10px;
-	position: fixed;
-	top: 610px;
-	right: calc(100vw - 630px);
+	top: calc(100vh - 300px);
+	right: calc(50vw - 150px);
 }
 
 #presentationSeperate {

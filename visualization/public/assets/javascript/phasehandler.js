@@ -1,10 +1,18 @@
 'use strict';
 
-const elements = [ 'communeSelector', 'filterBox', 'collectedSchools', 'map', 'mainCon', 'relationPhase' ];
+const elements = [
+	'communeSelector',
+	'filterBox',
+	'collectedSchools',
+	'map',
+	'mainCon',
+	'relationPhase',
+	'presentationPhase'
+];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
 
-let currentPhase = 3;
+let currentPhase = 4;
 
 updatePhase(currentPhase);
 
@@ -12,7 +20,6 @@ function updatePhase(phase) {
 	currentPhase = phase;
 	console.log('Entering phase:', phase);
 	setView(phase);
-	setMenuBar(phase);
 }
 
 function setView(phase) {
@@ -80,40 +87,40 @@ function setView(phase) {
 				}
 			];
 			createPresentation(savedCharts);
-			display('presentation');
+			display('presentationPhase');
 	}
 }
 
-function setMenuBar(phase) {
-	deactiveButtons();
-	switch (phase) {
-		case 0:
-			activeButton('overview');
-			break;
-		case 1:
-			hasBeenButton('overview');
-			activeButton('filter');
-			break;
-		case 2:
-			hasBeenButton('overview');
-			hasBeenButton('filter');
-			activeButton('detail');
-			break;
-		case 3:
-			hasBeenButton('overview');
-			hasBeenButton('filter');
-			hasBeenButton('detail');
-			activeButton('relation');
-			break;
-		case 4:
-			hasBeenButton('overview');
-			hasBeenButton('filter');
-			hasBeenButton('detail');
-			hasBeenButton('relation');
-			activeButton('presentation');
-			break;
-	}
-}
+// function setMenuBar(phase) {
+// 	deactiveButtons();
+// 	switch (phase) {
+// 		case 0:
+// 			activeButton('overview');
+// 			break;
+// 		case 1:
+// 			hasBeenButton('overview');
+// 			activeButton('filter');
+// 			break;
+// 		case 2:
+// 			hasBeenButton('overview');
+// 			hasBeenButton('filter');
+// 			activeButton('detail');
+// 			break;
+// 		case 3:
+// 			hasBeenButton('overview');
+// 			hasBeenButton('filter');
+// 			hasBeenButton('detail');
+// 			activeButton('relation');
+// 			break;
+// 		case 4:
+// 			hasBeenButton('overview');
+// 			hasBeenButton('filter');
+// 			hasBeenButton('detail');
+// 			hasBeenButton('relation');
+// 			activeButton('presentation');
+// 			break;
+// 	}
+// }
 
 function display(id) {
 	let element = document.getElementById(id);
