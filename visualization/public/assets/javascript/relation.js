@@ -110,7 +110,7 @@ function drawChart() {
 }
 
 function getRandomColor() {
-	let pal = palette('tol-rainbow', relationPhaseList.length);
+	let pal = palette('tol', relationPhaseList.length);
 	return pal;
 }
 
@@ -226,7 +226,7 @@ async function processArray(array, type) {
 			fill: false,
 			data: chartData,
 			borderColor: `#${item.color}`,
-			borderWidth: 2
+			borderWidth: 4
 		};
 		dataToInsert.push(d);
 	}
@@ -267,13 +267,12 @@ async function processScatter(array, typeX, typeY) {
 	}
 
 	for (let item of simpleArray) {
-		let chartData = [];
 		let d = {
 			label: item.name,
 			fill: false,
 			data: [ { x: item.x, y: item.y } ],
 			borderColor: `#${item.color}`,
-			borderWidth: 2
+			borderWidth: 4
 		};
 		dataToInsert.push(d);
 	}
