@@ -244,10 +244,10 @@
           if(presentationBool === false) {
             updatePhase(4);
             presentationBool = true;
-            gsap.to(presentation, {scale:3, opacity:"1", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["everything"]})
+            gsap.to(presentation, {scale:3, opacity:"1", transformOrigin:"center center", onStart: presentationValues, onStartParams: ["everything"]})
           } else {
             presentationBool = false;
-            gsap.to(presentation, {scale:1,opacity:"0.5", transformOrigin:"center center", onStart: changeOpacity, onStartParams: ["reset"]})
+            gsap.to(presentation, {scale:1,opacity:"0.5", transformOrigin:"center center", onStart: presentationValues, onStartParams: ["reset"], onComplete: setAnimationState})
           }
         }
 
@@ -275,6 +275,13 @@
                 gsap.to([overview, filter, details], {css:{opacity:"0.5"}});
                 gsap.to(relate, {css:{opacity:"1"}})
                 break;
+        }
+       
+    }
+
+    var presentationValues = (param) => {
+          animationState = true;
+            switch(param) {
             case "everything":
                 gsap.to([overview, filter, details, relate], {css:{opacity:"0.5"}});
                 break
@@ -284,7 +291,6 @@
         }
        
     }
-
         presentationCircle.onclick = animatePresentationCircle
 
 
