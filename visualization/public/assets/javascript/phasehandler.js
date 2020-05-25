@@ -40,6 +40,8 @@ function setView(phase) {
 			info.remove();
 			display('filterBox');
 			display('collectedSchools');
+			//animateForward('filterBox');
+			//animateForward('collectedSchools');
 			display('map');
 			break;
 		case 2:
@@ -54,11 +56,13 @@ function setView(phase) {
 				fetchAllMarkersAndPlaceOnMap(() => {
 					setDetailData(inBounds[0].NAME);
 					createSchoolList(inBounds);
-					display('mainCon');
+					//display('mainCon');
+					animateForward('mainCon');
 				});
 			}
 			createSchoolList(inBounds);
-			display('mainCon');
+			//display('mainCon');
+			animateForward('mainCon');
 			break;
 		case 3:
 			// relationPhaseList = [
@@ -156,4 +160,30 @@ function deactiveButtons() {
 	for (let b of navButtons) {
 		deactiveButton(b);
 	}
+}
+
+function animateForward(id) {
+	let element = document.getElementById(id);
+	gsap.set(element, { x: 1450 });
+
+	switch (currentPhase) {
+		case 1:
+		/* 			gsap.set('#filterBox.active, #collectedSchools.active', {});
+			let tk = new TimelineMax({})
+				.to('#filterBox.active, #collectedSchools.active', 1, { className: 'active' }, 0)
+				.to('#filterBox.active, #collectedSchools.active', 1, { y: 0, ease: 'power1' }, 0); */
+		case 2:
+			let tl = new TimelineMax({})
+				.to(element, 1, { className: 'row active' }, 0)
+				.to(element, 1, { x: 0, ease: 'power1' }, 0);
+			break;
+	}
+}
+
+function animateBackward(id) {
+	let element = document.getElementById(id);
+	gsap.set(element, { x: 1450 });
+	let tl = new TimelineMax({})
+		.to(element, 1, { className: 'row active' }, 0)
+		.to(element, 1, { x: 0, ease: 'power1' }, 0);
 }
