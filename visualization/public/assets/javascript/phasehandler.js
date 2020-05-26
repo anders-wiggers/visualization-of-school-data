@@ -11,18 +11,33 @@ const elements = [
 ];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
+let currentPhase = 0;
+var previousPhase;
+var updateDepending;
+var communeSelectorAnimate = (string) => {
+	gsap.set('#communeSelector', { x: '100%' });
 
-let currentPhase = 4;
+	let to = new TimelineMax({})
+		.to('#communeSelector', 1, { className: 'active' }, 0)
+		.to('#communeSelector', 1, { x: 0, ease: 'power1' }, 0);
+};
 
 updatePhase(currentPhase);
 
 function updatePhase(phase) {
+	previousPhase = currentPhase;
 	currentPhase = phase;
-	console.log('Entering phase:', phase);
-	setView(phase);
+	setView(phase, '');
+	if (previousPhase > phase) {
+		setView(phase, '-');
+	} else if (previousPhase < phase && previousPhase - phase != -3) {
+		setView(phase, '');
+	} else if (previousPhase - phase === -3) {
+		setView(phase, '-');
+	}
 }
 
-function setView(phase) {
+function setView(phase, string) {
 	hideAll();
 	switch (phase) {
 		case 0:
@@ -41,7 +56,7 @@ function setView(phase) {
 			info.remove();
 			display('filterBox');
 			//display('collectedSchools');
-			filterAnimate();
+			filterAnimate(string);
 			display('map');
 			break;
 		case 2:
@@ -62,7 +77,7 @@ function setView(phase) {
 			}
 			createSchoolList(inBounds);
 			//display('mainCon');
-			detailsAnimate();
+			detailsAnimate(string);
 			break;
 		case 3:
 			// relationPhaseList = [
@@ -71,7 +86,7 @@ function setView(phase) {
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
 			createRelationPage(relationPhaseList);
-			relationAnimate();
+			relationAnimate(string);
 			break;
 		case 4:
 			savedCharts = [
@@ -93,7 +108,7 @@ function setView(phase) {
 				}
 			];
 			createPresentation(savedCharts);
-			presentationAnimate();
+			presentationAnimate(string);
 	}
 }
 
@@ -162,34 +177,28 @@ function deactiveButtons() {
 	}
 }
 
-var communeSelectorAnimate = () => {
-	gsap.set('#communeSelector', { x: '100%' });
-
-	let to = new TimelineMax({})
-		.to('#communeSelector', 1, { className: 'active' }, 0)
-		.to('#communeSelector', 1, { x: 0, ease: 'power1' }, 0);
-};
-
-var filterAnimate = () => {
+var filterAnimate = (string) => {
 	gsap.set('#collectedSchools', { x: '100%' });
 	gsap.set('#filterBox', { x: '-100%' });
 
 	let tk = new TimelineMax({})
 		.to('#filterBox ,#collectedSchools', 1, { className: 'active' }, 0)
-		.to('#collectedSchools,#filterBox', 1, { x: 0, ease: 'power1' }, 0);
+		.to('#collectedSchools,#filterBox', 1, { x: 0, ease: 'power1' }, 0)
+		.to('#mainCon, #relationPhase, presentationPhase', { className: 'row hidden' });
 };
 
-var detailsAnimate = () => {
-	gsap.set('#mainCon', { x: '100%' });
+var detailsAnimate = (string) => {
+	gsap.set('#mainCon', { x: `${string}` + '100%' });
 	//gsap.set(element, { scaleX: '0' });
 	let tl = new TimelineMax({})
 		.to('#mainCon', 1.1, { className: 'row active' }, 0)
+		.to('.row', 1.1, { position: 'absolute' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
 		.to('#mainCon', 1.1, { x: 0, ease: 'power1' }, 0);
 };
 
-var relationAnimate = () => {
-	gsap.set('#relationPhase', { x: '100%' });
+var relationAnimate = (string) => {
+	gsap.set('#relationPhase', { x: `${string}` + '100%' });
 	//gsap.set(element, { scaleX: '0' });
 	let tr = new TimelineMax({})
 		.to('#relationPhase', 1.1, { className: 'row active' }, 0)
@@ -197,14 +206,17 @@ var relationAnimate = () => {
 		.to('#relationPhase', 1.1, { x: 0, ease: 'power1' }, 0);
 };
 
-function presentationAnimate() {
-	/* 	if (currentPhase < phase) {
-		console.log('testing');
-	} */
+function presentationAnimate(string) {
 	gsap.set('#presentationPhase', { scaleX: '0', scaleY: '0' });
 	//gsap.set(element, { scaleX: '0' });
 	let tr = new TimelineMax({})
 		.to('#presentationPhase', 1.1, { className: 'row active' }, 0)
+		.to('.row', 1.1, { position: 'absolute' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
-		.to('#presentationPhase', 1.1, { scaleX: '1', scaleY: '1', transformOrigin: 'center', ease: 'power1' }, 0);
+		.to(
+			'#presentationPhase',
+			1.1,
+			{ scaleX: '1', scaleY: '1', transformOrigin: 'bottom center', ease: 'power1' },
+			0
+		);
 }
