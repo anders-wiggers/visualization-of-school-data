@@ -120,12 +120,15 @@
             </div>
             <div class="row" style="width: 100%; margin: 0 auto;">
                 <div class="col-3">
-                    <div id="selectedList" class="boxShadow">
+                    <div class="ssContainer boxShadow">
+                        <h3>Selected Schools</h3>
+                        <div id="selectedList" class="boxShadow">
+                    </div>
                 </div>
                 </div>
                 <div id="detailBox" class="col-6">
                     <div id="detailContainer" class="boxShadow">
-                        <div id="allStats">
+                        <div id="allStats" class="boxShadow">
                             <h2 id="schoolName" style="text-align: center;"></h2>
                             <div class="row" style="text-align: center; width: 100%;">
                             <div class="col-sm">
@@ -293,13 +296,21 @@
                             
 
                             </div>
-                        <button class="btn btn-success addButton" onclick="addSelected()"><i class="fas fa-plus"></i> Add To Realtion</button>
+                        <div style="text-align: center;">    
+                            <button class="btn btn-success addButton" onclick="addSelected()"><i class="fas fa-plus"></i> Add To Realtion</button>
+                        </div>
+                    </div>
+                    <div style="padding-top: 10px;text-align: center;">
+                    <button class="btn btn-success addButton" onclick="addAll()"><i class="fas fa-plus"></i> Add All</button>
                     </div>
                 </div>
                 <div id="relationList" class="col-sm">
                     <div id="relationContainer" class="boxShadow">
                         <h3>Relation List</h3>
                         <div id="listItems"></div>
+                        <div>
+                            <button class="btn btn-danger addButton" onclick="removeAll()"><i class="fas fa-trash"></i> Delete All</button>
+                        </div>
                         <button id="" onclick="$('#filter').trigger('click')" class="conBtn prevBtn">Previous</button>
                         <button id="filterNext" onclick="$('#relate').trigger('click')" class="conBtn">Continue</button>
                     </div>
@@ -354,7 +365,7 @@
                                 </select>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-light" onclick="saveChart()">Save Graph</button>
+                                <button class="btn btn-primary" onclick="saveChart()"> <i class="fas fa-save"></i> Save Graph</button>
                             </div>
 
                         </div>

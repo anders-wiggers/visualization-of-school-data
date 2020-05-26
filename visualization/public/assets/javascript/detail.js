@@ -204,31 +204,35 @@ function setDetailData(school) {
 		`api/combine?school=${schoolDataSet.NAME}&year=${year}&data=planned_hours&commune=${schoolDataSet.COMMUNE}`
 	).then((res) => {
 		res.json().then((data) => {
-			let d = data[0];
-			delete d.NAME;
-			delete d.YEAR;
-			delete d.COMMUNE;
-			delete d.id;
-			let tableRef = document.getElementById('planned_hours').getElementsByTagName('tbody')[0];
-			$('#planned_hours tbody tr').remove();
-			for (let point in d) {
-				if (d[point] === null) continue;
+			try {
+				let d = data[0];
+				delete d.NAME;
+				delete d.YEAR;
+				delete d.COMMUNE;
+				delete d.id;
+				let tableRef = document.getElementById('planned_hours').getElementsByTagName('tbody')[0];
+				$('#planned_hours tbody tr').remove();
+				for (let point in d) {
+					if (d[point] === null) continue;
 
-				// Insert a row in the table at the last row
-				let newRow = tableRef.insertRow();
+					// Insert a row in the table at the last row
+					let newRow = tableRef.insertRow();
 
-				// Insert a cell in the row at index 0
-				let g = newRow.insertCell(0);
-				let h = newRow.insertCell(0);
+					// Insert a cell in the row at index 0
+					let g = newRow.insertCell(0);
+					let h = newRow.insertCell(0);
 
-				// Append a text node to the cell
-				let text = point.replace('_', ' ');
-				text = text.charAt(0).toUpperCase() + text.slice(1);
-				let hours = document.createTextNode(text);
-				let grade = document.createTextNode(d[point]);
+					// Append a text node to the cell
+					let text = point.replace('_', ' ');
+					text = text.charAt(0).toUpperCase() + text.slice(1);
+					let hours = document.createTextNode(text);
+					let grade = document.createTextNode(d[point]);
 
-				g.appendChild(grade);
-				h.appendChild(hours);
+					g.appendChild(grade);
+					h.appendChild(hours);
+				}
+			} catch (error) {
+				$('#planned_hours tbody tr').remove();
 			}
 		});
 	});
@@ -301,6 +305,16 @@ function addSelected() {
 		relationPhaseList.push(selectedObject);
 		createRelationList(relationPhaseList);
 	}
+}
+
+function addAll() {
+	relationPhaseList = [ ...inBounds ];
+	createRelationList(relationPhaseList);
+}
+
+function removeAll() {
+	relationPhaseList = [];
+	createRelationList(relationPhaseList);
 }
 
 function removeSchoolFromList(name) {

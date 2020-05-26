@@ -2,8 +2,8 @@
 let charType = 'line';
 let myChart;
 let graphSchool = [];
-let xAxis = [ 'ida', 'nymark', 'tes' ];
-let yAxis = [ 20, 30, 40 ];
+let xAxis = [];
+let yAxis = [];
 let dataToInsert = [];
 let xAxisColor = [];
 
@@ -18,10 +18,12 @@ let savedCharts = [];
 let graphYears = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
 
 function createRelationPage(list) {
-	changeX();
-	changeY();
 	xAxisColor = getRandomColor();
+
+	changeX(false);
+	changeY(false);
 	drawChart();
+
 	let div = document.getElementById('selectedSchoolListCon');
 	div.innerHTML = '';
 	let ul = document.createElement('ul');
@@ -142,7 +144,7 @@ function chooseDataType() {}
 // 	}
 // }
 
-function changeX() {
+function changeX(makeChart = true) {
 	let x = document.getElementById('graphX').value;
 	xAxis = [];
 	xAxisValue = x;
@@ -156,14 +158,14 @@ function changeX() {
 			break;
 	}
 
-	createChartData();
+	if (makeChart) createChartData();
 }
 
-function changeY() {
+function changeY(makeChart = true) {
 	let y = document.getElementById('graphY').value;
 	yAxisValue = y;
 
-	createChartData();
+	if (makeChart) createChartData();
 }
 
 function createChartData() {
@@ -185,8 +187,8 @@ let simpleArray = [];
 async function processArray(array, type) {
 	// map array to promises
 	simpleArray = [];
+	console.log(simpleArray);
 
-	simpleArray = [];
 	let dataToGetY = 'mean';
 	try {
 		let aa = type.split('*');
@@ -236,6 +238,8 @@ async function processArray(array, type) {
 async function processScatter(array, typeX, typeY) {
 	// map array to promises
 	simpleArray = [];
+	console.log(simpleArray);
+
 	let dataToGetX = 'mean';
 	let dataToGetY = 'mean';
 
@@ -306,13 +310,13 @@ function saveChart() {
 		//clear items
 
 		//Add to List
-		createSavedChartList(savedCharts);
+		createSaveddChartList(savedCharts);
 
 		// console.log(myChart.toBase64Image());
 	}
 }
 
-function createSavedChartList(list) {
+function createSaveddChartList(list) {
 	let div = document.getElementById('savedGraphs');
 	div.innerHTML = '';
 	let ul = document.createElement('ul');
