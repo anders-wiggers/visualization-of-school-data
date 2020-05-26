@@ -470,7 +470,7 @@ h3 {
 	background-color: #f6f2f5;
 	margin-top: 10px;
 	border-radius: 5px;
-	max-height: calc(100vh - 320px);
+	max-height: calc(100vh - 365px);
 	overflow: auto;
 }
 
