@@ -26,7 +26,8 @@ function setView(phase) {
 	hideAll();
 	switch (phase) {
 		case 0:
-			display('communeSelector');
+			//display('communeSelector');
+			communeSelectorAnimate();
 			display('map');
 			info.addTo(map);
 			break;
@@ -39,9 +40,8 @@ function setView(phase) {
 			}
 			info.remove();
 			display('filterBox');
-			display('collectedSchools');
-			//animateForward('filterBox');
-			//animateForward('collectedSchools');
+			//display('collectedSchools');
+			filterAnimate();
 			display('map');
 			break;
 		case 2:
@@ -57,12 +57,12 @@ function setView(phase) {
 					setDetailData(inBounds[0].NAME);
 					createSchoolList(inBounds);
 					//display('mainCon');
-					animateForward('mainCon');
+					detailsAnimate();
 				});
 			}
 			createSchoolList(inBounds);
 			//display('mainCon');
-			animateForward('mainCon');
+			detailsAnimate();
 			break;
 		case 3:
 			// relationPhaseList = [
@@ -71,7 +71,7 @@ function setView(phase) {
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
 			createRelationPage(relationPhaseList);
-			display('relationPhase');
+			relationAnimate();
 			break;
 		case 4:
 			savedCharts = [
@@ -93,7 +93,7 @@ function setView(phase) {
 				}
 			];
 			createPresentation(savedCharts);
-			display('presentationPhase');
+			presentationAnimate();
 	}
 }
 
@@ -162,28 +162,49 @@ function deactiveButtons() {
 	}
 }
 
-function animateForward(id) {
-	let element = document.getElementById(id);
-	gsap.set(element, { x: 1450 });
+var communeSelectorAnimate = () => {
+	gsap.set('#communeSelector', { x: '100%' });
 
-	switch (currentPhase) {
-		case 1:
-		/* 			gsap.set('#filterBox.active, #collectedSchools.active', {});
-			let tk = new TimelineMax({})
-				.to('#filterBox.active, #collectedSchools.active', 1, { className: 'active' }, 0)
-				.to('#filterBox.active, #collectedSchools.active', 1, { y: 0, ease: 'power1' }, 0); */
-		case 2:
-			let tl = new TimelineMax({})
-				.to(element, 1, { className: 'row active' }, 0)
-				.to(element, 1, { x: 0, ease: 'power1' }, 0);
-			break;
-	}
-}
+	let to = new TimelineMax({})
+		.to('#communeSelector', 1, { className: 'active' }, 0)
+		.to('#communeSelector', 1, { x: 0, ease: 'power1' }, 0);
+};
 
-function animateBackward(id) {
-	let element = document.getElementById(id);
-	gsap.set(element, { x: 1450 });
+var filterAnimate = () => {
+	gsap.set('#collectedSchools', { x: '100%' });
+	gsap.set('#filterBox', { x: '-100%' });
+
+	let tk = new TimelineMax({})
+		.to('#filterBox ,#collectedSchools', 1, { className: 'active' }, 0)
+		.to('#collectedSchools,#filterBox', 1, { x: 0, ease: 'power1' }, 0);
+};
+
+var detailsAnimate = () => {
+	gsap.set('#mainCon', { x: '100%' });
+	//gsap.set(element, { scaleX: '0' });
 	let tl = new TimelineMax({})
-		.to(element, 1, { className: 'row active' }, 0)
-		.to(element, 1, { x: 0, ease: 'power1' }, 0);
+		.to('#mainCon', 1.1, { className: 'row active' }, 0)
+		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
+		.to('#mainCon', 1.1, { x: 0, ease: 'power1' }, 0);
+};
+
+var relationAnimate = () => {
+	gsap.set('#relationPhase', { x: '100%' });
+	//gsap.set(element, { scaleX: '0' });
+	let tr = new TimelineMax({})
+		.to('#relationPhase', 1.1, { className: 'row active' }, 0)
+		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
+		.to('#relationPhase', 1.1, { x: 0, ease: 'power1' }, 0);
+};
+
+function presentationAnimate() {
+	/* 	if (currentPhase < phase) {
+		console.log('testing');
+	} */
+	gsap.set('#presentationPhase', { scaleX: '0', scaleY: '0' });
+	//gsap.set(element, { scaleX: '0' });
+	let tr = new TimelineMax({})
+		.to('#presentationPhase', 1.1, { className: 'row active' }, 0)
+		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
+		.to('#presentationPhase', 1.1, { scaleX: '1', scaleY: '1', transformOrigin: 'center', ease: 'power1' }, 0);
 }

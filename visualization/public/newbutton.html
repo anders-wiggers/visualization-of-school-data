@@ -48,6 +48,7 @@
         </div>
         <script>
         var presentationBool = false;
+        var phaseState;
         var stopBool = false;
         var topPosition = [];
         var elementsArray = [];
@@ -242,10 +243,12 @@
 
         var animatePresentationCircle = () => {
           if(presentationBool === false) {
-            updatePhase(4);
             presentationBool = true;
+            phaseState = currentPhase;
+            updatePhase(4);
             gsap.to(presentation, {scale:3, opacity:"1", transformOrigin:"center center", onStart: presentationValues, onStartParams: ["everything"]})
           } else {
+            updatePhase(phaseState)
             presentationBool = false;
             gsap.to(presentation, {scale:1,opacity:"0.5", transformOrigin:"center center", onStart: presentationValues, onStartParams: ["reset"], onComplete: setAnimationState})
           }
