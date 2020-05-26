@@ -291,7 +291,7 @@ h3 {
 	display: flow-root;
 	text-align: left;
 	padding: 15px;
-	background: #f0f0f0;
+	background: #f5f6fa;
 	border-radius: 5px;
 	margin: 10px;
 }
@@ -309,7 +309,7 @@ h3 {
 
 #selectedList {
 	overflow: auto;
-	height: calc(100vh - 370px);
+	height: calc(100vh - 423px);
 	border-radius: 5px;
 	margin-top: 10px;
 	padding: 10px;
@@ -329,6 +329,7 @@ h3 {
 #allStats {
 	overflow: auto;
 	max-height: calc(80vh - 100px);
+	margin-bottom: 20px;
 }
 
 #relationList {
@@ -421,9 +422,12 @@ h3 {
 	display: flow-root;
 	text-align: left;
 	padding: 15px;
-	background: white;
+	background: #f5f6fa;
 	border-radius: 5px;
 	margin: 10px;
+	-webkit-box-shadow: 0px 1px 1px 0px rgba(66, 66, 66, 0.05);
+	-moz-box-shadow: 0px 1px 1px 0px rgba(66, 66, 66, 0.05);
+	box-shadow: 0px 1px 1px 0px rgba(66, 66, 66, 0.05);
 }
 
 #relationContainer {
@@ -595,6 +599,12 @@ h3 {
 	box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
 }
 
+.normalShadow {
+	-webkit-box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
+	-moz-box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
+	box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
+}
+
 body {
 	background-color: #f5f6fa;
 }
@@ -610,4 +620,13 @@ body {
 	border-radius: 5px;
 	width: 300px;
 	padding-top: 15px;
+}
+
+.ssContainer {
+	padding: 5px;
+	text-align: center;
+	background: white;
+	border-radius: 5px;
+	margin-top: 10px;
+	height: calc(100vh - 370px);
 }
