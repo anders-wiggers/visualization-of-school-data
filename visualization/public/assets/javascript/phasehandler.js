@@ -40,7 +40,6 @@ function updatePhase(phase) {
 }
 
 function setView(phase, string) {
-	console.log('setting view: ', phase, 'setting string: ', string);
 	hideAll();
 	switch (phase) {
 		case 0:
@@ -198,5 +197,10 @@ function presentationAnimate(string) {
 	let tr = new TimelineMax({})
 		.to('#presentationPhase', 1.1, { className: 'active' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
-		.to('#presentationPhase', 1.1, { scaleX: '1', scaleY: '1', transformOrigin: 'bottom left', ease: 'power1' }, 0);
+		.to(
+			'#presentationPhase',
+			1.1,
+			{ scaleX: '1', scaleY: '1', transformOrigin: 'bottom center', ease: 'power1' },
+			0
+		);
 }

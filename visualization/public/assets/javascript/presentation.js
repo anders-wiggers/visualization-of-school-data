@@ -97,7 +97,7 @@ async function downloadPDF() {
 		doc.text(item.name, 20, corx);
 		doc.text(item.yAxis, 15, 50 + corx, null, 90);
 		doc.text(item.xAxis, 80, 80 + corx);
-		doc.addImage(item.graph, 'PNG', 20, corx + 10);
+		doc.addImage(item.graph, 'PNG', 20, corx + 10, 140, 60);
 		doc.text(item.annotation, 20, 85 + corx);
 
 		breakPage++;

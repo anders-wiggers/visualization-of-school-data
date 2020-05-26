@@ -304,6 +304,7 @@ function saveChart() {
 			name: document.getElementById('graphName').value,
 			xAxis: xAxisValue,
 			yAxis: yAxisValue,
+			annotation: '',
 			graph: myChart.toBase64Image()
 		};
 		savedCharts.push(chart);
