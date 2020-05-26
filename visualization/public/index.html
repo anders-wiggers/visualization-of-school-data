@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                             <div class="detailItem">
-                                <p class="inline">Studetns Well-Being: <a class="dataPointBox" id="wbLabel"></a></p>
+                                <p class="inline">Students Well-Being: <a class="dataPointBox" id="wbLabel"></a></p>
                                 <span style="margin-left: 10px; cursor: help;" class="d-inline-block inline" tabindex="0" data-toggle="tooltip" title="Metric from 0-5, where 0 is the least and 5 is the highest. Submited anonymously by the students"><i class="far fa-question-circle"></i></span>
 
                             </div>  
@@ -311,7 +311,7 @@
                         <div>
                             <button class="btn btn-danger addButton" onclick="removeAll()"><i class="fas fa-trash"></i> Delete All</button>
                         </div>
-                        <button id="" onclick="$('#filter').trigger('click')" class="conBtn prevBtn">Previous</button>
+                        <button id="" onclick="setView(1,'-')" class="conBtn prevBtn">Previous</button>
                         <button id="filterNext" onclick="$('#relate').trigger('click')" class="conBtn">Continue</button>
                     </div>
                 </div>
@@ -378,7 +378,7 @@
                         <div id="savedGraphs">
 
                         </div>
-                        <button id="" onclick="$('#details').trigger('click')" class="conBtn prevBtn">Previous</button>
+                        <button id="" onclick="setView(2,'-')" class="conBtn prevBtn">Previous</button>
                         <button id="presentationNext" onclick="$('#presentation').trigger('click');" class="conBtn">Continue</button>
                     </div>
                 </div>
@@ -424,7 +424,7 @@
         <div id="collectedSchools">
             <h3>Selected Schools</h3>
             <div id="schoolContainer"></div>
-            <button id="" onclick="$('#overview').trigger('click')" class="conBtn prevBtn">Previous</button>
+            <button id="filterClick" onclick=recreateStyles() class="conBtn prevBtn">Previous</button>
             <button id="filterNext" onclick="$('#details').trigger('click');" class="conBtn">Continue</button>
         </div>
 
