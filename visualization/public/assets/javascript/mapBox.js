@@ -1,6 +1,6 @@
 // Now we create a map object and add a layer to it.
 var map = new L.Map('map', { zoomControl: false });
-var osmUrl = 'https://tile.thunderforest.com/neighbourhood/{z}/{x}/{y}.png?apikey=523123eab9074addb51cc220ddc9df2d';
+var osmUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 var osm = new L.TileLayer(osmUrl, { minZoom: 6.9, maxZoom: 18 });
 //Adding map, plus zoom of denmark
 map.addLayer(osm);
