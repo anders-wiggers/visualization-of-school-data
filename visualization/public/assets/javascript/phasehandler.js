@@ -183,8 +183,7 @@ var filterAnimate = (string) => {
 
 	let tk = new TimelineMax({})
 		.to('#filterBox ,#collectedSchools', 1, { className: 'active' }, 0)
-		.to('#collectedSchools,#filterBox', 1, { x: 0, ease: 'power1' }, 0)
-		.to('#mainCon, #relationPhase, presentationPhase', { className: 'row hidden' });
+		.to('#collectedSchools, #filterBox', 1, { x: 0, ease: 'power1' }, 0);
 };
 
 var detailsAnimate = (string) => {
@@ -192,7 +191,6 @@ var detailsAnimate = (string) => {
 	//gsap.set(element, { scaleX: '0' });
 	let tl = new TimelineMax({})
 		.to('#mainCon', 1.1, { className: 'row active' }, 0)
-		.to('.row', 1.1, { position: 'absolute' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
 		.to('#mainCon', 1.1, { x: 0, ease: 'power1' }, 0);
 };
@@ -211,7 +209,6 @@ function presentationAnimate(string) {
 	//gsap.set(element, { scaleX: '0' });
 	let tr = new TimelineMax({})
 		.to('#presentationPhase', 1.1, { className: 'row active' }, 0)
-		.to('.row', 1.1, { position: 'absolute' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
 		.to(
 			'#presentationPhase',
