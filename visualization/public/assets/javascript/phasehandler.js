@@ -7,7 +7,9 @@ const elements = [
 	'map',
 	'mainCon',
 	'relationPhase',
-	'presentationPhase'
+	'presentationPhase',
+	'overviewTitle',
+	'filteringTitle'
 ];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
@@ -44,6 +46,7 @@ function setView(phase, string) {
 			//display('communeSelector');
 			communeSelectorAnimate();
 			display('map');
+			display('overviewTitle');
 			info.addTo(map);
 			break;
 		case 1:
@@ -55,6 +58,8 @@ function setView(phase, string) {
 			}
 			info.remove();
 			display('filterBox');
+			display('filteringTitle');
+
 			//display('collectedSchools');
 			filterAnimate(string);
 			display('map');
@@ -190,7 +195,7 @@ var detailsAnimate = (string) => {
 	gsap.set('#mainCon', { x: `${string}` + '100%' });
 	//gsap.set(element, { scaleX: '0' });
 	let tl = new TimelineMax({})
-		.to('#mainCon', 1.1, { className: 'row active' }, 0)
+		.to('#mainCon', 1.1, { className: 'active' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
 		.to('#mainCon', 1.1, { x: 0, ease: 'power1' }, 0);
 };
@@ -199,7 +204,7 @@ var relationAnimate = (string) => {
 	gsap.set('#relationPhase', { x: `${string}` + '100%' });
 	//gsap.set(element, { scaleX: '0' });
 	let tr = new TimelineMax({})
-		.to('#relationPhase', 1.1, { className: 'row active' }, 0)
+		.to('#relationPhase', 1.1, { className: 'active' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
 		.to('#relationPhase', 1.1, { x: 0, ease: 'power1' }, 0);
 };
@@ -208,7 +213,7 @@ function presentationAnimate(string) {
 	gsap.set('#presentationPhase', { scaleX: '0', scaleY: '0' });
 	//gsap.set(element, { scaleX: '0' });
 	let tr = new TimelineMax({})
-		.to('#presentationPhase', 1.1, { className: 'row active' }, 0)
+		.to('#presentationPhase', 1.1, { className: 'active' }, 0)
 		//.to(element, 1.1, { scaleX: 1, transformOrigin: 'right', ease: 'power1' }, 0);
 		.to(
 			'#presentationPhase',
