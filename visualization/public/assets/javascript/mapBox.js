@@ -21,6 +21,8 @@ var mapJSON;
 var inc = 0;
 var lastElement;
 var geojson;
+var noHighlight = '#EE3377';
+var highlight = '#0077BB';
 var inBounds = [];
 var markers = new L.markerClusterGroup({
 	showCoverageOnHover: false
@@ -28,7 +30,7 @@ var markers = new L.markerClusterGroup({
 var myLayer = new L.LayerGroup().addTo(map);
 //var markers = myLayer.addTo(new L.markerClusterGroup());
 var schoolIcon = L.icon({
-	iconUrl: '/assets/pictures/monuments.png',
+	iconUrl: '/assets/pictures/school.svg',
 	iconSize: [ 30, 40 ]
 });
 
@@ -47,10 +49,10 @@ fetch('/assets/geojson/kommuner.geojson')
 			}
 			mapJSON = data;
 			geojson = L.geoJson(mapJSON, {
-				weight: 0.01,
-				color: 'white',
-				dashArray: '',
-				fillOpacity: 0.01,
+				weight: 1.5,
+				fillColor: 'white',
+				fillOpacity: '0.01',
+				color: highlight,
 				onEachFeature: onEachFeature
 			}).addTo(map);
 		});
@@ -65,8 +67,10 @@ function highlightFeature(e) {
 			if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
 				object = geojson._layers[s];
 				object.setStyle({
-					weight: 1,
-					color: 'red'
+					weight: 1.5,
+					fillColor: highlight,
+					fillOpacity: '0.5',
+					color: highlight
 				});
 			}
 		}
@@ -85,8 +89,8 @@ function drawOnMap(input) {
 			var object = geojson._layers[i];
 			var layer = object;
 			layer.setStyle({
-				weight: 1,
-				color: 'red'
+				weight: 1.5,
+				color: highlight
 			});
 			selectedCommunes.push(object);
 		}
@@ -101,8 +105,10 @@ function resetHighlight(e) {
 				if (e.target.feature.properties.KOMNAVN === geojson._layers[s].feature.properties.KOMNAVN) {
 					var object = geojson._layers[s];
 					object.setStyle({
-						weight: 0.01,
-						color: 'white'
+						weight: 1.5,
+						fillColor: 'white',
+						fillOpacity: '0.01',
+						color: highlight
 					});
 				}
 			}
@@ -169,8 +175,8 @@ function determineWhatHappensOnClick(e) {
 					selectedCommunes.push(geojson._layers[k]);
 					object = geojson._layers[k];
 					object.setStyle({
-						weight: 1,
-						color: 'red'
+						weight: 1.5,
+						color: highlight
 					});
 				}
 			}
@@ -218,9 +224,58 @@ info.update = function(props) {
 
 info.addTo(map);
 
+var clearStyles = () => {
+	for (var s of allCommuneObjects) {
+		if (selectedCommunes.includes(s)) {
+			s.setStyle({
+				weight: 1.5,
+				fillColor: 'white',
+				fillOpacity: '0.01',
+				color: highlight
+			});
+		} else {
+			s.setStyle({
+				weight: 0.01,
+				fillColor: 'white',
+				fillOpacity: '0.01',
+				color: 'red'
+			});
+		}
+	}
+};
+
+var recreateStyles = () => {
+	console.log('Should be running');
+	$('#overview').trigger('click');
+	for (var s of allCommuneObjects) {
+		if (selectedCommunes.includes(s)) {
+			s.setStyle({
+				weight: 1.5,
+				fillColor: highlight,
+				fillOpacity: '0.5',
+				color: highlight
+			});
+		} else {
+			s.setStyle({
+				weight: 1.5,
+				fillColor: 'white',
+				fillOpacity: '0.01',
+				color: highlight
+			});
+		}
+	}
+};
+
 document.getElementById('markerButton').onclick = function(e) {
+	clearStyles();
 	$('#filter').trigger('click');
 };
+/* 
+document.getElementById('filterClick').onclick = function(e) {
+	console.log('previous clicked');
+	recreateStyles();
+	$('#overview').trigger('click');
+}; */
 
 function fetchMarkersAndPlaceOnMap() {
 	markers.clearLayers();

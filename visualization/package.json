@@ -12,6 +12,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@svgdotjs/svg.js": "^3.0.16",
+		"@tarekraafat/autocomplete.js": "^7.2.0",
 		"animejs": "^3.2.0",
 		"express": "^4.17.1",
 		"leaflet-minimap": "^3.6.1",
