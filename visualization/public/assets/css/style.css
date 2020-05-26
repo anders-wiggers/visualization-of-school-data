@@ -53,6 +53,8 @@ h3 {
 
 #filterBox {
 	max-width: 60vw;
+	max-height: calc(100vh - 320px);
+	overflow: auto;
 	background-color: #f6f6f6;
 	padding: 10px;
 	position: fixed;
@@ -280,6 +282,11 @@ h3 {
 	border-radius: 5px;
 }
 
+.prevBtn {
+	background-color: #f5f5f5;
+	color: #393e42;
+}
+
 .school-con {
 	display: flow-root;
 	text-align: left;
@@ -302,7 +309,7 @@ h3 {
 
 #selectedList {
 	overflow: auto;
-	height: 100%;
+	height: calc(100vh - 320px);
 }
 
 #detailBox {
@@ -456,6 +463,8 @@ h3 {
 	background-color: #f6f2f5;
 	margin-top: 10px;
 	border-radius: 5px;
+	max-height: calc(100vh - 320px);
+	overflow: auto;
 }
 
 #graphMakerBox {
@@ -470,7 +479,6 @@ h3 {
 	padding: 10px;
 	position: fixed;
 	top: calc(100vh - 300px);
-	right: calc(50vw - 150px);
 }
 
 #presentationSeperate {
@@ -517,6 +525,7 @@ h3 {
 	background-color: #f2f6f5;
 	text-align: center;
 	border-radius: 5px;
+	max-height: calc(100vh - 320px);
 }
 
 #bodyContainer {
@@ -551,4 +560,37 @@ h3 {
 
 .pressed {
 	background-color: #c8e0c84f;
+}
+
+.addButton {
+}
+
+#relatePath {
+	cursor: pointer;
+}
+
+#overviewPath {
+	cursor: pointer;
+}
+
+#details {
+	cursor: pointer;
+}
+
+#filter {
+	cursor: pointer;
+}
+
+#presentationCircle {
+	cursor: pointer;
+}
+
+.boxShadow {
+	-webkit-box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
+	-moz-box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
+	box-shadow: 0px 2px 4px 0px rgba(66, 66, 66, 0.05);
+}
+
+body {
+	background-color: #e8e8e8;
 }

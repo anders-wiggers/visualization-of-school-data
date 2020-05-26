@@ -117,7 +117,10 @@
             <div id="selectedList" class="col-3">
             </div>
             <div id="detailBox" class="col-6">
-                <div id="detailContainer">
+                <div style="text-align: center;">
+                    <h3>Details</h3>
+                </div>
+                <div id="detailContainer" class="boxShadow">
                     <div id="allStats">
                         <h2 id="schoolName" style="text-align: center;"></h2>
                         <div class="row" style="text-align: center; width: 100%;">
@@ -286,13 +289,14 @@
                         
 
                         </div>
-                    <button class="btn btn-light" onclick="addSelected()">Add</button>
+                    <button class="btn btn-success addButton" onclick="addSelected()"><i class="fas fa-plus"></i> Add To Realtion</button>
                 </div>
             </div>
             <div id="relationList" class="col-sm">
-                <div id="relationContainer">
+                <div id="relationContainer" class="boxShadow">
                     <h3>Relation List</h3>
                     <div id="listItems"></div>
+                    <button id="" onclick="$('#filter').trigger('click')" class="conBtn prevBtn">Previous</button>
                     <button id="filterNext" onclick="$('#relate').trigger('click')" class="conBtn">Continue</button>
                 </div>
             </div>
@@ -300,12 +304,11 @@
   
         <div id="relationPhase" class="row">
             <div id="selectedSchoolList" class="col-3">
-                <div id="selectedSchoolListCon">
-                    
+                <div id="selectedSchoolListCon" class="boxShadow">
                 </div>
             </div>
             <div id="graphMaker" class="col-6">
-                <div id="graphMakerBox">
+                <div id="graphMakerBox" class="boxShadow">
                     <input id="graphName" class="form-control" placeholder="Beautiful Graph">
                     <!-- <select id="graphTyper" onchange="changeType()">
                         <option value="line" selected>Line Graph</option>
@@ -343,7 +346,6 @@
                         </div>
                         <div class="col-3">
                             <button class="btn btn-light" onclick="saveChart()">Save Graph</button>
-
                         </div>
 
                     </div>
@@ -351,11 +353,12 @@
                 </div>
             </div>
             <div id="graphList" class="col-sm">
-                <div id="graphContainer">
+                <div id="graphContainer" class="boxShadow">
                     <h3>Saved Graphs</h3>
                     <div id="savedGraphs">
 
                     </div>
+                    <button id="" onclick="$('#details').trigger('click')" class="conBtn prevBtn">Previous</button>
                     <button id="presentationNext" onclick="$('#presentation').trigger('click');" class="conBtn">Continue</button>
                 </div>
             </div>
@@ -363,13 +366,13 @@
 
         <div id="presentationPhase" class="row">
             <div class="col-3" id="presentationList">
-                <div id="finishedCharts"></div>
+                <div id="finishedCharts" class="boxShadow"></div>
             </div>
             <div class="col-6" id="presnetationBody">
-                <div id="bodyContainer"></div>
+                <div id="bodyContainer" class="boxShadow"></div>
             </div>
             <div class="col-3" id="exportOption">
-                <div id="extractButtons">
+                <div id="extractButtons" class="boxShadow">
                     <div >
                         <button class="btn btn-light" onclick="downloadPDF()"><i class="fas fa-download"></i> Download PDF</button>
                     </div>
@@ -391,6 +394,7 @@
         <div id="collectedSchools">
             <h3>Selected Schools</h3>
             <div id="schoolContainer"></div>
+            <button id="" onclick="$('#overview').trigger('click')" class="conBtn prevBtn">Previous</button>
             <button id="filterNext" onclick="$('#details').trigger('click');" class="conBtn">Continue</button>
         </div>
 
