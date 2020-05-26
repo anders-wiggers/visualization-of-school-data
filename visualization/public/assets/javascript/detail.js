@@ -22,6 +22,7 @@ function createSchoolList(list) {
 			icon.classList.add('school-icon');
 			let floxFix = document.createElement('div');
 			floxFix.setAttribute('onclick', `setDetailData("${item.NAME}")`);
+			floxFix.setAttribute('id', item.NAME + item.COMMUNE);
 			floxFix.classList.add('school-con');
 			floxFix.classList.add('clickable');
 			floxFix.appendChild(icon);

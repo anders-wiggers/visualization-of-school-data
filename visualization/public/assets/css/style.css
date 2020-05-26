@@ -509,7 +509,6 @@ h3 {
 
 #presentationList {
 	height: 100%;
-	background-color: yellow;
 }
 
 #finishedCharts {
@@ -530,12 +529,10 @@ h3 {
 
 #presnetationBody {
 	height: 100%;
-	background-color: green;
 }
 
 #exportOption {
 	height: 100%;
-	background-color: pink;
 }
 
 #extractButtons {
@@ -550,4 +547,8 @@ h3 {
 .itemInPresentation {
 	margin: 10px;
 	padding: 5px;
+}
+
+.pressed {
+	background-color: #c8e0c84f;
 }

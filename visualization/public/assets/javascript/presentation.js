@@ -25,6 +25,7 @@ function createSavedChartList(list) {
 		floxFix.classList.add('school-list');
 		floxFix.classList.add('clickable');
 		floxFix.setAttribute('onclick', `addToPresentationPage('${item.name}')`);
+		floxFix.setAttribute('id', item.name);
 		floxFix.appendChild(icon);
 		floxFix.appendChild(text);
 		li.appendChild(floxFix);
@@ -39,9 +40,11 @@ function addToPresentationPage(item) {
 		index = presentList.findIndex((i) => i.name === item);
 		if (index > -1) {
 			presentList.splice(index, 1);
+			document.getElementById(item).classList.remove('pressed');
 		}
 	} else {
 		presentList.push(savedCharts[index]);
+		document.getElementById(item).classList.add('pressed');
 	}
 	drawSavedCharts();
 }
@@ -52,9 +55,13 @@ function drawSavedCharts() {
 	for (let item of presentList) {
 		let div = document.createElement('div');
 		div.setAttribute('class', 'itemInPresentation');
-		div.innerHTML = `<div>${item.name}</div>
-        <img src="${item.graph}"/>
-
+		console.log(item);
+		div.innerHTML = `<div><h3>${item.name}</h3></div>
+		<div class="d-flex align-items-center">
+		<div class="p-2">${capitalizeFirstLetter(item.yAxis)}</div>
+        <img class="p-2" src="${item.graph}"/>
+		</div>
+		<div>${capitalizeFirstLetter(item.xAxis)}</div>
         <div class="input-group">
   <div class="input-group-prepend">
     <span class="input-group-text">Annotation</span>
@@ -68,4 +75,39 @@ function drawSavedCharts() {
 function updateAnnotation(input, e) {
 	let index = savedCharts.findIndex((i) => i.name === input);
 	savedCharts[index].annotation = e.value;
+}
+
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+async function downloadPDF() {
+	var doc = new jsPDF();
+
+	// html2canvas(document.querySelector('#bodyContainer'), {
+	// 	onrendered: function(canvas) {
+	// 		doc.addImage(canvas, 'JPEG', 15, 0);
+	// 		doc.save('a4.pdf');
+	// 	}
+	// });
+
+	let breakPage = 0;
+	let corx = 20;
+	for (let item of presentList) {
+		doc.text(item.name, 20, corx);
+		doc.text(item.yAxis, 15, 50 + corx, null, 90);
+		doc.text(item.xAxis, 80, 80 + corx);
+		doc.addImage(item.graph, 'PNG', 20, corx + 10);
+		doc.text(item.annotation, 20, 85 + corx);
+
+		breakPage++;
+		if (breakPage === 2) {
+			doc.addPage();
+			breakPage = 0;
+			corx = 20;
+		} else {
+			corx += 100;
+		}
+	}
+	doc.save('a4.pdf');
 }

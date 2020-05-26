@@ -46,10 +46,9 @@
     <script defer src="/assets/javascript/presentation.js"></script>
     <script defer src="/assets/javascript/phasehandler.js"></script>
 
-
-
-   
-
+    <!-- PDF lib -->
+    <script src="/assets/javascript/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <!--Auto-complete functionality-->
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
@@ -372,7 +371,7 @@
             <div class="col-3" id="exportOption">
                 <div id="extractButtons">
                     <div >
-                        <button class="btn btn-light"><i class="fas fa-download"></i> Download PDF</button>
+                        <button class="btn btn-light" onclick="downloadPDF()"><i class="fas fa-download"></i> Download PDF</button>
                     </div>
                     <div>
                         <button class="btn btn-light"><i class="fas fa-share-square"></i> Get Shareable Link</button>
