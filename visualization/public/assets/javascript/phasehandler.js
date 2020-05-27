@@ -27,9 +27,12 @@ var communeSelectorAnimate = (string) => {
 updatePhase(currentPhase);
 
 function updatePhase(phase) {
+	if (phase === currentPhase) {
+		return;
+	}
 	previousPhase = currentPhase;
 	currentPhase = phase;
-	setView(phase, '');
+	//setView(phase, '');
 	if (previousPhase > phase) {
 		setView(phase, '-');
 	} else if (previousPhase < phase && previousPhase - phase != -3) {
@@ -73,17 +76,18 @@ function setView(phase, string) {
 			try {
 				for (let s of inBounds) {
 					if (s.display === true) {
-						setDetailData(s.NAME);
+						console.log('loop', s, inBounds.length);
+						setDetailData(`${s.NAME}-${s.COMMUNE}`);
 						break;
 					}
 				}
 			} catch (error) {
-				fetchAllMarkersAndPlaceOnMap(() => {
-					setDetailData(inBounds[0].NAME);
-					createSchoolList(inBounds);
-					//display('mainCon');
-					detailsAnimate();
-				});
+				// fetchAllMarkersAndPlaceOnMap(() => {
+				// 	setDetailData(`${s.NAME}-${s.COMMUNE}`);
+				// 	createSchoolList(inBounds);
+				// 	//display('mainCon');
+				// 	detailsAnimate();
+				// });
 			}
 			createSchoolList(inBounds);
 			//display('mainCon');

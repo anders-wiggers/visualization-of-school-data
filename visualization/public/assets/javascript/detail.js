@@ -22,7 +22,7 @@ function createSchoolList(list) {
 			icon.setAttribute('src', 'assets/pictures/school.svg');
 			icon.classList.add('school-icon');
 			let floxFix = document.createElement('div');
-			floxFix.setAttribute('onclick', `setDetailData("${item.NAME}-${item.COMMUNE}")`);
+			//floxFix.setAttribute('onclick', `setDetailData("${item.NAME}-${item.COMMUNE}")`);
 			floxFix.setAttribute('id', `${item.NAME}-${item.COMMUNE}`);
 			floxFix.classList.add('school-con');
 			floxFix.classList.add('clickable');
@@ -30,6 +30,9 @@ function createSchoolList(list) {
 			floxFix.appendChild(text);
 			li.appendChild(floxFix);
 			ul.appendChild(li);
+			floxFix.addEventListener('click', (e) => {
+				setDetailData(`${item.NAME}-${item.COMMUNE}`);
+			});
 		}
 	});
 }
@@ -81,15 +84,14 @@ function createRelationList(list) {
 function setDetailData(school) {
 	$('.collapse').collapse('hide');
 
-	console.log('activated');
-
 	activeSchool(school);
 
 	let commune = school.split('-')[1];
+
 	school = school.split('-')[0];
 
 	let missing = 'Data not provided';
-	let index = inBounds.findIndex((i) => i.NAME === school);
+	let index = inBounds.findIndex((i) => i.NAME === school && i.COMMUNE == commune);
 	let schoolDataSet = inBounds[index];
 
 	let nameBox = document.getElementById('schoolName');
