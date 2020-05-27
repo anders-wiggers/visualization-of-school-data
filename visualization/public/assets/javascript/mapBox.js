@@ -148,6 +148,12 @@ function addKommunesToList(list) {
 		li.appendChild(floxFix);
 		ul.appendChild(li);
 	});
+	gsap.fromTo(
+		'.fix',
+		1,
+		{ opacity: 0, backgroundColor: '#2bd82b', borderRadius: '5px', marginBottom: '5px' },
+		{ opacity: 1, backgroundColor: '#fafafa', borderRadius: '5px', marginBottom: '5px' }
+	);
 }
 function clearList() {
 	$(document.getElementById('mapLi')).empty();
@@ -202,10 +208,10 @@ function determineWhatHappensOnClick(e) {
 						weight: 0.01,
 						color: 'white'
 					});
+					markers.clearLayers();
 				}
 			}
 		}
-		fetchMarkersAndPlaceOnMap();
 	}
 }
 
@@ -229,7 +235,7 @@ var clearStyles = () => {
 	for (var s of allCommuneObjects) {
 		if (selectedCommunes.includes(s)) {
 			s.setStyle({
-				weight: 1.5,
+				weight: 3,
 				fillColor: 'white',
 				fillOpacity: '0.01',
 				color: highlight
