@@ -43,13 +43,21 @@ function createRelationPage(list) {
 			floxFix.setAttribute('onclick', `addToGraph("${item.NAME}")`);
 			floxFix.classList.add('school-list');
 			floxFix.classList.add('clickable');
-			floxFix.setAttribute('id', `${item.NAME.replace(/\s/g, '')}-${item.COMMUNE.replace(/\s/g, '')}`);
+			floxFix.setAttribute('id', `${item.NAME.replace(/\s/g, '')}$${item.COMMUNE.replace(/\s/g, '')}`);
 			floxFix.appendChild(icon);
 			floxFix.appendChild(text);
 			li.appendChild(floxFix);
 			ul.appendChild(li);
+			//addToGraph(`${item.NAME.replace(/\s/g, '')}$${item.COMMUNE.replace(/\s/g, '')}`);
+
+			let index = relationPhaseList.findIndex((i) => i.NAME === item.NAME);
+			item.color = xAxisColor[index];
+			graphSchool.push(item);
+			updateButton(item, true);
 		}
 	});
+	console.log(graphSchool);
+	createChartData();
 }
 
 function changeType() {
@@ -80,7 +88,7 @@ function addToGraph(id) {
 }
 
 function updateButton(school, isOn) {
-	let btn = document.getElementById(`${school.NAME.replace(/\s/g, '')}-${school.COMMUNE.replace(/\s/g, '')}`);
+	let btn = document.getElementById(`${school.NAME.replace(/\s/g, '')}$${school.COMMUNE.replace(/\s/g, '')}`);
 	if (isOn) btn.setAttribute('style', `background-color:#${school.color}`);
 	else btn.removeAttribute('style');
 }

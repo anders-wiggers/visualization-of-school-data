@@ -13,7 +13,7 @@ const elements = [
 ];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
-let currentPhase = 3;
+let currentPhase = 0;
 var previousPhase;
 var updateDepending;
 var communeSelectorAnimate = (string) => {
@@ -70,23 +70,23 @@ function setView(phase, string) {
 			// 	{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
+
+			createSchoolList(inBounds);
 			try {
 				for (let s of inBounds) {
 					if (s.display === true) {
-						console.log('loop', s, inBounds.length);
 						setDetailData(`${s.NAME}$${s.COMMUNE}`);
 						break;
 					}
 				}
 			} catch (error) {
-				fetchAllMarkersAndPlaceOnMap(() => {
-					setDetailData(inBounds[0].NAME);
-					createSchoolList(inBounds);
-					//display('mainCon');
-					detailsAnimate();
-				});
+				// fetchAllMarkersAndPlaceOnMap(() => {
+				// 	setDetailData(inBounds[0].NAME);
+				// 	createSchoolList(inBounds);
+				// 	//display('mainCon');
+				// 	detailsAnimate();
+				// });
 			}
-			createSchoolList(inBounds);
 			//display('mainCon');
 			detailsAnimate(string);
 			break;
