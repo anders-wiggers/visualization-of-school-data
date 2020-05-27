@@ -249,17 +249,19 @@
     
 
   var animatePresentationCircle = () => {
-    if(presentationBool === false && confirm("You are about to enter the presentation phase, are you sure you want to continue?")) {
+    if(presentationBool === false) {
+      if(confirm("You are about enter the presentation phase, are you sure you have finished exploring the data")){
       presentationBool = true;
       phaseState = currentPhase;
       updatePhase(4);
       gsap.to(presentation, {scale:3, opacity:"1", transformOrigin:"center center", onStart: presentationValues, onStartParams: ["everything"]})
-    } else {
+    }} else {
       updatePhase(phaseState)
       presentationBool = false;
       gsap.to(presentation, {scale:1,opacity:"0.5", transformOrigin:"center center", onStart: presentationValues, onStartParams: ["reset"], onComplete: setAnimationState})
     }
-  }
+  
+}
 
   var setAnimationState = () => {
     animationState = false;
