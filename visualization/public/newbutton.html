@@ -118,6 +118,7 @@
   
     $("#filter").click(function(){
       if(animationState === false){
+        clearStyles();
         updatePhase(1)
       if(topPosition[0] === overview){ //Works
         topPosition=[];
@@ -150,6 +151,7 @@
     })
     $("#overview").click(function(){
       if(animationState === false){
+      recreateStyles();
       updatePhase(0)
       if(topPosition[0] === filter){ //works
         topPosition=[];
@@ -250,7 +252,7 @@
     
 
   var animatePresentationCircle = () => {
-    if(presentationBool === false) {
+    if(presentationBool === false && confirm("You are about to enter the presentation phase, are you sure you want to continue?")) {
       presentationBool = true;
       phaseState = currentPhase;
       updatePhase(4);

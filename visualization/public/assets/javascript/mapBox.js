@@ -245,8 +245,6 @@ var clearStyles = () => {
 };
 
 var recreateStyles = () => {
-	console.log('Should be running');
-	$('#overview').trigger('click');
 	for (var s of allCommuneObjects) {
 		if (selectedCommunes.includes(s)) {
 			s.setStyle({
