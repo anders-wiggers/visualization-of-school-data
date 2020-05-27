@@ -204,8 +204,8 @@ function determineWhatHappensOnClick(e) {
 					});
 				}
 			}
-			fetchMarkersAndPlaceOnMap();
 		}
+		fetchMarkersAndPlaceOnMap();
 	}
 }
 
@@ -219,7 +219,8 @@ info.onAdd = function(map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function(props) {
 	this._div.innerHTML =
-		'<h4>Vælg kommune</h4>' + (props ? '<b>' + props.KOMNAVN + '</b><br />' : 'Tryk på en kommune');
+		'<h4>Select a commune</h4>' +
+		(props ? '<b>' + props.KOMNAVN + '</b><br />' : 'You can press any commune on the map');
 };
 
 info.addTo(map);
