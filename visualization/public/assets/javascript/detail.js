@@ -1,6 +1,7 @@
 'use strict';
 let selectedSchool;
 let selectedObject;
+let inputdataFromSchool;
 let year = 2019;
 let socSelectorValue = 'Gennemsnit_Gennemsnit';
 
@@ -23,7 +24,7 @@ function createSchoolList(list) {
 			icon.classList.add('school-icon');
 			let floxFix = document.createElement('div');
 			//floxFix.setAttribute('onclick', `setDetailData("${item.NAME}-${item.COMMUNE}")`);
-			floxFix.setAttribute('id', `${item.NAME}-${item.COMMUNE}`);
+			floxFix.setAttribute('id', `${item.NAME}$${item.COMMUNE}`);
 			floxFix.classList.add('school-con');
 			floxFix.classList.add('clickable');
 			floxFix.appendChild(icon);
@@ -31,7 +32,7 @@ function createSchoolList(list) {
 			li.appendChild(floxFix);
 			ul.appendChild(li);
 			floxFix.addEventListener('click', (e) => {
-				setDetailData(`${item.NAME}-${item.COMMUNE}`);
+				setDetailData(`${item.NAME}$${item.COMMUNE}`);
 			});
 		}
 	});
@@ -85,10 +86,11 @@ function setDetailData(school) {
 	$('.collapse').collapse('hide');
 
 	activeSchool(school);
+	inputdataFromSchool = school;
 
-	let commune = school.split('-')[1];
+	let commune = school.split('$')[1];
 
-	school = school.split('-')[0];
+	school = school.split('$')[0];
 
 	let missing = 'Data not provided';
 	let index = inBounds.findIndex((i) => i.NAME === school && i.COMMUNE == commune);
@@ -351,12 +353,12 @@ function removeSchoolFromList(name) {
 
 function updateYear() {
 	year = document.getElementById('year').value;
-	setDetailData(selectedSchool);
+	setDetailData(inputdataFromSchool);
 }
 
 function updateSocio() {
 	socSelectorValue = document.getElementById('soceco').value;
-	setDetailData(selectedSchool);
+	setDetailData(inputdataFromSchool);
 }
 
 function round(number, decial) {

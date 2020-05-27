@@ -13,7 +13,7 @@ const elements = [
 ];
 
 const navButtons = [ 'overview', 'filter', 'detail', 'relation', 'presentation' ];
-let currentPhase = 0;
+let currentPhase = 3;
 var previousPhase;
 var updateDepending;
 var communeSelectorAnimate = (string) => {
@@ -74,7 +74,7 @@ function setView(phase, string) {
 				for (let s of inBounds) {
 					if (s.display === true) {
 						console.log('loop', s, inBounds.length);
-						setDetailData(`${s.NAME}-${s.COMMUNE}`);
+						setDetailData(`${s.NAME}$${s.COMMUNE}`);
 						break;
 					}
 				}

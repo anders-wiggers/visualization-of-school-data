@@ -112,8 +112,13 @@ function drawChart() {
 }
 
 function getRandomColor() {
-	let pal = palette('tol', relationPhaseList.length);
-	return pal;
+	if (relationPhaseList.length > 12) {
+		let pal = palette('tol-rainbow', relationPhaseList.length);
+		return pal;
+	} else {
+		let pal = palette('tol', relationPhaseList.length);
+		return pal;
+	}
 }
 
 function chooseDataType() {}
