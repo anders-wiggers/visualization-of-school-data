@@ -10,6 +10,7 @@ function createSchoolList(list) {
 	let ul = document.createElement('ul');
 	ul.classList.add('com-ul');
 	div.appendChild(ul);
+
 	list.forEach(function(item) {
 		if (item.display) {
 			let li = document.createElement('li');
@@ -21,8 +22,8 @@ function createSchoolList(list) {
 			icon.setAttribute('src', 'assets/pictures/school.svg');
 			icon.classList.add('school-icon');
 			let floxFix = document.createElement('div');
-			floxFix.setAttribute('onclick', `setDetailData("${item.NAME}")`);
-			floxFix.setAttribute('id', item.NAME + item.COMMUNE);
+			floxFix.setAttribute('onclick', `setDetailData("${item.NAME}-${item.COMMUNE}")`);
+			floxFix.setAttribute('id', `${item.NAME}-${item.COMMUNE}`);
 			floxFix.classList.add('school-con');
 			floxFix.classList.add('clickable');
 			floxFix.appendChild(icon);
@@ -35,10 +36,23 @@ function createSchoolList(list) {
 
 function createRelationList(list) {
 	let div = document.getElementById('listItems');
+	let nextBtn = document.getElementById('relationNext');
+
 	div.innerHTML = '';
 	let ul = document.createElement('ul');
 	ul.classList.add('com-ul');
 	div.appendChild(ul);
+
+	if (relationPhaseList.length > 0) {
+		console.log('gut');
+		nextBtn.classList.remove('deaBtn');
+		nextBtn.classList.add('conBtn');
+	} else {
+		console.log('notgut');
+		nextBtn.classList.remove('conBtn');
+		nextBtn.classList.add('deaBtn');
+	}
+
 	list.forEach(function(item) {
 		if (item.display) {
 			let li = document.createElement('li');
@@ -66,6 +80,14 @@ function createRelationList(list) {
 
 function setDetailData(school) {
 	$('.collapse').collapse('hide');
+
+	console.log('activated');
+
+	activeSchool(school);
+
+	let commune = school.split('-')[1];
+	school = school.split('-')[0];
+
 	let missing = 'Data not provided';
 	let index = inBounds.findIndex((i) => i.NAME === school);
 	let schoolDataSet = inBounds[index];
@@ -338,4 +360,14 @@ function updateSocio() {
 function round(number, decial) {
 	let n = Math.pow(10, decial);
 	return Math.round((number + Number.EPSILON) * n) / 100 + '%';
+}
+
+let lastEle;
+function activeSchool(id) {
+	try {
+		lastEle.classList.remove('clicked');
+	} catch (error) {}
+	let btn = document.getElementById(id);
+	btn.classList.add('clicked');
+	lastEle = btn;
 }

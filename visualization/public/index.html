@@ -122,9 +122,9 @@
                 <div class="col-3">
                     <div class="ssContainer boxShadow">
                         <h3>Selected Schools</h3>
-                        <div id="selectedList" class="boxShadow">
+                        <div id="selectedList" class="boxShadow"></div>
+                        <button class="btn btn-success addButton" onclick="addAll()"><i class="fas fa-plus"></i> Add All</button>
                     </div>
-                </div>
                 </div>
                 <div id="detailBox" class="col-6">
                     <div id="detailContainer" class="boxShadow">
@@ -301,7 +301,6 @@
                         </div>
                     </div>
                     <div style="padding-top: 10px;text-align: center;">
-                    <button class="btn btn-success addButton" onclick="addAll()"><i class="fas fa-plus"></i> Add All</button>
                     </div>
                 </div>
                 <div id="relationList" class="col-sm">
@@ -312,7 +311,7 @@
                             <button class="btn btn-danger addButton" onclick="removeAll()"><i class="fas fa-trash"></i> Delete All</button>
                         </div>
                         <button id="" onclick="setView(1,'-')" class="conBtn prevBtn">Previous</button>
-                        <button id="filterNext" onclick="$('#relate').trigger('click')" class="conBtn">Continue</button>
+                        <button id="relationNext" onclick="$('#relate').trigger('click')" class="deaBtn">Continue</button>
                     </div>
                 </div>
             </div>

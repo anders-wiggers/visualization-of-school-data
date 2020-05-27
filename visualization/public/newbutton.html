@@ -213,7 +213,7 @@
       }
     })
     $("#relate").click(function(){
-      if(animationState === false){
+      if(animationState === false && relationPhaseList.length > 0) {
       updatePhase(3)
       if(topPosition[0] === overview){//Works
         topPosition=[];
@@ -242,6 +242,9 @@
         clickedElement.push(relate);
         startForth();
       }
+    }
+    else {
+      alert('Please select some schools before continuing')
     }
     })
     
