@@ -27,12 +27,9 @@ var communeSelectorAnimate = (string) => {
 updatePhase(currentPhase);
 
 function updatePhase(phase) {
-	if (phase === currentPhase) {
-		return;
-	}
 	previousPhase = currentPhase;
 	currentPhase = phase;
-	//setView(phase, '');
+	setView(phase, '');
 	if (previousPhase > phase) {
 		setView(phase, '-');
 	} else if (previousPhase < phase && previousPhase - phase != -3) {
