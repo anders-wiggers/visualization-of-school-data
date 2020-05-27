@@ -79,12 +79,12 @@ function setView(phase, string) {
 					}
 				}
 			} catch (error) {
-				// fetchAllMarkersAndPlaceOnMap(() => {
-				// 	setDetailData(`${s.NAME}-${s.COMMUNE}`);
-				// 	createSchoolList(inBounds);
-				// 	//display('mainCon');
-				// 	detailsAnimate();
-				// });
+				fetchAllMarkersAndPlaceOnMap(() => {
+					setDetailData(inBounds[0].NAME);
+					createSchoolList(inBounds);
+					//display('mainCon');
+					detailsAnimate();
+				});
 			}
 			createSchoolList(inBounds);
 			//display('mainCon');
