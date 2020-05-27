@@ -424,7 +424,7 @@
         <div id="collectedSchools">
             <h3>Selected Schools</h3>
             <div id="schoolContainer"></div>
-            <button id="filterClick" onclick=recreateStyles() class="conBtn prevBtn">Previous</button>
+            <button id="filterClick" onclick="$('#overview').trigger('click');" class="conBtn prevBtn">Previous</button>
             <button id="filterNext" onclick="$('#details').trigger('click');" class="conBtn">Continue</button>
         </div>
 
