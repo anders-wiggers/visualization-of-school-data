@@ -71,7 +71,12 @@ function setView(phase, string) {
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
 			try {
-				setDetailData(inBounds[0].NAME);
+				for (let s of inBounds) {
+					if (s.display === true) {
+						setDetailData(s.NAME);
+						break;
+					}
+				}
 			} catch (error) {
 				fetchAllMarkersAndPlaceOnMap(() => {
 					setDetailData(inBounds[0].NAME);

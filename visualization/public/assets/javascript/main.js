@@ -309,8 +309,8 @@ function filterData() {
 		}
 	}
 	inBounds = [ ...temp ];
-	addSchoolToList(temp);
-	updateMakers(temp);
+	addSchoolToList(inBounds);
+	updateMakers(inBounds);
 }
 
 function updateMakers(arr) {
