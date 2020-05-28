@@ -9,33 +9,78 @@ let reverse = false;
 function reverseList() {
 	reverse = !reverse;
 	createSchoolList(inBounds);
+	if (reverse) {
+		let arrow = document.getElementById('arrow');
+		arrow.classList.remove('fa-arrow-down');
+		arrow.classList.add('fa-arrow-up');
+	} else {
+		let arrow = document.getElementById('arrow');
+		arrow.classList.remove('fa-arrow-up');
+		arrow.classList.add('fa-arrow-down');
+	}
 }
 
-function createSchoolList(list) {
+function changeSorting() {
+	createSchoolList(inBounds);
+}
+
+async function createSchoolList(list) {
 	let div = document.getElementById('selectedList');
+	div.innerHTML = `<ul>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+		<li class="loadingItem"></li>
+	</ul>`;
+
+	console.log(inBounds);
+
+	let sorter = document.getElementById('sorting');
+	if (sorter.value === 'name') {
+		inBounds.sort((a, b) => {
+			var nameA = a.NAME.toLowerCase(),
+				nameB = b.NAME.toLowerCase();
+			if (
+				nameA < nameB //sort string ascending
+			)
+				return -1;
+			if (nameA > nameB) return 1;
+			return 0; //default return value (no sorting)
+		});
+	} else if (sorter.value === 'grade') {
+		for (let i of inBounds) {
+			if (i.mean == null) {
+				const res = await fetch(`api/combine?school=${i.NAME}&commune=${i.COMMUNE}&data=grades&year=2019`);
+				let data = await res.json();
+				try {
+					i.mean = data[0]['mean'];
+					if (i.mean === null) i.mean = 0;
+				} catch (error) {
+					i.mean = 0;
+				}
+			}
+		}
+		inBounds.sort((a, b) => {
+			return b.mean - a.mean;
+		});
+	}
+	if (reverse) {
+		inBounds.reverse();
+	}
+
 	div.innerHTML = '';
+
 	let ul = document.createElement('ul');
 	ul.classList.add('com-ul');
 	div.appendChild(ul);
 
-	console.log(list);
-
-	list.sort((a, b) => {
-		var nameA = a.NAME.toLowerCase(),
-			nameB = b.NAME.toLowerCase();
-		if (
-			nameA < nameB //sort string ascending
-		)
-			return -1;
-		if (nameA > nameB) return 1;
-		return 0; //default return value (no sorting)
-	});
-
-	if (reverse) {
-		list.reverse();
-	}
-
-	list.forEach(function(item) {
+	inBounds.forEach(function(item) {
 		if (item.display) {
 			let li = document.createElement('li');
 			li.classList.add('com-li');

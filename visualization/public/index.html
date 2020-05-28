@@ -127,16 +127,17 @@
                                 <div>Sort By:</div>
                             </div>
                             <div class="col-6">
-                                <select id="graphY" class="custom-select" style="width: 100%;" onchange="changeY()">
-                                    <option value="Name" selected>Name</option>
-                                    <option value="Average Grade" selected>Average Final Grades</option>
+                                <select id="sorting" onchange ="changeSorting()" class="custom-select" style="width: 100%;" onchange="changeY()">
+                                    <option value="name" selected>Name</option>
+                                    <option value="grade">Average Final Grades</option>
                                 </select>
                             </div>
                             <div class="col-2">
-                            <i class="fas fa-arrow-down" onclick="reverseList()"></i>
+                            <i class="fas fa-arrow-down" id="arrow" onclick="reverseList()"></i>
                             </div>
                         </div>
-                        <div id="selectedList" class="boxShadow"></div>
+                        <div id="selectedList" class="boxShadow">
+                        </div>
                         <button class="btn btn-success addButton" onclick="addAll()"><i class="fas fa-plus"></i> Add All</button>
                     </div>
                 </div>
@@ -353,10 +354,10 @@
                             <div class="p-2" style="width: 50px;transform: rotate(-90deg);">
                                 <select id="graphY" class="custom-select" style="width: 200px;margin-left: -75px;" onchange="changeY()">
                                     <option value="grades*mean" selected>Average Final Grades</option>
-                                    <option value="absence*mean" selected>Students Absence</option>
-                                    <option value="students*classratio" selected>Students Per Class</option>
-                                    <option value="students*total_students" selected>Total Students</option>
-                                    <option value="competence_coverage*COMPETENCE_COVERAGE" selected>Competence Coverage</option>
+                                    <option value="absence*mean" >Students Absence</option>
+                                    <option value="students*classratio" >Students Per Class</option>
+                                    <option value="students*total_students" >Total Students</option>
+                                    <option value="competence_coverage*COMPETENCE_COVERAGE" >Competence Coverage</option>
                                 </select>
                             </div>
                             <div class="p-2" style="width: 100%;">
@@ -370,11 +371,11 @@
                             <div class="col-6">
                                 <select id="graphX" class="custom-select inline-free" style="width: 200px;" onchange="changeX()">
                                     <option value="year" selected>Year</option>
-                                    <option value="grades*mean" selected>Average Final Grades</option>
-                                    <option value="absence*mean" selected>Students Absence</option>
-                                    <option value="students*classratio" selected>Students Per Class</option>
-                                    <option value="students*total_students" selected>Total Students</option>
-                                    <option value="competence_coverage*COMPETENCE_COVERAGE" selected>Competence Coverage</option>
+                                    <option value="grades*mean" >Average Final Grades</option>
+                                    <option value="absence*mean" >Students Absence</option>
+                                    <option value="students*classratio" >Students Per Class</option>
+                                    <option value="students*total_students" >Total Students</option>
+                                    <option value="competence_coverage*COMPETENCE_COVERAGE" >Competence Coverage</option>
                                 </select>
                             </div>
                             <div class="col-3">
