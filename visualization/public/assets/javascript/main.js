@@ -311,12 +311,12 @@ function filterData() {
 		}
 	}
 	inBounds = [ ...temp ];
-	addSchoolToList(inBounds);
+	addSchoolToList(emptyArray);
 	updateMakers(inBounds);
 }
 
 function updateMakers(arr) {
-	if (manualSelected.length < inBounds) {
+	if (manualSelected.length > 0) {
 		addMarker(manualSelected);
 	}
 	for (let s of arr) {
@@ -368,7 +368,7 @@ function addMarker(s) {
 			"<br><a href='data[i].website'>" +
 			s.website +
 			'</a>' +
-			'<br/><button type="button" onclick="schoolMarkerButton()" class="btn btn-primary sidebar-open-button"  data = "' +
+			'<br/><button type="button" onclick="schoolMarkerButton()" class="btn btn-success sidebar-open-button"  data = "' +
 			s.NAME +
 			'" ' +
 			'><i class="fas fa-plus"></i> Add to selected schools</button>';
@@ -390,4 +390,9 @@ var schoolMarkerButton = (e) => {
 			}
 		}
 	});
+};
+
+var clearSchoolList = () => {
+	manualSelected = [];
+	addSchoolToList(emptyArray);
 };
