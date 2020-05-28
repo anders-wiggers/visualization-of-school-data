@@ -212,3 +212,7 @@ function presentationAnimate(string) {
 			0
 		);
 }
+
+window.onbeforeunload = function() {
+	return 'Are you sure you want to leave?';
+};
