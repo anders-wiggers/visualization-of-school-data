@@ -19,6 +19,7 @@ var studentStatus = false;
 var absenceStatus = false;
 var wellbeingStatus = false;
 var competenceStatus = false;
+var firstTime = true;
 
 /*
 * MEAN GRADE BUTTON
@@ -311,7 +312,15 @@ function filterData() {
 		}
 	}
 	inBounds = [ ...temp ];
-	addSchoolToList(emptyArray);
+	if (manualSelected.length > 0) {
+		addSchoolToList(manualSelected);
+	}
+	if (firstTime === true) {
+		addSchoolToList(emptyArray);
+	} else if (firstTime === false && manualSelected === 0) {
+		addSchoolToList(inBounds);
+	}
+
 	updateMakers(inBounds);
 }
 

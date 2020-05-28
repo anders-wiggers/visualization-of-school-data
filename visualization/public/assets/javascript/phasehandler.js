@@ -59,7 +59,6 @@ function setView(phase, string) {
 			info.remove();
 			display('filterBox');
 			display('filteringTitle');
-
 			//display('collectedSchools');
 			filterAnimate(string);
 			display('map');
@@ -70,23 +69,26 @@ function setView(phase, string) {
 			// 	{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
-
-			createSchoolList(inBounds);
-			try {
-				for (let s of inBounds) {
-					if (s.display === true) {
-						setDetailData(`${s.NAME}$${s.COMMUNE}`);
-						break;
-					}
-				}
-			} catch (error) {
-				// fetchAllMarkersAndPlaceOnMap(() => {
-				// 	setDetailData(inBounds[0].NAME);
-				// 	createSchoolList(inBounds);
-				// 	//display('mainCon');
-				// 	detailsAnimate();
-				// });
+			if (manualSelected.length > 0) {
+				createSchoolList(manualSelected);
+			} else {
+				createSchoolList(inBounds);
 			}
+			// try {
+			// 	for (let s of inBounds) {
+			// 		if (s.display === true) {
+			// 			setDetailData(`${s.NAME}$${s.COMMUNE}`);
+			// 			break;
+			// 		}
+			// 	}
+			// } catch (error) {
+			// 	// fetchAllMarkersAndPlaceOnMap(() => {
+			// 	// 	setDetailData(inBounds[0].NAME);
+			// 	// 	createSchoolList(inBounds);
+			// 	// 	//display('mainCon');
+			// 	// 	detailsAnimate();
+			// 	// });
+			// }
 			//display('mainCon');
 			detailsAnimate(string);
 			break;

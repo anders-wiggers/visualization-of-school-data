@@ -6,9 +6,11 @@ let year = 2019;
 let socSelectorValue = 'Gennemsnit_Gennemsnit';
 let reverse = false;
 
+let detailSelectArray = [];
+
 function reverseList() {
 	reverse = !reverse;
-	createSchoolList(inBounds);
+	createSchoolList(detailSelectArray);
 	if (reverse) {
 		let arrow = document.getElementById('arrow');
 		arrow.classList.remove('fa-arrow-down');
@@ -21,10 +23,14 @@ function reverseList() {
 }
 
 function changeSorting() {
-	createSchoolList(inBounds);
+	createSchoolList(detailSelectArray);
 }
 
 async function createSchoolList(list) {
+	if (detailSelectArray.length !== list.length) {
+		detailSelectArray = [ ...list ];
+	}
+
 	let div = document.getElementById('selectedList');
 	div.innerHTML = `<ul>
 		<li class="loadingItem"></li>
@@ -39,11 +45,11 @@ async function createSchoolList(list) {
 		<li class="loadingItem"></li>
 	</ul>`;
 
-	console.log(inBounds);
+	console.log(detailSelectArray);
 
 	let sorter = document.getElementById('sorting');
 	if (sorter.value === 'name') {
-		inBounds.sort((a, b) => {
+		detailSelectArray.sort((a, b) => {
 			var nameA = a.NAME.toLowerCase(),
 				nameB = b.NAME.toLowerCase();
 			if (
@@ -54,7 +60,7 @@ async function createSchoolList(list) {
 			return 0; //default return value (no sorting)
 		});
 	} else if (sorter.value === 'grade') {
-		for (let i of inBounds) {
+		for (let i of detailSelectArray) {
 			if (i.mean == null) {
 				const res = await fetch(`api/combine?school=${i.NAME}&commune=${i.COMMUNE}&data=grades&year=2019`);
 				let data = await res.json();
@@ -66,12 +72,12 @@ async function createSchoolList(list) {
 				}
 			}
 		}
-		inBounds.sort((a, b) => {
+		detailSelectArray.sort((a, b) => {
 			return b.mean - a.mean;
 		});
 	}
 	if (reverse) {
-		inBounds.reverse();
+		detailSelectArray.reverse();
 	}
 
 	div.innerHTML = '';
@@ -80,7 +86,7 @@ async function createSchoolList(list) {
 	ul.classList.add('com-ul');
 	div.appendChild(ul);
 
-	inBounds.forEach(function(item) {
+	detailSelectArray.forEach(function(item) {
 		if (item.display) {
 			let li = document.createElement('li');
 			li.classList.add('com-li');
@@ -108,6 +114,7 @@ async function createSchoolList(list) {
 			});
 		}
 	});
+	setDetailData(`${detailSelectArray[0].NAME}$${detailSelectArray[0].COMMUNE}`);
 }
 
 function createRelationList(list) {
@@ -165,8 +172,8 @@ function setDetailData(school) {
 	school = school.split('$')[0];
 
 	let missing = 'Data not provided';
-	let index = inBounds.findIndex((i) => i.NAME === school && i.COMMUNE == commune);
-	let schoolDataSet = inBounds[index];
+	let index = detailSelectArray.findIndex((i) => i.NAME === school && i.COMMUNE == commune);
+	let schoolDataSet = detailSelectArray[index];
 
 	let nameBox = document.getElementById('schoolName');
 	let totalStudents = document.getElementById('totalStudents');
@@ -406,7 +413,7 @@ function addSelected() {
 }
 
 function addAll() {
-	relationPhaseList = [ ...inBounds ];
+	relationPhaseList = [ ...detailSelectArray ];
 	createRelationList(relationPhaseList);
 }
 
