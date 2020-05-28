@@ -316,7 +316,7 @@ function filterData() {
 }
 
 function updateMakers(arr) {
-	if (manualSelected.length < inBounds) {
+	if (manualSelected.length > 0) {
 		addMarker(manualSelected);
 	}
 	for (let s of arr) {
@@ -390,4 +390,9 @@ var schoolMarkerButton = (e) => {
 			}
 		}
 	});
+};
+
+var clearSchoolList = () => {
+	manualSelected = [];
+	addSchoolToList(emptyArray);
 };
