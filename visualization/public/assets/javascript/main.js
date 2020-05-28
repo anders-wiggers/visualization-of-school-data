@@ -405,3 +405,8 @@ var clearSchoolList = () => {
 	manualSelected = [];
 	addSchoolToList(emptyArray);
 };
+
+var addAllSchoolsList = () => {
+	manualSelected = [];
+	addSchoolToList(inBounds);
+};

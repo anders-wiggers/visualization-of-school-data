@@ -3,6 +3,7 @@ var map = new L.Map('map', { zoomControl: false });
 var osmUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
 var osm = new L.TileLayer(osmUrl, { minZoom: 6.9, maxZoom: 18 });
 //Adding map, plus zoom of denmark
+console.log(osm);
 map.addLayer(osm);
 map.setView(new L.LatLng(56.283, 10.491), 6.9);
 // Initializing mini map
@@ -25,7 +26,8 @@ var noHighlight = '#EE3377';
 var highlight = '#0077BB';
 var inBounds = [];
 var markers = new L.markerClusterGroup({
-	showCoverageOnHover: false
+	showCoverageOnHover: false,
+	maxClusterRadius: 60
 });
 var myLayer = new L.LayerGroup().addTo(map);
 //var markers = myLayer.addTo(new L.markerClusterGroup());
@@ -75,7 +77,6 @@ function highlightFeature(e) {
 			}
 		}
 		var layer = e.target;
-
 		if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
 			layer.bringToFront();
 		}
@@ -222,6 +223,7 @@ function determineWhatHappensOnClick(e) {
 						weight: 0.01,
 						color: 'white'
 					});
+
 					markers.clearLayers();
 				}
 			}
