@@ -140,7 +140,21 @@ function addKommunesToList(list) {
 		text.classList.add('com-item');
 		let close = document.createElement('div');
 		close.classList.add('com-close');
-		close.innerHTML = 'x';
+		close.innerHTML = '<i class="fas fa-times"></i>';
+		close.addEventListener('click', () => {
+			console.log('ran command');
+			let e = {
+				target: {
+					feature: {
+						properties: {
+							KOMNAVN: item
+						}
+					}
+				}
+			};
+			determineWhatHappensOnClick(e);
+			recreateStyles();
+		});
 		let floxFix = document.createElement('div');
 		floxFix.classList.add('fix');
 		floxFix.appendChild(text);
