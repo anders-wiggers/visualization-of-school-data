@@ -317,7 +317,7 @@ function filterData() {
 
 function updateMakers(arr) {
 	if (manualSelected.length < inBounds) {
-		addMarker(arr);
+		addMarker(manualSelected);
 	}
 	for (let s of arr) {
 		if (s.display) {
@@ -383,6 +383,11 @@ function addMarker(s) {
 var schoolMarkerButton = (e) => {
 	$('div').on('click', '.sidebar-open-button', function() {
 		var ID = $(this).attr('data');
-		addMarkerToList(ID);
+		for (let k of inBounds) {
+			if (k.NAME === ID && manualSelected.includes(k) === false) {
+				manualSelected.push(k);
+				addSchoolToList(manualSelected);
+			}
+		}
 	});
 };
