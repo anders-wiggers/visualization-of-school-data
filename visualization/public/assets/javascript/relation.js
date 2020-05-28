@@ -19,7 +19,7 @@ let graphYears = [ 2013, 2014, 2015, 2016, 2017, 2018, 2019 ];
 
 function createRelationPage(list) {
 	xAxisColor = getRandomColor();
-
+	graphSchool = [];
 	changeX(false);
 	changeY(false);
 
@@ -336,6 +336,7 @@ function saveChart() {
 		};
 		savedCharts.push(chart);
 		//clear items
+		document.getElementById('graphName').value = '';
 
 		//Add to List
 		createSaveddChartList(savedCharts);
