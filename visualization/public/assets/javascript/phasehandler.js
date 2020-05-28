@@ -59,7 +59,6 @@ function setView(phase, string) {
 			info.remove();
 			display('filterBox');
 			display('filteringTitle');
-
 			//display('collectedSchools');
 			filterAnimate(string);
 			display('map');
@@ -70,8 +69,11 @@ function setView(phase, string) {
 			// 	{ NAME: 'Nymarkskolen', display: true, COMMUNE: 'Svendborg' },
 			// 	{ NAME: 'Kernen', display: true, COMMUNE: 'Svendborg' }
 			// ];
-
-			createSchoolList(inBounds);
+			if (manualSelected.length > 0) {
+				createSchoolList(manualSelected);
+			} else {
+				createSchoolList(inBounds);
+			}
 			try {
 				for (let s of inBounds) {
 					if (s.display === true) {

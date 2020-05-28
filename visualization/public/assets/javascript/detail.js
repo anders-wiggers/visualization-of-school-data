@@ -5,10 +5,13 @@ let inputdataFromSchool;
 let year = 2019;
 let socSelectorValue = 'Gennemsnit_Gennemsnit';
 let reverse = false;
-
 function reverseList() {
 	reverse = !reverse;
-	createSchoolList(inBounds);
+	if (manualSelected.length > 0) {
+		createSchoolList(manualSelected);
+	} else {
+		createSchoolList(inBounds);
+	}
 }
 
 function createSchoolList(list) {
