@@ -130,13 +130,8 @@ h3 {
 }
 
 #addAllSchools {
-	max-width: 60vw;
-	position: fixed;
 	background: white;
 	padding: 10px;
-	position: fixed;
-	top: 620px;
-	left: calc(100vw - 360px);
 	border-radius: 5px;
 	background-color: #fafafa;
 }
@@ -645,15 +640,19 @@ body {
 }
 
 .deaBtn {
-	margin-top: 20px;
 	border: none;
-	color: white;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	border-radius: 5px;
+	background-color: #e3e3e366;
+	color: #393e4252;
+}
+
+.deaBtn:hover {
+	border: none;
+	background-color: #e3e3e366;
+	color: #393e4252;
+}
+
+.deaBtn:focus {
+	border: none;
 	background-color: #e3e3e366;
 	color: #393e4252;
 }
@@ -685,4 +684,15 @@ body {
 	margin-top: 10px;
 	margin-left: -21px;
 	list-style: none;
+}
+
+.btnContainer {
+	position: fixed;
+	left: calc(50vw - 150px);
+	top: calc(100vh - 60px);
+}
+
+.navBtn {
+	height: 50px;
+	width: 150px;
 }

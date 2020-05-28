@@ -27,6 +27,12 @@ function changeSorting() {
 }
 
 async function createSchoolList(list) {
+	if (relationPhaseList.length > 0) {
+		nextBtn.classList.remove('deaBtn');
+	} else {
+		nextBtn.classList.add('deaBtn');
+	}
+
 	if (detailSelectArray.length !== list.length) {
 		detailSelectArray = [ ...list ];
 	}
@@ -119,7 +125,7 @@ async function createSchoolList(list) {
 
 function createRelationList(list) {
 	let div = document.getElementById('listItems');
-	let nextBtn = document.getElementById('relationNext');
+	let nextBtn = document.getElementById('nextBtn');
 
 	div.innerHTML = '';
 	let ul = document.createElement('ul');
@@ -127,12 +133,8 @@ function createRelationList(list) {
 	div.appendChild(ul);
 
 	if (relationPhaseList.length > 0) {
-		console.log('gut');
 		nextBtn.classList.remove('deaBtn');
-		nextBtn.classList.add('conBtn');
 	} else {
-		console.log('notgut');
-		nextBtn.classList.remove('conBtn');
 		nextBtn.classList.add('deaBtn');
 	}
 

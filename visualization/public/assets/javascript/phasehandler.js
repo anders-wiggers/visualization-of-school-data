@@ -213,6 +213,45 @@ function presentationAnimate(string) {
 		);
 }
 
+function nextPhase() {
+	switch (currentPhase) {
+		case 0:
+			$('#filter').trigger('click');
+			break;
+		case 1:
+			$('#details').trigger('click');
+			break;
+		case 2:
+			$('#relate').trigger('click');
+			break;
+		case 3:
+			$('#presentation').trigger('click');
+			break;
+		case 4:
+	}
+}
+
+function prevPhase() {
+	let nextBtn = document.getElementById('nextBtn');
+	nextBtn.classList.remove('deaBtn');
+	switch (currentPhase) {
+		case 0:
+			break;
+		case 1:
+			$('#overview').trigger('click');
+			break;
+		case 2:
+			$('#filter').trigger('click');
+			break;
+		case 3:
+			$('#details').trigger('click');
+			break;
+		case 4:
+			$('#relation').trigger('click');
+			break;
+	}
+}
+
 window.onbeforeunload = function() {
 	return 'Are you sure you want to leave?';
 };

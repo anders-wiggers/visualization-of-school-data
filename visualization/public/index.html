@@ -320,13 +320,14 @@
                 </div>
                 <div id="relationList" class="col-sm">
                     <div id="relationContainer" class="boxShadow">
-                        <h3>Relation List</h3>
+                        <h3>Schools for futher exploration</h3>
+                        <p>Schools in this list will carry into the next window</p>
                         <div id="listItems"></div>
                         <div>
                             <button class="btn btn-danger addButton" onclick="removeAll()"><i class="fas fa-trash"></i> Delete All</button>
                         </div>
-                        <button id="" onclick="$('#filter').trigger('click')" class="conBtn prevBtn">Previous</button>
-                        <button id="relationNext" onclick="$('#relate').trigger('click')" class="deaBtn">Continue</button>
+                        <!-- <button id="" onclick="$('#filter').trigger('click')" class="conBtn prevBtn"><i class="fas fa-chevron-left"></i> Previous</button>
+                        <button id="relationNext" onclick="$('#relate').trigger('click')" class="deaBtn">Continue <i class="fas fa-chevron-right"></i></button> -->
                     </div>
                 </div>
             </div>
@@ -392,8 +393,8 @@
                         <div id="savedGraphs">
 
                         </div>
-                        <button id="" onclick="setView(2,'-')" class="conBtn prevBtn">Previous</button>
-                        <button id="presentationNext" onclick="$('#presentation').trigger('click');" class="conBtn">Continue</button>
+                        <!-- <button id="" onclick="setView(2,'-')" class="conBtn prevBtn"><i class="fas fa-chevron-left"></i> Previous</button>
+                        <button id="presentationNext" onclick="$('#presentation').trigger('click');" class="conBtn">Continue <i class="fas fa-chevron-right"></i></button> -->
                     </div>
                 </div>
             </div>
@@ -438,13 +439,12 @@
         <div id="collectedSchools">
             <h3>Selected Schools</h3>
             <div id="schoolContainer"></div>
-            <button id="filterClick" onclick="$('#overview').trigger('click');" class="conBtn prevBtn">Previous</button>
-            <button id="filterNext" onclick="$('#details').trigger('click');" class="conBtn">Continue</button>
-        </div>
-
-        <div id="addAllSchools">
-            <button type="button" onclick="addSchoolToList(inBounds)" class="btn btn-success"><i class="fas fa-plus"></i> Add all</button>
-            <button type="button" onclick="clearSchoolList()" class="btn btn-danger"><i class="fas fa-trash"></i> Remove all</button>
+            <!-- <button id="filterClick" onclick="$('#overview').trigger('click');" class="conBtn prevBtn"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button id="filterNext" onclick="$('#details').trigger('click');" class="conBtn">Continue <i class="fas fa-chevron-right"></i></button> -->
+            <div id="addAllSchools">
+                <button type="button" onclick="addSchoolToList(inBounds)" class="btn btn-success"><i class="fas fa-plus"></i> Add all</button>
+                <button type="button" onclick="clearSchoolList()" class="btn btn-danger"><i class="fas fa-trash"></i> Remove all</button>
+            </div>
         </div>
 
         <div id="navigationButton"></div>
@@ -461,9 +461,14 @@
                 </div>
                     <h2>Communes</h2>
                 <div id="kommunes"></div>
-                    <button id="markerButton" class="conBtn">Continue</button>
+                    <!-- <button id="markerButton" class="conBtn">Continue <i class="fas fa-chevron-right"></i></button> -->
             </div>
         </div>
+    </div>
+
+    <div class="btnContainer">
+        <button id="prevBtn" class="btn btn-light navBtn" onclick="prevPhase()"><i class="fas fa-chevron-left"></i> Previous</button>
+        <button id="nextBtn" class="btn btn-success navBtn" onclick="nextPhase()">Continue <i class="fas fa-chevron-right"></i></button>
     </div>
 
     <!-- <div id="navBar">
