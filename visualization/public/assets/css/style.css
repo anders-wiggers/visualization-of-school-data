@@ -129,6 +129,16 @@ h3 {
 	background-color: #fafafa;
 }
 
+.leaflet-popup-close-button {
+	display: none;
+}
+
+.leaflet-label-overlay {
+	line-height: 0px;
+	margin-top: 9px;
+	position: absolute;
+}
+
 #addAllSchools {
 	background: white;
 	padding: 10px;
