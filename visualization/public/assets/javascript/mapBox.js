@@ -275,6 +275,7 @@ document.getElementById('markerButton').onclick = function(e) {
 	clearStyles();
 	$('#filter').trigger('click');
 };
+
 /* 
 document.getElementById('filterClick').onclick = function(e) {
 	console.log('previous clicked');

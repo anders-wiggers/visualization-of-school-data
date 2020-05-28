@@ -2,6 +2,7 @@
 
 const elements = [
 	'communeSelector',
+	'addAllSchools',
 	'filterBox',
 	'collectedSchools',
 	'map',
@@ -18,7 +19,6 @@ var previousPhase;
 var updateDepending;
 var communeSelectorAnimate = (string) => {
 	gsap.set('#communeSelector', { x: '100%' });
-
 	let to = new TimelineMax({})
 		.to('#communeSelector', 1, { className: 'active' }, 0)
 		.to('#communeSelector', 1, { x: 0, ease: 'power1' }, 0);
@@ -170,12 +170,12 @@ function deactiveButtons() {
 }
 
 var filterAnimate = (string) => {
-	gsap.set('#collectedSchools', { x: '100%' });
+	gsap.set('#collectedSchools, #addAllSchools', { x: '100%' });
 	gsap.set('#filterBox', { x: '-100%' });
 
 	let tk = new TimelineMax({})
-		.to('#filterBox ,#collectedSchools', 1, { className: 'active' }, 0)
-		.to('#collectedSchools, #filterBox', 1, { x: 0, ease: 'power1' }, 0);
+		.to('#filterBox ,#collectedSchools, #addAllSchools', 1, { className: 'active' }, 0)
+		.to('#collectedSchools, #filterBox, #addAllSchools', 1, { x: 0, ease: 'power1' }, 0);
 };
 
 var detailsAnimate = (string) => {

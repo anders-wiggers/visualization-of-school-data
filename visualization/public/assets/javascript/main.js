@@ -10,6 +10,8 @@ var competenceAverage = [];
 let filterButton = document.getElementById('filterBtn');
 let filterBox = document.getElementById('filterBox');
 var relationPhaseList = [];
+var manualSelected = [];
+var emptyArray = [];
 
 //Global status
 var gradeStatus = false;
@@ -314,6 +316,9 @@ function filterData() {
 }
 
 function updateMakers(arr) {
+	if (manualSelected.length < inBounds) {
+		addMarker(arr);
+	}
 	for (let s of arr) {
 		if (s.display) {
 			addMarker(s);
@@ -362,7 +367,11 @@ function addMarker(s) {
 			s.phone +
 			"<br><a href='data[i].website'>" +
 			s.website +
-			'</a>';
+			'</a>' +
+			'<br/><button type="button" onclick="schoolMarkerButton()" class="btn btn-primary sidebar-open-button"  data = "' +
+			s.NAME +
+			'" ' +
+			'><i class="fas fa-plus"></i> Add to selected schools</button>';
 		let marker = L.marker([ latitude, longitude ], { icon: schoolIcon, title: s.NAME })
 			.bindPopup(popInfo)
 			.openPopup();
@@ -370,3 +379,10 @@ function addMarker(s) {
 		map.addLayer(markers);
 	} catch (err) {}
 }
+
+var schoolMarkerButton = (e) => {
+	$('div').on('click', '.sidebar-open-button', function() {
+		var ID = $(this).attr('data');
+		addMarkerToList(ID);
+	});
+};

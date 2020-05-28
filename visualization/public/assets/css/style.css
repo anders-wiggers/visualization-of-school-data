@@ -129,6 +129,18 @@ h3 {
 	background-color: #fafafa;
 }
 
+#addAllSchools {
+	max-width: 60vw;
+	position: fixed;
+	background: white;
+	padding: 10px;
+	position: fixed;
+	top: 620px;
+	left: calc(100vw - 360px);
+	border-radius: 5px;
+	background-color: #fafafa;
+}
+
 #searchBar {
 	max-width: 60vw;
 	background: white;
@@ -648,4 +660,19 @@ body {
 
 .clicked {
 	background-color: #c4c7d5;
+}
+
+.sidebar-open-button {
+	background-color: #4caf50;
+	border-color: #4caf50;
+}
+
+.sidebar-open-button:sucess {
+	background-color: #4caf50;
+	border-color: #4caf50;
+}
+
+.sidebar-open-button:hover {
+	background-color: #218838;
+	border-color: #218838;
 }
