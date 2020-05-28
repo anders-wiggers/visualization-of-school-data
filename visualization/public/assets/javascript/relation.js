@@ -22,7 +22,6 @@ function createRelationPage(list) {
 
 	changeX(false);
 	changeY(false);
-	drawChart();
 
 	let div = document.getElementById('selectedSchoolListCon');
 	div.innerHTML = '';
@@ -43,7 +42,7 @@ function createRelationPage(list) {
 			floxFix.setAttribute('onclick', `addToGraph("${item.NAME}")`);
 			floxFix.classList.add('school-list');
 			floxFix.classList.add('clickable');
-			floxFix.setAttribute('id', `${item.NAME.replace(/\s/g, '')}$${item.COMMUNE.replace(/\s/g, '')}`);
+			floxFix.setAttribute('id', `${item.NAME}?${item.COMMUNE}`);
 			floxFix.appendChild(icon);
 			floxFix.appendChild(text);
 			li.appendChild(floxFix);
@@ -52,11 +51,12 @@ function createRelationPage(list) {
 
 			let index = relationPhaseList.findIndex((i) => i.NAME === item.NAME);
 			item.color = xAxisColor[index];
-			graphSchool.push(item);
+			if (!graphSchool.includes(item)) {
+				graphSchool.push(item);
+			}
 			updateButton(item, true);
 		}
 	});
-	console.log(graphSchool);
 	createChartData();
 }
 
@@ -77,7 +77,9 @@ function addToGraph(id) {
 	} else {
 		school.color = xAxisColor[index];
 		updateButton(school, true);
-		graphSchool.push(school);
+		if (!graphSchool.includes(school)) {
+			graphSchool.push(school);
+		}
 	}
 
 	createChartData();
@@ -88,7 +90,7 @@ function addToGraph(id) {
 }
 
 function updateButton(school, isOn) {
-	let btn = document.getElementById(`${school.NAME.replace(/\s/g, '')}$${school.COMMUNE.replace(/\s/g, '')}`);
+	let btn = document.getElementById(`${school.NAME}?${school.COMMUNE}`);
 	if (isOn) btn.setAttribute('style', `background-color:#${school.color}`);
 	else btn.removeAttribute('style');
 }
@@ -117,6 +119,7 @@ function drawChart() {
 			}
 		}
 	});
+	console.log(dataToInsert);
 }
 
 function getRandomColor() {
@@ -191,8 +194,6 @@ function createChartData() {
 		xAxis = [];
 		processScatter(graphSchool, xAxisValue, yAxisValue);
 	}
-
-	drawChart();
 }
 
 let simpleArray = [];
@@ -243,7 +244,14 @@ async function processArray(array, type) {
 			borderColor: `#${item.color}`,
 			borderWidth: 4
 		};
-		dataToInsert.push(d);
+
+		if (
+			!dataToInsert.filter(function(e) {
+				return e.label === d.label;
+			}).length > 0
+		) {
+			dataToInsert.push(d);
+		}
 	}
 	drawChart();
 }
@@ -291,7 +299,13 @@ async function processScatter(array, typeX, typeY) {
 			borderColor: `#${item.color}`,
 			borderWidth: 4
 		};
-		dataToInsert.push(d);
+		if (
+			!dataToInsert.filter(function(e) {
+				return e.label === d.label;
+			}).length > 0
+		) {
+			dataToInsert.push(d);
+		}
 	}
 	drawChart();
 }
