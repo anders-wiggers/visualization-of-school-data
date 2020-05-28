@@ -4,6 +4,12 @@ let selectedObject;
 let inputdataFromSchool;
 let year = 2019;
 let socSelectorValue = 'Gennemsnit_Gennemsnit';
+let reverse = false;
+
+function reverseList() {
+	reverse = !reverse;
+	createSchoolList(inBounds);
+}
 
 function createSchoolList(list) {
 	let div = document.getElementById('selectedList');
@@ -11,6 +17,23 @@ function createSchoolList(list) {
 	let ul = document.createElement('ul');
 	ul.classList.add('com-ul');
 	div.appendChild(ul);
+
+	console.log(list);
+
+	list.sort((a, b) => {
+		var nameA = a.NAME.toLowerCase(),
+			nameB = b.NAME.toLowerCase();
+		if (
+			nameA < nameB //sort string ascending
+		)
+			return -1;
+		if (nameA > nameB) return 1;
+		return 0; //default return value (no sorting)
+	});
+
+	if (reverse) {
+		list.reverse();
+	}
 
 	list.forEach(function(item) {
 		if (item.display) {

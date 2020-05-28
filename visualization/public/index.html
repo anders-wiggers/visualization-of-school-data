@@ -122,6 +122,20 @@
                 <div class="col-3">
                     <div class="ssContainer boxShadow">
                         <h3>Selected Schools</h3>
+                        <div class="d-flex align-items-center">    
+                            <div class="col-4">                  
+                                <div>Sort By:</div>
+                            </div>
+                            <div class="col-6">
+                                <select id="graphY" class="custom-select" style="width: 100%;" onchange="changeY()">
+                                    <option value="Name" selected>Name</option>
+                                    <option value="Average Grade" selected>Average Final Grades</option>
+                                </select>
+                            </div>
+                            <div class="col-2">
+                            <i class="fas fa-arrow-down" onclick="reverseList()"></i>
+                            </div>
+                        </div>
                         <div id="selectedList" class="boxShadow"></div>
                         <button class="btn btn-success addButton" onclick="addAll()"><i class="fas fa-plus"></i> Add All</button>
                     </div>
