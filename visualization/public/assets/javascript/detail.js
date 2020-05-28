@@ -34,6 +34,10 @@ function createSchoolList(list) {
 			floxFix.addEventListener('click', (e) => {
 				setDetailData(`${item.NAME}$${item.COMMUNE}`);
 			});
+			floxFix.addEventListener('dblclick', (e) => {
+				setDetailData(`${item.NAME}$${item.COMMUNE}`);
+				addSelected();
+			});
 		}
 	});
 }
