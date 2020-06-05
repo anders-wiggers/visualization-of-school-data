@@ -17,12 +17,12 @@ sudo apt install pipenv
 
 ## Deployment
 
-The Script runs through all instructions in the `instructions` folder. An instruction is a `json` file which contains a set of instructions for the script to execute. Each relevant excel sheet has been given a fetch instruction 
+The script runs through all instructions in the `instructions` folder. An instruction is a `json` file which contains a set of instructions for the script to execute. Each relevant excel sheet has been given a fetch instruction 
 
 ### Instructions
 
 #### Get
-The get command navigates to a website
+The get command can be used to navigate to a specified URL. 
 
 ```
 {
@@ -31,7 +31,7 @@ The get command navigates to a website
 ```
 
 #### Wait
-The wait command waits for x amount of time
+The Wait command can be used to stall the execution for a finite amount of time inputted 
 
 ```
 {
@@ -40,7 +40,7 @@ The wait command waits for x amount of time
 ```
 
 #### Switch
-The switch command changes focus to an iframe window
+The switch command can be used to changes the focus of selenium to an alternative window, such as an iframe window
 
 ```
 {
@@ -49,14 +49,29 @@ The switch command changes focus to an iframe window
 ```
 
 #### Click
-The click command clicks on an element in the window frame. The click commands can determine the element by
+The click command can be used to perform a mouse click on DOM objects in the window frame. The click commands can detect the DOM element by
 * id
+The id option can be used when locating an element by the unique id identifier
+```
+{
+    "click": {
+        "find": "id",
+        "value": "acceptButton"
+    }
+}
+```
 * class
+The class option can be used when locating an element by the class identifier
+```
+{
+    "click": {
+        "find": "class",
+        "value": "roundButton"
+    }
+}
+```
 * xpath
-* pivotTalbe (special case)
-* pivotTalbeExpand (special case)
-* pivotTalbeMulti (special case)
-
+The xpath option can be used when trying to detect an element based on anything as it can be used to locate an element based on nodes in XHTML document, further detail about xpath can be read in selenium documentation [here](https://selenium-python.readthedocs.io/locating-elements.html#locating-by-xpath)
 ```
 {
     "click": {
@@ -65,6 +80,49 @@ The click command clicks on an element in the window frame. The click commands c
     }
 }
 ```
+* dragAndDrop
+The dragAndDrop option can be used when an element needs to be dragged to a certain position. The element is located via the text value of the DOM object. Furthermore, the dragAndDrop command has 2 additional option which is the X and Y coordinate to move the object to. 
+```
+{
+    "click": {
+        "find": "dragAndDrop",
+        "value": "Schoolyear",
+	"x": 150,
+	"y":0
+    }
+}
+```
+* pivotTable 
+The pivotTable option can be used to click on a pivot table item in the online excel sheet. 
+```
+{
+    "click": {
+        "find": "pivotTable",
+        "value": "More Fields",
+    }
+}
+```
+* pivotTalbeExpand option can be used to expand a pivot table item in the online excel sheet. 
+```
+{
+    "click": {
+        "find": "pivotTableExpand",
+        "value": "More Fields",
+    }
+}
+```
+* pivotTableMulti 
+The pivotTableMulti can be used to click on a pivot table item in the online excel sheet where duplicate entries with no specific id are present.
+```
+{
+    "click": {
+        "find": "pivotTableMulti",
+        "value": "institution",
+	"listNumber": 2
+    }
+}
+```
+
 
 
 ## Config
