@@ -50,7 +50,7 @@ The switch command can be used to changes the focus of selenium to an alternativ
 
 #### Click
 The click command can be used to perform a mouse click on DOM objects in the window frame. The click commands can detect the DOM element by
-* id
+* **id** <br>
 The id option can be used when locating an element by the unique id identifier
 ```
 {
@@ -60,7 +60,7 @@ The id option can be used when locating an element by the unique id identifier
     }
 }
 ```
-* class
+* **class** <br>
 The class option can be used when locating an element by the class identifier
 ```
 {
@@ -70,7 +70,7 @@ The class option can be used when locating an element by the class identifier
     }
 }
 ```
-* xpath
+* **xpath** <br>
 The xpath option can be used when trying to detect an element based on anything as it can be used to locate an element based on nodes in XHTML document, further detail about xpath can be read in selenium documentation [here](https://selenium-python.readthedocs.io/locating-elements.html#locating-by-xpath)
 ```
 {
@@ -80,7 +80,7 @@ The xpath option can be used when trying to detect an element based on anything 
     }
 }
 ```
-* dragAndDrop
+* **dragAndDrop** <br>
 The dragAndDrop option can be used when an element needs to be dragged to a certain position. The element is located via the text value of the DOM object. Furthermore, the dragAndDrop command has 2 additional option which is the X and Y coordinate to move the object to. 
 ```
 {
@@ -92,7 +92,7 @@ The dragAndDrop option can be used when an element needs to be dragged to a cert
     }
 }
 ```
-* pivotTable 
+* **pivotTable** <br>
 The pivotTable option can be used to click on a pivot table item in the online excel sheet. 
 ```
 {
@@ -102,7 +102,8 @@ The pivotTable option can be used to click on a pivot table item in the online e
     }
 }
 ```
-* pivotTalbeExpand option can be used to expand a pivot table item in the online excel sheet. 
+* **pivotTableExpand** <br> 
+The pivotTableExpand option can be used to expand a pivot table item in the online excel sheet. 
 ```
 {
     "click": {
@@ -111,7 +112,7 @@ The pivotTable option can be used to click on a pivot table item in the online e
     }
 }
 ```
-* pivotTableMulti 
+* **pivotTableMulti** <br> 
 The pivotTableMulti can be used to click on a pivot table item in the online excel sheet where duplicate entries with no specific id are present.
 ```
 {
