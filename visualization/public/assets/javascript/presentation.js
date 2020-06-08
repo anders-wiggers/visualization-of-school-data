@@ -59,7 +59,7 @@ function drawSavedCharts() {
 		div.innerHTML = `<div><h3>${item.name}</h3></div>
 		<div class="d-flex align-items-center">
 		<div class="p-2">${capitalizeFirstLetter(item.yAxis)}</div>
-        <img class="p-2" src="${item.graph}"/>
+        <img class="p-2" style="width: calc(100% - 150px)"src="${item.graph}"/>
 		</div>
 		<div>${capitalizeFirstLetter(item.xAxis)}</div>
         <div class="input-group">
