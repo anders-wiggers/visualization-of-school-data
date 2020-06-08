@@ -26,8 +26,37 @@ var noHighlight = '#EE3377';
 var highlight = '#0077BB';
 var inBounds = [];
 var markers = new L.markerClusterGroup({
+	iconCreateFunction: function(cluster) {
+		var childCount = cluster.getChildCount();
+		var c = ' marker-cluster-';
+		if (childCount <= 5) {
+			c += 'color1';
+		} else if (childCount <= 15 && childCount > 5) {
+			c += 'color2';
+		} else if (childCount <= 25 && childCount > 15) {
+			c += 'color3';
+		} else if (childCount <= 50 && childCount > 25) {
+			c += 'color4';
+		} else if (childCount <= 75 && childCount > 50) {
+			c += 'color5';
+		} else if (childCount <= 100 && childCount > 75) {
+			c += 'color6';
+		} else if (childCount <= 200 && childCount > 100) {
+			c += 'color7';
+		} else if (childCount <= 250 && childCount > 200) {
+			c += 'color8';
+		} else {
+			c += 'color9';
+		}
+
+		return new L.DivIcon({
+			html: '<div><span>' + childCount + '</span></div>',
+			className: 'marker-cluster' + c,
+			iconSize: new L.Point(40, 40)
+		});
+	},
 	showCoverageOnHover: false,
-	maxClusterRadius: 60
+	maxClusterRadius: 50
 });
 var myLayer = new L.LayerGroup().addTo(map);
 //var markers = myLayer.addTo(new L.markerClusterGroup());

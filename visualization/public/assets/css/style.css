@@ -706,3 +706,57 @@ body {
 	height: 50px;
 	width: 150px;
 }
+.marker-cluster-color1 {
+	background-color: rgba(255, 255, 229);
+}
+.marker-cluster-color1 div {
+	background-color: rgba(255, 255, 229);
+}
+.marker-cluster-color2 {
+	background-color: rgba(255, 247, 188);
+}
+.marker-cluster-color2 div {
+	background-color: rgba(255, 247, 188);
+}
+.marker-cluster-color3 {
+	background-color: rgba(254, 227, 145);
+}
+.marker-cluster-color3 div {
+	background-color: rgba(254, 227, 145);
+}
+.marker-cluster-color4 {
+	background-color: rgba(254, 196, 79);
+}
+.marker-cluster-color4 div {
+	background-color: rgba(254, 196, 79);
+}
+.marker-cluster-color5 {
+	background-color: rgba(251, 154, 41);
+}
+.marker-cluster-color5 div {
+	background-color: rgba(251, 154, 41);
+}
+.marker-cluster-color6 {
+	background-color: rgba(236, 112, 20);
+}
+.marker-cluster-color6 div {
+	background-color: rgba(236, 112, 20);
+}
+.marker-cluster-color7 {
+	background-color: rgba(204, 76, 2);
+}
+.marker-cluster-color7 div {
+	background-color: rgba(204, 76, 2);
+}
+.marker-cluster-color8 {
+	background-color: rgba(153, 52, 4);
+}
+.marker-cluster-color8 div {
+	background-color: rgba(153, 52, 4);
+}
+.marker-cluster-color9 {
+	background-color: rgba(102, 37, 6);
+}
+.marker-cluster-color9 div {
+	background-color: rgba(102, 37, 6);
+}
